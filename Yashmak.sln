@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web.Tests", "Yashma
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3AF1FE40-CF50-4F1E-924F-4D5137B710B1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Models", "Yashmak.Models\Yashmak.Models.csproj", "{68658828-BEEE-404C-8DB7-E441D93D0D84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Data", "Yashmak.Data\Yashmak.Data.csproj", "{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,14 @@ Global
 		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68658828-BEEE-404C-8DB7-E441D93D0D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68658828-BEEE-404C-8DB7-E441D93D0D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68658828-BEEE-404C-8DB7-E441D93D0D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68658828-BEEE-404C-8DB7-E441D93D0D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,5 +50,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3BED139F-693D-4ED6-8FD5-D40DCAF37514} = {26AFE9CB-1689-4EE6-9F3D-4F9D979FA93E}
 		{D2F4F27E-8466-4024-B844-27E3FFACB48B} = {3AF1FE40-CF50-4F1E-924F-4D5137B710B1}
+		{68658828-BEEE-404C-8DB7-E441D93D0D84} = {AA92DD66-1D90-465B-B48E-F56EE2860E98}
+		{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77} = {3459ADE1-9D18-4651-8AD9-F52933F4B8D6}
 	EndGlobalSection
 EndGlobal
