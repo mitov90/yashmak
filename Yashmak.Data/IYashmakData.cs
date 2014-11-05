@@ -5,7 +5,7 @@
 
     internal interface IYashmakData
     {
-        IRepository<User> Users { get; }
+        IRepository<AppUser> Users { get; }
 
         void SaveChanges();
     }

@@ -12,7 +12,6 @@
 
     using Yashmak.Data;
     using Yashmak.Models;
-    using Yashmak.Web.Models;
 
     public class EmailService : IIdentityMessageService
     {
@@ -32,10 +31,10 @@
         }
     }
 
-    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-    public class ApplicationUserManager : UserManager<User>
+    // Configure the application AppUser manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+    public class ApplicationUserManager : UserManager<AppUser>
     {
-        public ApplicationUserManager(IUserStore<User> store)
+        public ApplicationUserManager(IUserStore<AppUser> store)
             : base(store)
         {
         }
@@ -44,11 +43,10 @@
             IdentityFactoryOptions<ApplicationUserManager> options, 
             IOwinContext context)
         {
-            var manager = new ApplicationUserManager(
-                new UserStore<User>(context.Get<YashmakDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<AppUser>(context.Get<YashmakDbContext>()));
 
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<User>(manager)
+            manager.UserValidator = new UserValidator<AppUser>(manager)
                                         {
                                             AllowOnlyAlphanumericUserNames = false, 
                                             RequireUniqueEmail = true
@@ -57,37 +55,33 @@
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
                                             {
-                                                RequiredLength = 3, 
-                                                RequireNonLetterOrDigit = false,
-                                                RequireDigit = false,
-                                                RequireLowercase = false,
+                                                RequiredLength = 6, 
+                                                RequireNonLetterOrDigit = false, 
+                                                RequireDigit = false, 
+                                                RequireLowercase = false, 
                                                 RequireUppercase = false, 
                                             };
 
-            // Configure user lockout defaults
+            // Configure AppUser lockout defaults
             manager.UserLockoutEnabledByDefault = true;
             manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
             manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-            // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
+            // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the AppUser
             // You can write your own provider and plug it in here.
             manager.RegisterTwoFactorProvider(
                 "Phone Code", 
-                new PhoneNumberTokenProvider<User> { MessageFormat = "Your security code is {0}" });
+                new PhoneNumberTokenProvider<AppUser> { MessageFormat = "Your security code is {0}" });
             manager.RegisterTwoFactorProvider(
                 "Email Code", 
-                new EmailTokenProvider<User>
-                    {
-                        Subject = "Security Code", 
-                        BodyFormat = "Your security code is {0}"
-                    });
+                new EmailTokenProvider<AppUser> { Subject = "Security Code", BodyFormat = "Your security code is {0}" });
             manager.EmailService = new EmailService();
             manager.SmsService = new SmsService();
             var dataProtectionProvider = options.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<User>(dataProtectionProvider.Create("ASP.NET Identity"));
+                    new DataProtectorTokenProvider<AppUser>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
 
             return manager;
@@ -95,18 +89,13 @@
     }
 
     // Configure the application sign-in manager which is used in this application.
-    public class ApplicationSignInManager : SignInManager<User, string>
+    public class ApplicationSignInManager : SignInManager<AppUser, string>
     {
         public ApplicationSignInManager(
             ApplicationUserManager userManager, 
             IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
-        }
-
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
-        {
-            return user.GenerateUserIdentityAsync((ApplicationUserManager)this.UserManager);
         }
 
         public static ApplicationSignInManager Create(
@@ -116,6 +105,11 @@
             return new ApplicationSignInManager(
                 context.GetUserManager<ApplicationUserManager>(), 
                 context.Authentication);
+        }
+
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(AppUser appUser)
+        {
+            return appUser.GenerateUserIdentityAsync((ApplicationUserManager)this.UserManager);
         }
     }
 }

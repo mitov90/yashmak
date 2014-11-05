@@ -8,7 +8,7 @@
 
     public interface IYashmakDbContex : IDisposable
     {
-        IDbSet<User> Users { get; set; }
+        IDbSet<AppUser> Users { get; set; }
 
         void SaveChanges();
 

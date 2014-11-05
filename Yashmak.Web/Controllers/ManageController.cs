@@ -73,7 +73,7 @@
                                     this.AuthenticationManager.TwoFactorBrowserRememberedAsync(
                                         this.User.Identity.GetUserId())
                             };
-            return this.View(model);
+            return View(model);
         }
 
         // GET: /Manage/RemoveLogin
@@ -81,7 +81,7 @@
         {
             var linkedAccounts = this.UserManager.GetLogins(this.User.Identity.GetUserId());
             this.ViewBag.ShowRemoveButton = this.HasPassword() || linkedAccounts.Count > 1;
-            return this.View(linkedAccounts);
+            return View(linkedAccounts);
         }
 
         // POST: /Manage/RemoveLogin
@@ -116,7 +116,7 @@
         // GET: /Manage/AddPhoneNumber
         public ActionResult AddPhoneNumber()
         {
-            return this.View();
+            return View();
         }
 
         // POST: /Manage/AddPhoneNumber
@@ -126,7 +126,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return View(model);
             }
 
             // Generate the token and send it
@@ -181,8 +181,8 @@
 
             // Send an SMS through the SMS provider to verify the phone number
             return phoneNumber == null
-                       ? this.View("Error")
-                       : this.View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
+                       ? View("Error")
+                       : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
 
         // POST: /Manage/VerifyPhoneNumber
@@ -192,7 +192,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return View(model);
             }
 
             var result =
@@ -211,7 +211,7 @@
 
             // If we got this far, something failed, redisplay form
             this.ModelState.AddModelError(string.Empty, "Failed to verify phone");
-            return this.View(model);
+            return View(model);
         }
 
         // GET: /Manage/RemovePhoneNumber
@@ -235,7 +235,7 @@
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
-            return this.View();
+            return View();
         }
 
         // POST: /Manage/ChangePassword
@@ -245,7 +245,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                return View(model);
             }
 
             var result =
@@ -266,13 +266,13 @@
             }
 
             this.AddErrors(result);
-            return this.View(model);
+            return View(model);
         }
 
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
-            return this.View();
+            return View();
         }
 
         // POST: /Manage/SetPassword
@@ -298,7 +298,7 @@
             }
 
             // If we got this far, something failed, redisplay form
-            return this.View(model);
+            return View(model);
         }
 
         // GET: /Manage/ManageLogins
@@ -312,7 +312,7 @@
             var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
             if (user == null)
             {
-                return this.View("Error");
+                return View("Error");
             }
 
             var userLogins = await this.UserManager.GetLoginsAsync(this.User.Identity.GetUserId());
@@ -321,7 +321,7 @@
                     .Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider))
                     .ToList();
             this.ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-            return this.View(new ManageLoginsViewModel { CurrentLogins = userLogins, OtherLogins = otherLogins });
+            return View(new ManageLoginsViewModel { CurrentLogins = userLogins, OtherLogins = otherLogins });
         }
 
         // POST: /Manage/LinkLogin
@@ -329,7 +329,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult LinkLogin(string provider)
         {
-            // Request a redirect to the external login provider to link a login for the current user
+            // Request a redirect to the external login provider to link a login for the current AppUser
             return new AccountController.ChallengeResult(
                 provider, 
                 this.Url.Action("LinkLoginCallback", "Manage"), 
@@ -380,14 +380,14 @@
             }
         }
 
-        private async Task SignInAsync(User user, bool isPersistent)
+        private async Task SignInAsync(AppUser appUser, bool isPersistent)
         {
             this.AuthenticationManager.SignOut(
                 DefaultAuthenticationTypes.ExternalCookie, 
                 DefaultAuthenticationTypes.TwoFactorCookie);
             this.AuthenticationManager.SignIn(
                 new AuthenticationProperties { IsPersistent = isPersistent }, 
-                await user.GenerateUserIdentityAsync(this.UserManager));
+                await appUser.GenerateUserIdentityAsync(this.UserManager));
         }
 
         private void AddErrors(IdentityResult result)

@@ -7,7 +7,7 @@
     using Yashmak.Data.Migrations;
     using Yashmak.Models;
 
-    public class YashmakDbContext : IdentityDbContext<User>, IYashmakDbContex
+    public class YashmakDbContext : IdentityDbContext<AppUser>, IYashmakDbContex
     {
         public YashmakDbContext()
             : base("name=YashmakContext")

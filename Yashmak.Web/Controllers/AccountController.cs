@@ -129,7 +129,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             // The following code protects for brute force attacks against the two factor codes. 
@@ -152,7 +152,7 @@
                 case SignInStatus.Failure:
                 default:
                     this.ModelState.AddModelError(string.Empty, "Invalid code.");
-                    return View(model);
+                    return this.View(model);
             }
         }
 
@@ -171,7 +171,7 @@
         {
             if (this.ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new AppUser { UserName = model.Email, Email = model.Email };
                 var result = await this.UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -189,7 +189,7 @@
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
         // GET: /Account/ConfirmEmail
@@ -236,7 +236,7 @@
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
         // GET: /Account/ForgotPasswordConfirmation
@@ -261,7 +261,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             var user = await this.UserManager.FindByNameAsync(model.Email);
@@ -394,7 +394,7 @@
                     return this.View("ExternalLoginFailure");
                 }
 
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new AppUser { UserName = model.Email, Email = model.Email };
                 var result = await this.UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -410,7 +410,7 @@
             }
 
             this.ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return this.View(model);
         }
 
         // POST: /Account/LogOff

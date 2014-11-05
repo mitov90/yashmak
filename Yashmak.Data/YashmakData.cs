@@ -23,11 +23,11 @@
             this.repositories = new Dictionary<Type, object>();
         }
 
-        public IRepository<User> Users
+        public IRepository<AppUser> Users
         {
             get
             {
-                return this.GetRepository<User>();
+                return this.GetRepository<AppUser>();
             }
         }
 

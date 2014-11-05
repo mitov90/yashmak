@@ -25,29 +25,23 @@
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             // Configure the sign in cookie
+            var provider = new CookieAuthenticationProvider
+                               {
+                                   // Enables the application to validate the security stamp when the user logs in.
+                                   // This is a security feature which is used when you change a password or add an external login to your account.  
+                                   OnValidateIdentity =
+                                       SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, AppUser>(
+                                           TimeSpan.FromMinutes(30),
+                                           (manager, user) => user.GenerateUserIdentityAsync(manager)),
+                                   OnException = context => { }
+                               };
+
             app.UseCookieAuthentication(
-                new CookieAuthenticationOptions
+                new CookieAuthenticationOptions()
                     {
                         AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie, 
                         LoginPath = new PathString("/Account/Login"), 
-                        Provider =
-                            new CookieAuthenticationProvider
-                                {
-                                    // Enables the application to validate the security stamp when the user logs in.
-                                    // This is a security feature which is used when you change a password or add an external login to your account.  
-                                    OnValidateIdentity =
-                                        SecurityStampValidator
-                                        .OnValidateIdentity
-                                        <ApplicationUserManager, 
-                                        User>(
-                                            validateInterval:
-                                        TimeSpan.FromMinutes(30), 
-                                            regenerateIdentity:
-                                        (manager, user) =>
-                                        user
-                                            .GenerateUserIdentityAsync
-                                            (manager))
-                                }
+                        Provider = provider
                     });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -60,6 +54,16 @@
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
+            // app.UseFacebookAuthentication(appId: "1498636617090099", appSecret: "db0c1261fbb2a401e0ee24164008946a");
+
+            // app.UseGoogleAuthentication(
+            // new GoogleOAuth2AuthenticationOptions()
+            // {
+            // ClientId =
+            // "330109337482-slv30e2dnb6tmhpj0769hcmppsjkfai7.apps.googleusercontent.com", 
+            // ClientSecret = "Ldn-0UKwjcUn2ig-KVdbkvLF"
+            // });
+
             // app.UseMicrosoftAccountAuthentication(
             // clientId: "",
             // clientSecret: "");
@@ -67,16 +71,6 @@
             // app.UseTwitterAuthentication(
             // consumerKey: "",
             // consumerSecret: "");
-
-            // app.UseFacebookAuthentication(
-            // appId: "",
-            // appSecret: "");
-
-            // app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            // {
-            // ClientId = "",
-            // ClientSecret = ""
-            // });
         }
     }
 }
