@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3459ADE1-9D18-4651-8AD9-F52933F4B8D6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{26AFE9CB-1689-4EE6-9F3D-4F9D979FA93E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{AA92DD66-1D90-465B-B48E-F56EE2860E98}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utilities", "Utilities", "{DBF9F34A-5464-4A57-AD9D-18FBDB53090F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web", "Yashmak.Web\Yashmak.Web.csproj", "{3BED139F-693D-4ED6-8FD5-D40DCAF37514}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web.Tests", "Yashmak.Web.Tests\Yashmak.Web.Tests.csproj", "{D2F4F27E-8466-4024-B844-27E3FFACB48B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3AF1FE40-CF50-4F1E-924F-4D5137B710B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BED139F-693D-4ED6-8FD5-D40DCAF37514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BED139F-693D-4ED6-8FD5-D40DCAF37514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BED139F-693D-4ED6-8FD5-D40DCAF37514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BED139F-693D-4ED6-8FD5-D40DCAF37514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F4F27E-8466-4024-B844-27E3FFACB48B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3BED139F-693D-4ED6-8FD5-D40DCAF37514} = {26AFE9CB-1689-4EE6-9F3D-4F9D979FA93E}
+		{D2F4F27E-8466-4024-B844-27E3FFACB48B} = {3AF1FE40-CF50-4F1E-924F-4D5137B710B1}
+	EndGlobalSection
+EndGlobal
