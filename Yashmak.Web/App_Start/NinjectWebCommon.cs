@@ -13,7 +13,10 @@ namespace Yashmak.Web
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
+    using Ninject.Syntax;
     using Ninject.Web.Common;
+
+    using Yashmak.Data;
 
     public static class NinjectWebCommon
     {
@@ -63,8 +66,9 @@ namespace Yashmak.Web
         ///     Load your modules or register your services here!
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        private static void RegisterServices(IKernel kernel)
+        private static void RegisterServices(IBindingRoot kernel)
         {
+            kernel.Bind<IYashmakDbContex>().To<YashmakDbContext>();
         }
     }
 }
