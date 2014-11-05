@@ -1,11 +1,12 @@
 ﻿namespace Yashmak.Data
 {
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
 
     using Yashmak.Models;
 
-    public interface IYashmakDbContex
+    public interface IYashmakDbContex : IDisposable
     {
         IDbSet<User> Users { get; set; }
 

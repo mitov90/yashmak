@@ -36,6 +36,14 @@
             this.context.SaveChanges();
         }
 
+        public void Dispose()
+        {
+            if (this.context != null)
+            {
+                this.context.Dispose();
+            }
+        }
+
         private IRepository<T> GetRepository<T>() where T : class
         {
             var typeOfModel = typeof(T);

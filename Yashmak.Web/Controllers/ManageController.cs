@@ -15,7 +15,7 @@
     [Authorize]
     public class ManageController : Controller
     {
-        private ApplicationUserManager _userManager;
+        private ApplicationUserManager userManager;
 
         public ManageController()
         {
@@ -30,12 +30,12 @@
         {
             get
             {
-                return this._userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return this.userManager ?? this.HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
 
             private set
             {
-                this._userManager = value;
+                this.userManager = value;
             }
         }
 
@@ -73,7 +73,7 @@
                                     this.AuthenticationManager.TwoFactorBrowserRememberedAsync(
                                         this.User.Identity.GetUserId())
                             };
-            return View(model);
+            return this.View(model);
         }
 
         // GET: /Manage/RemoveLogin
@@ -81,7 +81,7 @@
         {
             var linkedAccounts = this.UserManager.GetLogins(this.User.Identity.GetUserId());
             this.ViewBag.ShowRemoveButton = this.HasPassword() || linkedAccounts.Count > 1;
-            return View(linkedAccounts);
+            return this.View(linkedAccounts);
         }
 
         // POST: /Manage/RemoveLogin
@@ -126,7 +126,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             // Generate the token and send it
@@ -192,7 +192,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             var result =
@@ -211,7 +211,7 @@
 
             // If we got this far, something failed, redisplay form
             this.ModelState.AddModelError(string.Empty, "Failed to verify phone");
-            return View(model);
+            return this.View(model);
         }
 
         // GET: /Manage/RemovePhoneNumber
@@ -245,7 +245,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             var result =
@@ -266,7 +266,7 @@
             }
 
             this.AddErrors(result);
-            return View(model);
+            return this.View(model);
         }
 
         // GET: /Manage/SetPassword
@@ -298,7 +298,7 @@
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return this.View(model);
         }
 
         // GET: /Manage/ManageLogins
@@ -306,7 +306,9 @@
         {
             this.ViewBag.StatusMessage = message == ManageMessageId.RemoveLoginSuccess
                                              ? "The external login was removed."
-                                             : message == ManageMessageId.Error ? "An error has occurred." : string.Empty;
+                                             : message == ManageMessageId.Error
+                                                   ? "An error has occurred."
+                                                   : string.Empty;
             var user = await this.UserManager.FindByIdAsync(this.User.Identity.GetUserId());
             if (user == null)
             {
@@ -349,8 +351,6 @@
                        ? this.RedirectToAction("ManageLogins")
                        : this.RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
         }
-
-        #region Helpers
 
         // Used for XSRF protection when adding external logins
         public enum ManageMessageId
@@ -419,7 +419,5 @@
 
             return false;
         }
-
-        #endregion
     }
 }
