@@ -293,7 +293,16 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Yashmak.Data\Yashmak.Data.csproj">
+      <Project>{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}</Project>
+      <Name>Yashmak.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yashmak.Models\Yashmak.Models.csproj">
+      <Project>{68658828-BEEE-404C-8DB7-E441D93D0D84}</Project>
+      <Name>Yashmak.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

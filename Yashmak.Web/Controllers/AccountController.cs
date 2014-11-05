@@ -9,6 +9,7 @@
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
 
+    using Yashmak.Models;
     using Yashmak.Web.Models;
 
     [Authorize]

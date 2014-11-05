@@ -10,6 +10,8 @@
     using Microsoft.Owin;
     using Microsoft.Owin.Security;
 
+    using Yashmak.Data;
+    using Yashmak.Models;
     using Yashmak.Web.Models;
 
     public class EmailService : IIdentityMessageService
@@ -43,7 +45,7 @@
             IOwinContext context)
         {
             var manager = new ApplicationUserManager(
-                new UserStore<User>(context.Get<ApplicationDbContext>()));
+                new UserStore<User>(context.Get<YashmakDbContext>()));
 
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<User>(manager)
