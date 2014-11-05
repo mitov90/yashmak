@@ -7,10 +7,11 @@
     using Microsoft.AspNet.Identity;
 
     using Yashmak.Data;
+    using Yashmak.Models;
 
     public class LogAttribute : ActionFilterAttribute
     {
-        private IYashmakDbContex dbContex;
+        private readonly IYashmakDbContex dbContex;
 
         public LogAttribute(IYashmakDbContex dbContex)
         {
@@ -22,7 +23,13 @@
             var dateTime = DateTime.Now;
             var ip = HttpContext.Current.Request.UserHostAddress;
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            var url = HttpContext.Current.Request.Url.ToString();
+            var action = HttpContext.Current.Request.Url.ToString();
+
+            var log = new Log { Action = action, DateTime = dateTime, UserId = userId, Ip = ip };
+
+            this.dbContex.Logs.Add(log);
+            this.dbContex.SaveChanges();
+
             base.OnActionExecuted(filterContext);
         }
     }

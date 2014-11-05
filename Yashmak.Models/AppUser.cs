@@ -1,5 +1,6 @@
 ﻿namespace Yashmak.Models
 {
+    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
@@ -8,6 +9,13 @@
 
     public class AppUser : IdentityUser
     {
+        public AppUser()
+        {
+            this.Logs = new HashSet<Log>();
+        }
+
+        public ICollection<Log> Logs { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

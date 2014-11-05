@@ -7,6 +7,8 @@
     {
         IRepository<AppUser> Users { get; }
 
+        IRepository<Log> Logs { get; }
+
         void SaveChanges();
     }
 }

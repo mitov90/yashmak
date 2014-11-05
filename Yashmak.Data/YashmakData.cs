@@ -31,6 +31,14 @@
             }
         }
 
+        public IRepository<Log> Logs
+        {
+            get
+            {
+                return this.GetRepository<Log>();
+            }
+        }
+
         public void SaveChanges()
         {
             this.context.SaveChanges();

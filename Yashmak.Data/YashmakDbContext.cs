@@ -15,6 +15,8 @@
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
         }
 
+        public virtual IDbSet<Log> Logs { get; set; }
+
         public static YashmakDbContext Create()
         {
             return new YashmakDbContext();
