@@ -4,10 +4,10 @@
 
     public class EngineConfig
     {
-        public static void RegisterEngines()
+        public static void RegisterEngines(ViewEngineCollection engines)
         {
-            ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new RazorViewEngine());
+            engines.Clear();
+            engines.Add(new RazorViewEngine());
         }
     }
 }

@@ -9,7 +9,7 @@
     {
         protected void Application_Start()
         {
-            EngineConfig.RegisterEngines();
+            EngineConfig.RegisterEngines(ViewEngines.Engines);
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

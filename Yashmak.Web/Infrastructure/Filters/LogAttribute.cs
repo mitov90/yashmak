@@ -6,29 +6,31 @@
 
     using Microsoft.AspNet.Identity;
 
+    using Ninject;
+
     using Yashmak.Data;
     using Yashmak.Models;
 
     public class LogAttribute : ActionFilterAttribute
     {
-        private readonly IYashmakDbContex dbContex;
+        [Inject]
+        public IYashmakDbContex Contex { get; set; }
 
-        public LogAttribute(IYashmakDbContex dbContex)
-        {
-            this.dbContex = dbContex;
-        }
-
+        // public LogAttribute(IYashmakDbContex dbContex)
+        // {
+        // this.dbContex = dbContex;
+        // }
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var dateTime = DateTime.Now;
             var ip = HttpContext.Current.Request.UserHostAddress;
             var userId = HttpContext.Current.User.Identity.GetUserId();
-            var action = HttpContext.Current.Request.Url.ToString();
+            var action = HttpContext.Current.Request.Url.LocalPath;
 
             var log = new Log { Action = action, DateTime = dateTime, UserId = userId, Ip = ip };
 
-            this.dbContex.Logs.Add(log);
-            this.dbContex.SaveChanges();
+            this.Contex.Logs.Add(log);
+            this.Contex.SaveChanges();
 
             base.OnActionExecuted(filterContext);
         }
