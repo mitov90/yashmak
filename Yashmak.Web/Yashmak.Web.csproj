@@ -223,11 +223,9 @@
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Filters\LogAttribute.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -316,6 +314,10 @@
     <ProjectReference Include="..\Data\Yashmak.Models\Yashmak.Data.Models.csproj">
       <Project>{68658828-BEEE-404C-8DB7-E441D93D0D84}</Project>
       <Name>Yashmak.Data.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yashlamak.Web.Infrastructure\Yashmak.Web.Infrastructure.csproj">
+      <Project>{a9d1ff74-f2e3-43a8-9cbe-8cb1db7fab9e}</Project>
+      <Name>Yashmak.Web.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Yashmak.Common\Yashmak.Common.csproj">
       <Project>{C5A1974C-132B-4CD2-8F9B-EFC84F711370}</Project>
