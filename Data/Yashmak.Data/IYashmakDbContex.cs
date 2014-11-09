@@ -4,7 +4,7 @@
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
 
-    using Yashmak.Models;
+    using Yashmak.Data.Models;
 
     public interface IYashmakDbContex : IDisposable
     {
@@ -14,10 +14,10 @@
 
         IDbSet<File> Files { get; set; }
 
-        void SaveChanges();
-
-        IDbSet<TEntity> Set<TEntity>() where TEntity : class;
+        int SaveChanges();
 
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+
+        IDbSet<T> Set<T>() where T : class;
     }
 }

@@ -7,8 +7,8 @@
     <ProjectGuid>{68658828-BEEE-404C-8DB7-E441D93D0D84}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Yashmak.Models</RootNamespace>
-    <AssemblyName>Yashmak.Models</AssemblyName>
+    <RootNamespace>Yashmak.Data.Models</RootNamespace>
+    <AssemblyName>Yashmak.Data.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

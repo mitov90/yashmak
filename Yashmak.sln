@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3AF1FE40
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Data", "Data\Yashmak.Data\Yashmak.Data.csproj", "{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Models", "Data\Yashmak.Models\Yashmak.Models.csproj", "{68658828-BEEE-404C-8DB7-E441D93D0D84}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Data.Models", "Data\Yashmak.Models\Yashmak.Data.Models.csproj", "{68658828-BEEE-404C-8DB7-E441D93D0D84}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Utilities.Tests", "Tests\Yashmak.Utilities.Tests\Yashmak.Utilities.Tests.csproj", "{1F1A96F3-5EEC-4C4F-B84F-69EDF5EDFC0F}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web", "Web\Yashmak.Web\Yashmak.Web.csproj", "{3BED139F-693D-4ED6-8FD5-D40DCAF37514}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Common", "Yashmak.Common\Yashmak.Common.csproj", "{C5A1974C-132B-4CD2-8F9B-EFC84F711370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Data.Common", "Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj", "{EFE74164-CB45-4403-BE91-5D7C8A110E25}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{C5A1974C-132B-4CD2-8F9B-EFC84F711370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5A1974C-132B-4CD2-8F9B-EFC84F711370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5A1974C-132B-4CD2-8F9B-EFC84F711370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE74164-CB45-4403-BE91-5D7C8A110E25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE74164-CB45-4403-BE91-5D7C8A110E25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE74164-CB45-4403-BE91-5D7C8A110E25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE74164-CB45-4403-BE91-5D7C8A110E25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,5 +67,6 @@ Global
 		{1F1A96F3-5EEC-4C4F-B84F-69EDF5EDFC0F} = {3AF1FE40-CF50-4F1E-924F-4D5137B710B1}
 		{D2F4F27E-8466-4024-B844-27E3FFACB48B} = {3AF1FE40-CF50-4F1E-924F-4D5137B710B1}
 		{3BED139F-693D-4ED6-8FD5-D40DCAF37514} = {26AFE9CB-1689-4EE6-9F3D-4F9D979FA93E}
+		{EFE74164-CB45-4403-BE91-5D7C8A110E25} = {3459ADE1-9D18-4651-8AD9-F52933F4B8D6}
 	EndGlobalSection
 EndGlobal

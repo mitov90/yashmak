@@ -1,7 +1,8 @@
 ﻿namespace Yashmak.Data
 {
-    using Yashmak.Data.Repositories;
-    using Yashmak.Models;
+    using Yashmak.Data.Common;
+    using Yashmak.Data.Common.Repository;
+    using Yashmak.Data.Models;
 
     public interface IYashmakData
     {

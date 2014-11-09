@@ -29,7 +29,7 @@
         {
             const string Username = "test@test.test";
 
-            var actual = FileSystemHelper.CreateFolder(Environment.CurrentDirectory, Username);
+            var actual = FileSystemHelper.CreateUserFolder(Environment.CurrentDirectory, Username);
 
             Assert.AreEqual(true, actual);
         }

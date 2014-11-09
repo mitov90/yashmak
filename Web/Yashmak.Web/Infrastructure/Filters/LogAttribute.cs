@@ -9,7 +9,7 @@
     using Ninject;
 
     using Yashmak.Data;
-    using Yashmak.Models;
+    using Yashmak.Data.Models;
 
     public class LogAttribute : ActionFilterAttribute
     {

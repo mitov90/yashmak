@@ -3,6 +3,9 @@
     using System.Data.Entity;
     using System.Linq;
 
+    using Yashmak.Data.Common;
+    using Yashmak.Data.Common.Repository;
+
     public class Repository<T> : IRepository<T>
         where T : class
     {
@@ -21,34 +24,54 @@
             this.set = context.Set<T>();
         }
 
-        public IQueryable<T> All()
+        public virtual IQueryable<T> All()
         {
-            return this.set;
+            return this.set.AsQueryable();
         }
 
-        public void Add(T entity)
+        public virtual T GetById(int id)
+        {
+            return this.set.Find(id);
+        }
+
+        public virtual void Add(T entity)
         {
             this.ChangeEntityState(entity, EntityState.Added);
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
             this.ChangeEntityState(entity, EntityState.Modified);
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             this.ChangeEntityState(entity, EntityState.Deleted);
         }
 
-        public void Detach(T entity)
+        public virtual void Delete(int id)
+        {
+            var entity = this.GetById(id);
+
+            if (entity != null)
+            {
+                this.Delete(entity);
+            }
+        }
+
+        public virtual void Detach(T entity)
         {
             this.ChangeEntityState(entity, EntityState.Detached);
         }
 
-        public void SaveChanges()
+        int IRepository<T>.SaveChanges()
         {
-            this.context.SaveChanges();
+            return this.context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            this.context.Dispose();
         }
 
         private void ChangeEntityState(T entity, EntityState state)

@@ -10,7 +10,7 @@
     using Owin;
 
     using Yashmak.Data;
-    using Yashmak.Models;
+    using Yashmak.Data.Models;
 
     public partial class Startup
     {

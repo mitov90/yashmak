@@ -1,11 +1,14 @@
-﻿namespace Yashmak.Data.Repositories
+﻿namespace Yashmak.Data.Common.Repository
 {
+    using System;
     using System.Linq;
 
-    public interface IRepository<T>
+    public interface IRepository<T> : IDisposable
         where T : class
     {
         IQueryable<T> All();
+
+        T GetById(int id);
 
         void Add(T entity);
 
@@ -13,8 +16,10 @@
 
         void Delete(T entity);
 
+        void Delete(int id);
+
         void Detach(T entity);
 
-        void SaveChanges();
+        int SaveChanges();
     }
 }

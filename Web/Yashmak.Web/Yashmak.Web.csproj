@@ -287,13 +287,17 @@
     <Content Include="Views\Files\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
+      <Project>{EFE74164-CB45-4403-BE91-5D7C8A110E25}</Project>
+      <Name>Yashmak.Data.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Data\Yashmak.Data\Yashmak.Data.csproj">
       <Project>{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}</Project>
       <Name>Yashmak.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Data\Yashmak.Models\Yashmak.Models.csproj">
+    <ProjectReference Include="..\..\Data\Yashmak.Models\Yashmak.Data.Models.csproj">
       <Project>{68658828-BEEE-404C-8DB7-E441D93D0D84}</Project>
-      <Name>Yashmak.Models</Name>
+      <Name>Yashmak.Data.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Yashmak.Common\Yashmak.Common.csproj">
       <Project>{C5A1974C-132B-4CD2-8F9B-EFC84F711370}</Project>
@@ -303,7 +307,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

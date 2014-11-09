@@ -10,7 +10,7 @@
     using Microsoft.Owin.Security;
 
     using Yashmak.Common;
-    using Yashmak.Models;
+    using Yashmak.Data.Models;
     using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.Models;
 
@@ -178,7 +178,7 @@
                 var result = await this.UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    FileSystemHelper.CreateUserFolder(user.UserName);
+                    FileSystemHelper.CreateUserFolder(Server.MapPath("~"), user.UserName);
                     await this.SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

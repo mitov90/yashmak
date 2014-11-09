@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
 
+    using Yashmak.Data.Common;
+    using Yashmak.Data.Common.Repository;
+    using Yashmak.Data.Models;
     using Yashmak.Data.Repositories;
-    using Yashmak.Models;
 
     public class YashmakData : IYashmakData
     {

@@ -1,4 +1,4 @@
-﻿namespace Yashmak.Models
+﻿namespace Yashmak.Data.Models
 {
     using System.Collections.Generic;
     using System.Security.Claims;

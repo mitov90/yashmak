@@ -11,7 +11,7 @@
     using Microsoft.Owin.Security;
 
     using Yashmak.Data;
-    using Yashmak.Models;
+    using Yashmak.Data.Models;
 
     public class EmailService : IIdentityMessageService
     {
