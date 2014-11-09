@@ -1,0 +1,40 @@
+﻿@using System.Globalization
+@model Yashmak.Web.Models.Directory.FileViewModel
+           
+<tr>
+    <td>
+        @{
+            if (Model.IsDirectory)
+            {
+                <span class="glyphicon glyphicon-folder-open"></span>
+            }
+            else
+            {
+                <span class="glyphicon glyphicon-file"></span>
+            }
+
+}
+    </td>
+    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files", new { fileId = Model.Id }, new AjaxOptions { UpdateTargetId = "files", HttpMethod = "GET", InsertionMode = InsertionMode.Replace })</td>
+    <td>@{
+            if (Model.IsDirectory)
+            {
+                <span>folder</span>
+            }
+            else
+            {
+                var index = Model.FileName.LastIndexOf('.');
+                if (index == -1)
+                {
+                    <span>binary</span>
+                }
+                else
+                {
+                    <span>@Model.FileName.Substring(index)</span>
+                }
+            }
+
+        }</td>
+    <td>@Html.DisplayFor(f => f.ModifiedOn)</td>
+    <td>@(Model.Size == 0 ? "-" : Model.Size.ToString(CultureInfo.InvariantCulture))</td>
+</tr>

@@ -1,0 +1,6 @@
+﻿@using System
+@model DateTime
+@{
+    var dif = DateTime.Now - Model;
+    <span>Before @dif.TotalDays days</span>
+}

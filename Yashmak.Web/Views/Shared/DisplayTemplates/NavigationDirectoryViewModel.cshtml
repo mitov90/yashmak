@@ -1,0 +1,12 @@
+﻿@model Yashmak.Web.Models.Directory.NavigationDirectoryViewModel
+           
+<li>
+    @Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
+    new { fileId = Model.Id },
+    new AjaxOptions
+    {
+        UpdateTargetId = "files",
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace
+    })
+</li>

@@ -1,5 +1,6 @@
 ﻿namespace Yashmak.Data.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +15,8 @@
         public string PathToFile { get; set; }
 
         public int Size { get; set; }
+
+        public DateTime ModifiedOn { get; set; }
 
         public bool IsDirectory { get; set; }
 

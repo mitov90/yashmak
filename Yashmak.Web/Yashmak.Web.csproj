@@ -227,6 +227,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Directory\DirectoryViewModel.cs" />
+    <Compile Include="Models\Directory\FileViewModel.cs" />
+    <Compile Include="Models\Directory\NavigationDirectoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -300,7 +303,10 @@
     <Content Include="Views\Files\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Files\CreateDirectory.cshtml" />
-    <Content Include="Views\Files\_ViewFolder.cshtml" />
+    <Content Include="Views\Shared\_ViewFolder.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FileViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\NavigationDirectoryViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
