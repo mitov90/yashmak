@@ -4,14 +4,14 @@
 
     using Microsoft.AspNet.Identity;
 
-    using Yashmak.Data;
+    using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
 
     public class FilesController : Controller
     {
-        private readonly IYashmakData dbContext;
+        private readonly IRepository<File> dbContext;
 
-        public FilesController(IYashmakData data)
+        public FilesController(IRepository<File> data)
         {
             this.dbContext = data;
         }
@@ -28,8 +28,8 @@
         {
             if (this.ModelState.IsValid)
             {
-                file.UserId = User.Identity.GetUserId();
-                this.dbContext.Files.Add(file);
+                file.UserId = this.User.Identity.GetUserId();
+                this.dbContext.Add(file);
                 this.dbContext.SaveChanges();
             }
 

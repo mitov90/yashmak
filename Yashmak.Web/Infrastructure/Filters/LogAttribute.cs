@@ -8,18 +8,14 @@
 
     using Ninject;
 
-    using Yashmak.Data;
+    using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
 
     public class LogAttribute : ActionFilterAttribute
     {
         [Inject]
-        public IYashmakDbContex Contex { get; set; }
+        public IRepository<Log> Contex { get; set; }
 
-        // public LogAttribute(IYashmakDbContex dbContex)
-        // {
-        // this.dbContex = dbContex;
-        // }
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var dateTime = DateTime.Now;
@@ -28,7 +24,7 @@
             var action = HttpContext.Current.Request.Url.LocalPath;
 
             var log = new Log() { Action = action, DateTime = dateTime, UserId = userId, Ip = ip };
-            this.Contex.Logs.Add(log);
+            this.Contex.Add(log);
             this.Contex.SaveChanges();
 
             base.OnActionExecuted(filterContext);

@@ -1,13 +1,14 @@
 using WebActivatorEx;
 
-using Yashmak.Web.App_Start;
+using Yashmak.Web;
 
 [assembly: PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: ApplicationShutdownMethod(typeof(NinjectWebCommon), "Stop")]
 
-namespace Yashmak.Web.App_Start
+namespace Yashmak.Web
 {
     using System;
+    using System.Data.Entity;
     using System.Web;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -17,6 +18,7 @@ namespace Yashmak.Web.App_Start
     using Ninject.Web.Common;
 
     using Yashmak.Data;
+    using Yashmak.Data.Common.Repository;
 
     public static class NinjectWebCommon
     {
@@ -68,8 +70,10 @@ namespace Yashmak.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IBindingRoot kernel)
         {
-            kernel.Bind<IYashmakData>().To<YashmakData>();
-            kernel.Bind<IYashmakDbContex>().To<YashmakDbContext>();
+            kernel.Bind<DbContext>().To<YashmakDbContext>();
+
+            kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
+            kernel.Bind(typeof(IDeletableEntityRepository<>)).To(typeof(DeletableEntityGenericRepository<>));
         }
     }
 }
