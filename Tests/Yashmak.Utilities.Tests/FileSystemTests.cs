@@ -10,20 +10,7 @@
     [TestClass]
     public class FileSystemTests
     {
-        [TestMethod]
-        public void UserFolder_OnCreating_ShouldCreate()
-        {
-            const string Username = "test@test.test";
 
-            if (Directory.Exists(Username))
-            {
-                Directory.Delete(Username);
-            }
-
-            var actual = FileSystemHelper.CreateUserFolder(Username);
-
-            Assert.AreEqual(true, actual);
-        }
         [TestMethod]
         public void Folder_OnCreating_ShouldCreate()
         {

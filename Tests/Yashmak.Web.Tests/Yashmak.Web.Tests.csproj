@@ -73,7 +73,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Web\Yashmak.Web\Yashmak.Web.csproj">
+    <ProjectReference Include="..\..\Yashmak.Web\Yashmak.Web.csproj">
       <Project>{3BED139F-693D-4ED6-8FD5-D40DCAF37514}</Project>
       <Name>Yashmak.Web</Name>
     </ProjectReference>
