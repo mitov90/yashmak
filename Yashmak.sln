@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Data.Common", "Data
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web", "Yashmak.Web\Yashmak.Web.csproj", "{3BED139F-693D-4ED6-8FD5-D40DCAF37514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web.Infrastructure", "Yashlamak.Web.Infrastructure\Yashmak.Web.Infrastructure.csproj", "{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web.Infrastructure", "Yashmak.Web.Infrastructure\Yashmak.Web.Infrastructure.csproj", "{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

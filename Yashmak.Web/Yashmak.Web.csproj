@@ -254,14 +254,12 @@
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.js" />
-    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
-    <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -301,6 +299,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Files\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Files\CreateDirectory.cshtml" />
+    <Content Include="Views\Files\_ViewFolder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
@@ -315,13 +315,13 @@
       <Project>{68658828-BEEE-404C-8DB7-E441D93D0D84}</Project>
       <Name>Yashmak.Data.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Yashlamak.Web.Infrastructure\Yashmak.Web.Infrastructure.csproj">
-      <Project>{a9d1ff74-f2e3-43a8-9cbe-8cb1db7fab9e}</Project>
-      <Name>Yashmak.Web.Infrastructure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Yashmak.Common\Yashmak.Common.csproj">
       <Project>{C5A1974C-132B-4CD2-8F9B-EFC84F711370}</Project>
       <Name>Yashmak.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Yashmak.Web.Infrastructure\Yashmak.Web.Infrastructure.csproj">
+      <Project>{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}</Project>
+      <Name>Yashmak.Web.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

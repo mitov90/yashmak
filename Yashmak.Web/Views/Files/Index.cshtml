@@ -1,24 +1,10 @@
 ﻿@using System.IO
 @using System.Web.WebPages
-@model Yashmak.Data.Models.File
 @{
     ViewBag.Title = "View";
+    ViewBag.IsAjaxRequest = Request.IsAjaxRequest();
 }
 
-<h2>View</h2>
-@{
-    using (Html.BeginForm("Index", "Files", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        <div>
-            @Html.DisplayNameFor(m => m.Filename)
-            @Html.EditorFor(m => m.Filename)
-        </div>
-        <div>
-            @Html.DisplayNameFor(m => m.IsDirectory)
-            @Html.EditorFor(m => m.IsDirectory)
-        </div>
-        <input type="submit"/>
-    }
-
-}
+<div id="container">
+    @Html.Action("ViewFolder", "Files")
+</div>

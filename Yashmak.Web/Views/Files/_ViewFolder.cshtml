@@ -1,0 +1,30 @@
+﻿@using System.IO
+@using System.Web.WebPages
+@model System.Collections.Generic.IEnumerable<Yashmak.Data.Models.File>
+
+
+<div id="files">
+    
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Library</a></li>
+        <li class="active">Data</li>
+    </ol>
+
+    @foreach (var file in Model)
+    {
+        <div class="row">
+            @Ajax.ActionLink(file.FileName, "ViewFolder", "Files", new { fileId = file.Id }, new AjaxOptions() { UpdateTargetId = "files", HttpMethod = "GET", InsertionMode = InsertionMode.Replace })
+            @file.IsDirectory
+            @{
+                if (file.Parent != null)
+                {
+                    <span>@file.Parent.FileName</span>
+                }
+
+            }
+        </div>
+    }
+
+    
+</div>
