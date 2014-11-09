@@ -1,4 +1,4 @@
-﻿namespace Yashmak.Data.Common
+﻿namespace Yashmak.Data.Common.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations.Schema;

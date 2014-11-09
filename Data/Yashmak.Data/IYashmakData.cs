@@ -1,6 +1,5 @@
 ﻿namespace Yashmak.Data
 {
-    using Yashmak.Data.Common;
     using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
 

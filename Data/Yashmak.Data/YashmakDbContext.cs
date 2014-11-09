@@ -6,7 +6,7 @@
 
     using Microsoft.AspNet.Identity.EntityFramework;
 
-    using Yashmak.Data.Common;
+    using Yashmak.Data.Common.Models;
     using Yashmak.Data.Migrations;
     using Yashmak.Data.Models;
 
@@ -38,8 +38,6 @@
             this.ApplyDeletableEntityRules();
             return base.SaveChanges();
         }
-
-
 
         private void ApplyAuditInfoRules()
         {

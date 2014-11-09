@@ -3,10 +3,8 @@
     using System;
     using System.Collections.Generic;
 
-    using Yashmak.Data.Common;
     using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
-    using Yashmak.Data.Repositories;
 
     public class YashmakData : IYashmakData
     {
@@ -70,7 +68,7 @@
                 return (IRepository<T>)this.repositories[typeOfModel];
             }
 
-            var type = typeof(Repository<T>);
+            var type = typeof(GenericRepository<T>);
 
             this.repositories.Add(typeOfModel, Activator.CreateInstance(type, this.context));
 

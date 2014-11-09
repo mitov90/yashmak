@@ -1,14 +1,14 @@
-﻿namespace Yashmak.Data.Repositories
+﻿namespace Yashmak.Data.Common.Repository
 {
+    using System.Data.Entity;
     using System.Linq;
 
-    using Yashmak.Data.Common;
-    using Yashmak.Data.Common.Repository;
+    using Yashmak.Data.Common.Models;
 
-    public class DeletableEntityRepository<T> : Repository<T>, IDeletableEntityRepository<T>
+    public class DeletableEntityGenericRepository<T> : GenericRepository<T>, IDeletableEntityRepository<T>
         where T : class, IDeletableEntity
     {
-        public DeletableEntityRepository(IYashmakDbContex context)
+        public DeletableEntityGenericRepository(DbContext context)
             : base(context)
         {
         }

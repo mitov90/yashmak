@@ -17,7 +17,7 @@
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
-
+            
             // Assert
             Assert.IsNotNull(result);
         }

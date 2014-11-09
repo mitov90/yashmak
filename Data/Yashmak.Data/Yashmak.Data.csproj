@@ -57,8 +57,6 @@
     <Compile Include="IYashmakData.cs" />
     <Compile Include="IYashmakDbContex.cs" />
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Repositories\DeletableEntityRepository.cs" />
-    <Compile Include="Repositories\Repository.cs" />
     <Compile Include="YashmakData.cs" />
     <Compile Include="YashmakDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

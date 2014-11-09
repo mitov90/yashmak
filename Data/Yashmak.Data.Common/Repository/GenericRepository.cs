@@ -1,24 +1,16 @@
-﻿namespace Yashmak.Data.Repositories
+﻿namespace Yashmak.Data.Common.Repository
 {
     using System.Data.Entity;
     using System.Linq;
 
-    using Yashmak.Data.Common;
-    using Yashmak.Data.Common.Repository;
-
-    public class Repository<T> : IRepository<T>
+    public class GenericRepository<T> : IRepository<T>
         where T : class
     {
-        private readonly IYashmakDbContex context;
+        private readonly DbContext context;
 
         private readonly IDbSet<T> set;
 
-        public Repository()
-            : this(new YashmakDbContext())
-        {
-        }
-
-        public Repository(IYashmakDbContex context)
+        public GenericRepository(DbContext context)
         {
             this.context = context;
             this.set = context.Set<T>();
