@@ -1,8 +1,11 @@
 ﻿@{
     ViewBag.Title = "View";
-    ViewBag.IsAjaxRequest = Request.IsAjaxRequest();
 }
 
 <div id="container">
     @Html.Action("ViewFolder", "Files")
 </div>
+
+@section scripts{
+    @Scripts.Render("~/Scripts/fileNode.select.js")
+}

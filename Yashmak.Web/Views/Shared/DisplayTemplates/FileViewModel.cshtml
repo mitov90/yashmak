@@ -1,7 +1,18 @@
 ﻿@using System.Globalization
 @model Yashmak.Web.Models.Directory.FileViewModel
-           
-<tr>
+<tr class="hidden">
+    <td>Download</td>
+    <td>
+        Manage permissions
+        Delete
+        Rename
+        Move
+        Copy
+    </td>
+    <td>Create folder</td>
+    <td>File Upload</td>
+</tr>
+<tr class="file-row">
     <td>
         @{
             if (Model.IsDirectory)
@@ -13,9 +24,16 @@
                 <span class="glyphicon glyphicon-file"></span>
             }
 
-}
+        }
     </td>
-    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files", new { fileId = Model.Id }, new AjaxOptions { UpdateTargetId = "files", HttpMethod = "GET", InsertionMode = InsertionMode.Replace })</td>
+    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
+            new { fileId = Model.Id },
+            new AjaxOptions { 
+                                UpdateTargetId = "files",
+                                HttpMethod = "GET",
+                                InsertionMode = InsertionMode.Replace 
+                            },
+            new {data_index=Model.Id})</td>
     <td>@{
             if (Model.IsDirectory)
             {

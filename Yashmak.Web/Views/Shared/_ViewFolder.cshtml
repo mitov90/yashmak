@@ -1,28 +1,32 @@
 ﻿@model Yashmak.Web.Models.Directory.DirectoryViewModel
 
 <div id="files">
+    <div class="row">
+        <ol class="breadcrumb">
+            @{
+                @Html.DisplayFor(x => x.NavigationModels)
+            }
+        </ol>
+    </div>
     
-    <ol class="breadcrumb">
-        @{
-            @Html.DisplayFor(x => x.NavigationModels)
-        }
-    </ol>
-
     
-    <table class="table table-condensed table-hover table-responsive table-striped">
-        <thead>
-            <tr>
-                <th> </th>
-                <th>Name</th>
-                <th>Kind</th>
-                <th>Modified</th>
-                <th>Size</th>
-            </tr>
-        </thead>
-        <tbody>
-            @Html.DisplayFor(x=>x.Files)
-        </tbody>
-    </table>
-
+    
+    <div class="row">
+        <table class="table table-responsive table-condensed table-hover table-striped">
+            <thead>
+                <tr>
+                    <th> </th>
+                    <th style ="width: 50%">Name </th>
+                    <th>Kind</th>
+                    <th>Modified</th>
+                    <th>Size</th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.DisplayFor(x => x.Files)
+            </tbody>
+        </table>
+    </div>
 
 </div>
+
