@@ -1,12 +1,18 @@
 ﻿@model int?
 @{
-    ViewBag.Title = "View";
+    ViewBag.Title = "Browse files";
+}
+
+@section styles{
+    @Styles.Render("~/Content/dropzone")
 }
 
 <div id="container">
     @Html.Action("ViewFolder", "Files", new { fileId = @Model })
 </div>
 
+
 @section scripts{
+    @Scripts.Render("~/bundles/dropzone")
     @Scripts.Render("~/Scripts/fileNode.select.js")
 }

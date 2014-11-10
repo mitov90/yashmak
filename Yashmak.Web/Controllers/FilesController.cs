@@ -28,25 +28,6 @@
             return this.View(fileId);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(File file)
-        {
-            if (this.ModelState.IsValid)
-            {
-                file.UserId = this.User.Identity.GetUserId();
-                this.dbContext.Add(file);
-                this.dbContext.SaveChanges();
-            }
-
-            return this.View(file);
-        }
-
-        public ActionResult CreateDirectory()
-        {
-            return this.View();
-        }
-
         public ActionResult ViewFolder(int? fileId)
         {
             var userId = this.HttpContext.User.Identity.GetUserId();

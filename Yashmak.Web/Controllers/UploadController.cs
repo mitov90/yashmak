@@ -9,6 +9,11 @@
     {
         private IRepository<File> repository;
 
+        public UploadController(IRepository<File> repository)
+        {
+            this.repository = repository;
+        }
+
         public ActionResult FileUpload(int filenodeid)
         {
             throw new System.NotImplementedException();
