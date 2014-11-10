@@ -23,9 +23,9 @@
             this.dbContext = data;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? fileId)
         {
-            return this.View();
+            return this.View(fileId);
         }
 
         [HttpPost]
@@ -66,6 +66,25 @@
             return this.PartialView("_ViewFolder", dirView);
         }
 
+        public ActionResult Download(int fileNodeId)
+        {
+            var fileNode = this.dbContext.GetById(fileNodeId);
+            if (fileNode == null)
+            {
+                return this.Content("Error! Not existing file, Redirecting to Err page");
+            }
+
+            // TODO: Check for permissions
+            if (fileNode.IsDirectory)
+            {
+                //return zip stream for folder
+            }
+
+                //return file
+
+            return this.Content(fileNode.FileName);
+        }
+
         [NonAction]
         private static IEnumerable<NavigationDirectoryViewModel> GetPath(File fileNode)
         {
@@ -81,5 +100,7 @@
             list.Reverse();
             return list;
         }
+
+
     }
 }

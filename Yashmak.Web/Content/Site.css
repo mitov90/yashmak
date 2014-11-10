@@ -9,6 +9,7 @@
     padding-left: 15px;
     padding-right: 15px;
 }
+a { text-decoration:none }
 
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 

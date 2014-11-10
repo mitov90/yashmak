@@ -1,9 +1,10 @@
-﻿@{
+﻿@model int?
+@{
     ViewBag.Title = "View";
 }
 
 <div id="container">
-    @Html.Action("ViewFolder", "Files")
+    @Html.Action("ViewFolder", "Files", new { fileId = @Model })
 </div>
 
 @section scripts{

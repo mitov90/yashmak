@@ -1,13 +1,13 @@
 ﻿@using System.Globalization
 @model Yashmak.Web.Models.Directory.FileViewModel
 <tr class="hidden">
-    <td>Download</td>
+    <td></td>
     <td>
-        Manage permissions
-        Delete
-        Rename
-        Move
-        Copy
+        @Html.ActionLink("Download", "Download", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-cloud-download" })
+        @Html.ActionLink("Share", "Share", "Permission", new { fileNodeId = Model.Id }, new { @class = "fa fa-share" })
+        @Html.ActionLink("Delete", "Delete", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-remove" })
+        @Html.ActionLink("Rename", "Rename", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-pencil" })
+        @Html.ActionLink("Move", "Move", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-folder-open" })
     </td>
     <td>Create folder</td>
     <td>File Upload</td>
@@ -26,7 +26,14 @@
 
         }
     </td>
-    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files", new { fileId = Model.Id }, new AjaxOptions { UpdateTargetId = "files", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { data_index = Model.Id })</td>
+    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
+    new { fileId = Model.Id }, 
+    new AjaxOptions {
+        UpdateTargetId = "files", 
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        OnComplete = "new function(){OnFolderChange(" + Model.Id + ")}"
+    })</td>
     <td>@{
             if (Model.IsDirectory)
             {
