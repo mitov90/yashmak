@@ -10,13 +10,13 @@
     </div>
     
     <input type="hidden" id="curFolderId" value="null"/>
-    @Html.ActionLink("Upload","FileUpload","Upload",new {fileNodeId = "null"}, new{@class = "dynamic-change-id"})
-    @Ajax.ActionLink("New Folder", "CreateFolder", "Directory", new { fileNodeId = 0 }, new AjaxOptions
-                                                                                                 {
-                                                                                                     UpdateTargetId = "files",
-                                                                                                     InsertionMode = InsertionMode.Replace,
-                                                                                                     HttpMethod = "GET"
-                                                                                                 }, new { @class = "fa fa-folder-o dynamic-change-id" })
+    @Ajax.ActionLink("Upload", "FileUpload", "Upload", new { fileNodeId = 0 },
+    new AjaxOptions { UpdateTargetId = "files", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" },
+    new { @class = "fa fa-upload fa-2x dynamic-change-id" })
+    @Ajax.ActionLink("New Folder", "CreateFolder", "Directory",
+    new { fileNodeId = 0 },
+    new AjaxOptions { UpdateTargetId = "files", InsertionMode = InsertionMode.Replace, HttpMethod = "GET" },
+    new { @class = "fa fa-folder-o fa-2x dynamic-change-id" })
     
     <div class="row">
         <table class="table table-responsive table-condensed table-hover table-striped">
@@ -36,4 +36,3 @@
     </div>
 
 </div>
-

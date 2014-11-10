@@ -45,6 +45,7 @@
             {
                 return this.RedirectToAction("Index", "Files", new { fileId = directory.Id });
             }
+
             var userId = this.User.Identity.GetUserId();
             var newDir = new File
                              {
