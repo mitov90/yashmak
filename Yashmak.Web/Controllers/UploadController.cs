@@ -2,9 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using System.Web;
     using System.Web.Mvc;
 
     using Microsoft.AspNet.Identity;
@@ -13,12 +11,11 @@
     using MvcFileUploader.Models;
 
     using Yashmak.Data.Common.Repository;
-
-    using File = Yashmak.Data.Models.File;
+    using Yashmak.Data.Models;
 
     public class UploadController : Controller
     {
-        private IRepository<File> repository;
+        private readonly IRepository<File> repository;
 
         public UploadController(IRepository<File> repository)
         {
@@ -34,8 +31,9 @@
         [HttpPost]
         public ActionResult FileUpload(int? filenodeid, string test)
         {
+            filenodeid = filenodeid == 0 ? null : filenodeid;
             var username = this.User.Identity.Name;
-            var savePath = Server.MapPath(string.Format(@"~/App_Data/{0}/", username));
+            var savePath = this.Server.MapPath(string.Format(@"~/App_Data/{0}/", username));
             var userId = this.User.Identity.GetUserId();
             var userFilesInCurrentDir = this.repository.All().Where(d => d.ParentId == filenodeid && d.UserId == userId);
 
@@ -45,24 +43,28 @@
             {
                 var curFile = i;
                 var curFileName = this.Request.Files[curFile].FileName;
+                var saveFileName = Guid.NewGuid().ToString();
                 var st = FileSaver.StoreFile(
                     x =>
-                    {
-                        x.File = this.Request.Files[curFile];
+                        {
+                            x.File = this.Request.Files[curFile];
 
-                        // note how we are adding an additional value to be posted with delete request
-                        // and giving it the same value posted with upload
-                        x.DeleteUrl = this.Url.Action("DeleteFile", new { filenodeid = filenodeid });
-                        x.StorageDirectory = savePath;
-                        x.UrlPrefix = string.Format("/App_Data/{0}", username);// this is used to generate the relative url of the file
-                        // overriding defaults
-                        x.FileName = curFileName;
-                        
-                        // default is filename suffixed with filetimestamp
-                        x.ThrowExceptions = true;
+                            // note how we are adding an additional value to be posted with delete request
+                            // and giving it the same value posted with upload
+                            x.DeleteUrl = this.Url.Action("DeleteFile", new { filenodeid = filenodeid });
+                            x.StorageDirectory = savePath;
+                            x.UrlPrefix = string.Format("/App_Data/{0}", username);
+                                
+                                // this is used to generate the relative url of the file
 
-                        // default is false, if false exception message is set in error property
-                    });
+                            // overriding defaults
+                            x.FileName = saveFileName;
+
+                            // default is filename suffixed with filetimestamp
+                            x.ThrowExceptions = true;
+
+                            // default is false, if false exception message is set in error property
+                        });
 
                 if (userFilesInCurrentDir.Any(f => f.FileName == curFileName))
                 {
@@ -70,42 +72,42 @@
                 }
                 else
                 {
-                    this.repository.Add(new File
-                                            {
-                                                FileName = curFileName,
-                                                IsDirectory = false,
-                                                ModifiedOn = DateTime.Now,
-                                                ParentId = filenodeid,
-                                                UserId = userId,
-                                                Size = st.size,
-                                                PathToFile = st.SavedFileName
-                                            });
+                    this.repository.Add(
+                        new File
+                            {
+                                FileName = curFileName, 
+                                IsDirectory = false, 
+                                ModifiedOn = DateTime.Now, 
+                                ParentId = filenodeid, 
+                                UserId = userId, 
+                                Size = st.size, 
+                                PathToFile = st.SavedFileName
+                            });
                     this.repository.SaveChanges();
                 }
 
                 statuses.Add(st);
             }
 
-            //statuses.ForEach(x => x.thumbnailUrl = x.url + "?width=80&height=80");
-            //statuses.ForEach(x => x.url = this.Url.Action("DownloadFile", new { fileUrl = x.url, mimetype = x.type }));
-            
+            // statuses.ForEach(x => x.thumbnailUrl = x.url + "?width=80&height=80");
+            // statuses.ForEach(x => x.url = this.Url.Action("DownloadFile", new { fileUrl = x.url, mimetype = x.type }));
             if (filenodeid == 13)
             {
                 var rnd = new Random();
                 statuses.ForEach(
                     x =>
-                    {
-                        // setting the error property removes the deleteUrl, thumbnailUrl and url property values
-                        x.error = rnd.Next(0, 2) > 0
-                                      ? "We do not have any entity with unlucky Id : '13'"
-                                      : string.Format("Your file size is {0} bytes which is un-acceptable", x.size);
-
-                        // delete file by using FullPath property
-                        if (System.IO.File.Exists(x.FullPath))
                         {
-                            System.IO.File.Delete(x.FullPath);
-                        }
-                    });
+                            // setting the error property removes the deleteUrl, thumbnailUrl and url property values
+                            x.error = rnd.Next(0, 2) > 0
+                                          ? "We do not have any entity with unlucky Id : '13'"
+                                          : string.Format("Your file size is {0} bytes which is un-acceptable", x.size);
+
+                            // delete file by using FullPath property
+                            if (System.IO.File.Exists(x.FullPath))
+                            {
+                                System.IO.File.Delete(x.FullPath);
+                            }
+                        });
             }
 
             var viewresult = this.Json(new { files = statuses });
@@ -149,6 +151,7 @@
             {
                 return File(filePath, mimetype);
             }
+
             return new HttpNotFoundResult("File not found");
         }
     }

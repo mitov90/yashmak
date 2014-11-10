@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title in @Model.FileName</h2>
 @using (Html.BeginForm("CreateFolder", "Directory",FormMethod.Post))
 {
-    @Html.ValidationSummary();
+    @Html.ValidationSummary("",new{@class="text-danger"});
     @Html.AntiForgeryToken();
     <input type="text" required="required" name="FileName" id="FileName" placeholder="Folder Name"/>
     <input type="submit" name="CreateFolder" value="Create"/>
