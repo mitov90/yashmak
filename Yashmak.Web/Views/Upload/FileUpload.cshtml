@@ -1,0 +1,16 @@
+﻿@using MvcFileUploader.HtmlHelper
+@using MvcFileUploader.Models
+@model int?
+
+@{
+    ViewBag.Title = "File Drag & Drop Upload";
+}
+
+
+@(Html.MvcFileUpload()
+      .UploadAt(Url.Action("FileUpload"))
+      .WithMaxFileSize(50000000) // 50 MB
+      .UIStyle(UploadUI.Bootstrap)
+      .MaxNumberOfFiles(10)
+      .AddFormField("filenodeid", @Model.ToString())
+      .RenderInline())

@@ -1,13 +1,15 @@
-﻿@using System
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - My ASP.NET Application</title>
+        <title>@ViewBag.Title - Yashmak</title>
         @Styles.Render("~/Content/css")
         @Styles.Render("~/Content/site")
-        @RenderSection("styles", false)
+        @RenderSection("styles", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,15 +37,9 @@
         <div class="container body-content">
             @RenderBody()
             <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <footer class="panel-footer panel text-center">
+                <p><a href="http://github.com/mitov90" class=" fa fa-github fa-3x"></a></p>
             </footer>
         </div>
-        
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-
-
     </body>
 </html>
