@@ -17,23 +17,16 @@
         @{
             if (Model.IsDirectory)
             {
-                <span class="glyphicon glyphicon-folder-open"></span>
+                <span class="fa fa-folder"></span>
             }
             else
             {
-                <span class="glyphicon glyphicon-file"></span>
+                <span class="fa fa-file-text"></span>
             }
 
         }
     </td>
-    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
-            new { fileId = Model.Id },
-            new AjaxOptions { 
-                                UpdateTargetId = "files",
-                                HttpMethod = "GET",
-                                InsertionMode = InsertionMode.Replace 
-                            },
-            new {data_index=Model.Id})</td>
+    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files", new { fileId = Model.Id }, new AjaxOptions { UpdateTargetId = "files", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }, new { data_index = Model.Id })</td>
     <td>@{
             if (Model.IsDirectory)
             {
