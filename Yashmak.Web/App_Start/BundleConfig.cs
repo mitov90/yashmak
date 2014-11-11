@@ -18,8 +18,8 @@
 
             bundles.Add(
                 new StyleBundle("~/Content/css").Include(
-                    "~/Content/bootstrap.css", 
-                    "~/Content/bootstrap.flatly.css", 
+                    "~/Content/bootstrap.css",
+                    "~/Content/bootstrap.flatly.css",
                     "~/Content/font-awesome.css"));
         }
 
@@ -30,10 +30,16 @@
                     "~/Scripts/jquery-{version}.js", 
                     "~/Scripts/jquery.unobtrusive-ajax.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include("~/Scripts/jquery.validate*"));
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval")
+                   .Include("~/Scripts/jquery.validate*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui")
+                   .Include("~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(
-                new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts/bootstrap.js", "~/Scripts/respond.js"));
+                new ScriptBundle("~/bundles/bootstrap").Include(
+                    "~/Scripts/bootstrap.js",
+                    "~/Scripts/respond.js"));
         }
     }
 }

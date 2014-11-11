@@ -1,10 +1,11 @@
 ﻿namespace Yashmak.Data.Models
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class File
+    using Yashmak.Data.Common.Models;
+
+    public class File : DeletableEntity
     {
         [Key]
         public int Id { get; set; }
@@ -15,8 +16,6 @@
         public string PathToFile { get; set; }
 
         public int Size { get; set; }
-
-        public DateTime ModifiedOn { get; set; }
 
         public bool IsDirectory { get; set; }
 

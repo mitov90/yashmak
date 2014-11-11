@@ -2,11 +2,11 @@
            
 <li>
     @Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
-    new { fileId = Model.Id },
-    new AjaxOptions
-    {
-        UpdateTargetId = "files",
-        HttpMethod = "GET",
-        InsertionMode = InsertionMode.Replace
-    })
+                        new { filenodeid = Model.Id },
+                        new AjaxOptions
+                        {
+                            UpdateTargetId = "files",
+                            HttpMethod = "GET",
+                            InsertionMode = InsertionMode.Replace
+                        })
 </li>

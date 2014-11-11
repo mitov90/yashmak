@@ -18,7 +18,7 @@
 
         public int Size { get; set; }
 
-        public DateTime ModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         public bool IsDirectory { get; set; }
     }

@@ -5,7 +5,7 @@
     <td>
         @Html.ActionLink("Download", "Download", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-cloud-download" })
         @Html.ActionLink("Share", "Share", "Permission", new { fileNodeId = Model.Id }, new { @class = "fa fa-share" })
-        @Html.ActionLink("Delete", "Delete", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-remove" })
+        @Html.ActionLink("Delete", "Delete", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-remove deleteLink" })
         @Html.ActionLink("Rename", "Rename", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-pencil" })
         @Html.ActionLink("Move", "Move", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-folder-open" })
     </td>
@@ -24,16 +24,16 @@
                 <span class="fa fa-file-text fa-2x"></span>
             }
 
-}
+        }
     </td>
     <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
-    new { fileId = Model.Id }, 
-    new AjaxOptions {
-        UpdateTargetId = "files", 
-        HttpMethod = "GET",
-        InsertionMode = InsertionMode.Replace,
-        OnComplete = "new function(){OnFolderChange(" + Model.Id + ")}"
-    })</td>
+            new { filenodeid = Model.Id }, 
+            new AjaxOptions {
+                UpdateTargetId = "files", 
+                HttpMethod = "GET",
+                InsertionMode = InsertionMode.Replace,
+                OnComplete = "new function(){OnFolderChange(" + Model.Id + ")}"
+            })</td>
     <td>@{
             if (Model.IsDirectory)
             {

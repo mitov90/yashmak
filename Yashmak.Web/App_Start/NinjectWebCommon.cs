@@ -74,6 +74,7 @@ namespace Yashmak.Web
 
             kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
             kernel.Bind(typeof(IDeletableEntityRepository<>)).To(typeof(DeletableEntityGenericRepository<>));
+
         }
     }
 }

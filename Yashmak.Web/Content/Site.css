@@ -24,3 +24,7 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.deleteLink {
+    color: deeppink;
+}

@@ -21,3 +21,32 @@ function OnFolderChange(fileNodeId) {
     });
 }
 
+// Modal dialog to confirm action
+$(document).ready( function () {
+    $("#dialog-confirm").dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        height:180,
+    });
+
+    $(".deleteLink").click(function(e) {
+        e.preventDefault();
+        var targetUrl = $(this).attr("href");
+
+        $("#dialog-confirm").dialog({
+            buttons : {
+                "Confirm" : function() {
+                    window.location.href = targetUrl;
+                },
+                "Cancel" : function() {
+                    $(this).dialog("close");
+                }
+            },
+
+        });
+
+        $("#dialog-confirm").dialog("open");
+    });
+
+});

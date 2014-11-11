@@ -12,20 +12,20 @@
 
     public class DirectoryController : Controller
     {
-        private readonly IRepository<File> repository;
+        private readonly IDeletableEntityRepository<File> repository;
 
-        public DirectoryController(IRepository<File> repository)
+        public DirectoryController(IDeletableEntityRepository<File> repository)
         {
             this.repository = repository;
         }
 
-        public ActionResult CreateFolder(int filenodeid)
+        public ActionResult CreateFolder(int? filenodeid)
         {
             var viewModel = new NavigationDirectoryViewModel { Id = null, FileName = "Home" };
-            if (filenodeid != 0)
+            if (filenodeid != 0 && filenodeid != null)
             {
                 viewModel.Id = filenodeid;
-                var dir = this.repository.GetById(filenodeid);
+                var dir = this.repository.GetById((int)filenodeid);
                 if (dir.UserId != this.User.Identity.GetUserId())
                 {
                     this.RedirectToAction("Index", "Files");
@@ -68,7 +68,7 @@
             this.repository.Add(newDir);
             this.repository.SaveChanges();
 
-            return this.RedirectToAction("Index", "Files", new { fileId = directory.Id });
+            return this.RedirectToAction("Index", "Files", new { filenodeid = directory.Id });
         }
     }
 }
