@@ -27,5 +27,10 @@
         public string UserId { get; set; }
 
         public virtual AppUser User { get; set; }
+
+        public int? PermissionId { get; set; }
+
+        [ForeignKey("PermissionId")]
+        public virtual Permission Permission { get; set; }
     }
 }

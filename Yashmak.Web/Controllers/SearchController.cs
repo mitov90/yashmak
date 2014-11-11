@@ -20,6 +20,9 @@
             this.repository = repository;
         }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Search(string query)
         {
             var userId = this.User.Identity.GetUserId();

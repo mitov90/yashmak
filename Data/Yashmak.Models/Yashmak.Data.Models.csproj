@@ -46,10 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessType.cs" />
     <Compile Include="File.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Permission.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppUser.cs" />
+    <Compile Include="ShareName.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Yashmak.Data.Common\Yashmak.Data.Common.csproj">

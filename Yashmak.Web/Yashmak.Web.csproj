@@ -241,6 +241,7 @@
     <Compile Include="Models\Directory\FileViewModel.cs" />
     <Compile Include="Models\Directory\NavigationDirectoryViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Permission\PermissionViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -388,6 +389,8 @@
     <Content Include="Views\Upload\FileUpload.cshtml" />
     <Content Include="Views\Shared\_MvcFileUpload.cshtml" />
     <Content Include="Views\Search\Search.cshtml" />
+    <Content Include="Views\Permissions\Share.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">

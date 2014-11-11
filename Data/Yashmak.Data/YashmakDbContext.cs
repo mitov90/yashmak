@@ -15,10 +15,15 @@
         public YashmakDbContext()
             : base("name=YashmakContext")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
         }
 
         public virtual IDbSet<File> Files { get; set; }
+
+        public virtual IDbSet<ShareName> ShareNames { get; set; }
+
+        public virtual IDbSet<Permission> Permissions { get; set; }
 
         public virtual IDbSet<Log> Logs { get; set; }
 
@@ -46,7 +51,8 @@
                 this.ChangeTracker.Entries()
                     .Where(
                         e =>
-                        e.Entity is IAuditInfo && ((e.State == EntityState.Added) || (e.State == EntityState.Modified))))
+                        e.Entity is IAuditInfo &&
+                        ((e.State == EntityState.Added) || (e.State == EntityState.Modified))))
             {
                 var entity = (IAuditInfo)entry.Entity;
 

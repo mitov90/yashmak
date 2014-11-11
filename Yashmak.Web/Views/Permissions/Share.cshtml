@@ -1,0 +1,27 @@
+﻿@model Yashmak.Web.Models.Permission.PermissionViewModel
+
+@{
+    ViewBag.Title = "Change Permissions for [" + @Model.FileName + "]";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Share", "Permissions", FormMethod.Post, new { @class = "form-horizontal col-md-6" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label for="access-id">Type permission:</label>
+        @Html.EnumDropDownListFor(m => m.AccessType, new { @class = "form-control", id = "access-id", value = @Model.AccessType })
+    </div>
+    <div class="form-group" id="custom-permission">
+        <label for="people-addresses">Enter E-mail address to share with:</label>
+        @Html.TextAreaFor(m => m.People, new { @class = "form-control", id ="people-addresses" , value = @Model.People })
+    </div>
+    <input type="hidden" name="FileName" value="@Model.FileName" />
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="submit" name="submit" value="Change" class="btn btn-warning btn-sm pull-right"/>
+}
+
+@section scripts{
+    @Scripts.Render("~/Scripts/fileNode.select.js")
+}

@@ -50,3 +50,18 @@ $(document).ready( function () {
     });
 
 });
+
+// 
+
+console.log($("#access-id"))
+if ($("#access-id").val() != 1) {
+    $("#custom-permission").hide();
+}
+    $("#access-id").change(function (e) {
+        console.log(e)
+        if ($("#access-id").val() == 1) {
+            $("#custom-permission").show();
+        } else {
+            $("#custom-permission").hide();
+        }
+    })

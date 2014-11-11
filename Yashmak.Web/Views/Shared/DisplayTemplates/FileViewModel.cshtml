@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
 @model Yashmak.Web.Models.Directory.FileViewModel
-<tr class="hidden">
+<tr class="hidden info">
     <td></td>
     <td>
         @Html.ActionLink("Download", "Download", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-cloud-download" })
@@ -9,8 +9,9 @@
         @Html.ActionLink("Rename", "Rename", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-pencil" })
         @Html.ActionLink("Move", "Move", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-folder-open" })
     </td>
-    <td>Create folder</td>
-    <td>File Upload</td>
+    <td></td>
+    <td></td>
+    <td></td>
 </tr>
 <tr class="file-row">
     <td>
