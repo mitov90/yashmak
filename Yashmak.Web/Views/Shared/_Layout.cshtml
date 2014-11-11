@@ -26,19 +26,28 @@
                         @if (Request.IsAuthenticated)
                         {
                             <li>@Html.ActionLink("Files", "Index", "Files")</li>
+                            <li>
+                                @using (Html.BeginForm("Search", "Search", FormMethod.Post, new { @class = "navbar-form navbar-right", role = "search" }))
+                                {
+                                    <div class="form-group">
+                                        <input type="text" name="query" class="form-control" placeholder="Search files">
+                                    </div>
+                                    <button type="submit" class="btn btn-default"><span class="fa fa-search"></span></button>
+                                }
+                            </li>
                         }
                     </ul>
                     @Html.Partial("_LoginPartial")
                 </div>
             </div>
         </div>
-        <div class="container body-content">
+        <div class="container body-content" id="main-content">
             @RenderBody()
-            <hr />
-            <footer class="panel-footer panel text-center">
-                <p><a href="http://github.com/mitov90" class="fa fa-github fa-3x"></a></p>
-            </footer>
         </div>
+        <hr />
+        <footer class="panel-footer panel text-center">
+            <p><a href="http://github.com/mitov90" class="fa fa-github fa-3x"></a></p>
+        </footer>
         @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)

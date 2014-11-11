@@ -1,0 +1,18 @@
+﻿@model IQueryable<Yashmak.Web.Models.Directory.FileViewModel>
+
+@{
+    ViewBag.Title = "Search result";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div id="files">
+    <table>
+        @Html.DisplayForModel(Model)
+    </table>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/Scripts/fileNode.select.js")
+}
