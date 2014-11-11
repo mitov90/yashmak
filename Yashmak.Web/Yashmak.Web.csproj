@@ -391,6 +391,7 @@
     <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\Permissions\Share.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
+    <Content Include="Views\Files\Download.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">

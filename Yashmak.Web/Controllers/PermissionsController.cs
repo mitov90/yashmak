@@ -106,40 +106,12 @@
 
             var permission = new Permission { AccessType = AccessType.Private, Id = fileNode.Id };
 
-            // authorize owner
-            var autorizeOwner = new ShareName { Username = fileNode.User.UserName };
-            this.context.ShareNames.Add(autorizeOwner);
-            permission.AuthorizedUsers.Add(autorizeOwner);
-
             fileNode.Permission = permission;
             this.context.Permissions.Add(permission);
             this.context.SaveChanges();
             return permission;
         }
 
-        [NonAction]
-        private Permission GetPermissionForId(File fileNode)
-        {
-            Permission permission;
-            while (true)
-            {
-                if (fileNode.Permission != null)
-                {
-                    permission = fileNode.Permission;
-                    break;
-                }
 
-                if (fileNode.ParentId == null)
-                {
-                    permission = fileNode.Permission;
-                    break;
-                }
-
-                fileNode = fileNode.Parent;
-            }
-
-            return permission ??
-                   (new Permission { AccessType = AccessType.Private, Id = fileNode.Id });
-        }
     }
 }

@@ -71,11 +71,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileSystemHelper.cs" />
+    <Compile Include="MimeAssistant.cs" />
+    <Compile Include="PermissionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
+      <Project>{EFE74164-CB45-4403-BE91-5D7C8A110E25}</Project>
+      <Name>Yashmak.Data.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Yashmak.Models\Yashmak.Data.Models.csproj">
+      <Project>{68658828-BEEE-404C-8DB7-E441D93D0D84}</Project>
+      <Name>Yashmak.Data.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

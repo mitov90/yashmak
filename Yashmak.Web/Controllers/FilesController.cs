@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
+    using System.IO;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -12,9 +13,12 @@
 
     using Microsoft.AspNet.Identity;
 
+    using Yashmak.Common;
     using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
     using Yashmak.Web.Models.Directory;
+
+    using File = Yashmak.Data.Models.File;
 
     public class FilesController : Controller
     {
@@ -46,8 +50,8 @@
 
             var dirView = new DirectoryViewModel
                 {
-                    Files = files,
-                    NavigationModels = navView,
+                    Files = files, 
+                    NavigationModels = navView, 
                     FileNodeId = filenodeid
                 };
 
@@ -75,28 +79,40 @@
 
             this.repository.SaveChanges();
 
-            return this.RedirectToAction(
-                "Index", 
-                "Files", 
-                new { filenodeid = fileNode.ParentId });
+            return this.RedirectToAction("Index", "Files", new { filenodeid = fileNode.ParentId });
         }
 
         public ActionResult Download(int fileNodeId)
         {
+            var curUserId = this.User.Identity.GetUserId();
+            var curUserName = this.User.Identity.Name;
             var fileNode = this.repository.GetById(fileNodeId);
             if (fileNode == null)
             {
-                return this.Content("Error! Not existing file, Redirecting to Err page");
+                return this.Json(new { message = "Not existing file, Redirecting to Err page" });
             }
 
-            // TODO: Check for permissions
-            if (fileNode.IsDirectory)
+            if (PermissionManager.CheckPermission(fileNode, curUserId, curUserName))
             {
-                // return zip stream for folder
+                if (!fileNode.IsDirectory)
+                {
+                    // Download file
+                    var pathToFile =
+                        this.Server.MapPath(
+                            "~/App_Data/" + fileNode.User.UserName + "/" + fileNode.PathToFile);
+                    var stream = new FileStream(pathToFile, FileMode.Open);
+                    return File(
+                        stream, 
+                        MimeAssistant.GetMimeType(fileNode.FileName), 
+                        fileNode.FileName);
+                }
+                else
+                {
+                    // return zip stream for folder
+                }
             }
 
-            // return file
-            return this.Content(fileNode.FileName);
+            return this.Json(new { message = "Not authorized, Access denied!" });
         }
 
         [NonAction]
