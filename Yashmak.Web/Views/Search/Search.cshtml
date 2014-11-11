@@ -2,15 +2,34 @@
 
 @{
     ViewBag.Title = "Search result";
+
+    if (Model.Any())
+    {
+        <h2>@ViewBag.Title</h2>
+
+        <div id="files">
+            <table class="table table-responsive table-condensed table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th> </th>
+                        <th style="width: 50%">Name </th>
+                        <th>Kind</th>
+                        <th>Modified</th>
+                        <th>Size</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @Html.DisplayForModel(Model)
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <h2> Bad luck, no result, pay for pro to restore deleted files</h2>
+    }
+
 }
-
-<h2>@ViewBag.Title</h2>
-
-<div id="files">
-    <table>
-        @Html.DisplayForModel(Model)
-    </table>
-</div>
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryui")
