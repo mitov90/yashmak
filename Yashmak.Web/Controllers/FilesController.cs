@@ -44,12 +44,17 @@
                     .Project()
                     .To<FileViewModel>();
 
-            var dirView = new DirectoryViewModel { Files = files, NavigationModels = navView, FileNodeId = filenodeid};
-            
+            var dirView = new DirectoryViewModel
+                {
+                    Files = files,
+                    NavigationModels = navView,
+                    FileNodeId = filenodeid
+                };
+
             return this.PartialView("_ViewFolder", dirView);
         }
 
-        public ActionResult Delete(int? filenodeid)
+        public ActionResult Delete(int? filenodeid, string fileUrl)
         {
             if (filenodeid == null || filenodeid == 0)
             {
