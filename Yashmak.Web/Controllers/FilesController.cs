@@ -15,7 +15,7 @@
 
     using Yashmak.Common;
     using Yashmak.Data.Common.Repository;
-    using Yashmak.Data.Models;
+    using Yashmak.Web.Models;
     using Yashmak.Web.Models.Directory;
 
     using File = Yashmak.Data.Models.File;
@@ -86,7 +86,7 @@
         {
             var curUserId = this.User.Identity.GetUserId();
             var curUserName = this.User.Identity.Name;
-            var fileNode = this.repository.GetById(fileNodeId);
+            var fileNode = this.repository.All().FirstOrDefault(f => f.Id == fileNodeId);
             if (fileNode == null)
             {
                 return this.Json(new { message = "Not existing file, Redirecting to Err page" });
@@ -106,10 +106,27 @@
                         MimeAssistant.GetMimeType(fileNode.FileName), 
                         fileNode.FileName);
                 }
-                else
-                {
-                    // return zip stream for folder
-                }
+
+                var potentialDownloads =
+                    this.repository.All()
+                        .Include(f => f.Permission)
+                        .Where(f => f.ParentId == fileNodeId && (!f.IsDirectory));
+
+                var resultFilePath = (from potentialDownload in potentialDownloads
+                                      where
+                                          PermissionManager.CheckPermission(
+                                              potentialDownload, 
+                                              curUserId, 
+                                              curUserName)
+                                      select
+                                          this.Server.MapPath(
+                                              "~/App_Data/" + fileNode.User.UserName + "/" +
+                                              potentialDownload.PathToFile)).ToList();
+
+                var zip = new ZipResult(resultFilePath) { FileName = fileNode.FileName + ".zip" };
+                return zip;
+
+                // return zip stream for folder
             }
 
             return this.Json(new { message = "Not authorized, Access denied!" });
