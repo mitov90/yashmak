@@ -15,8 +15,8 @@
 
     using Yashmak.Common;
     using Yashmak.Data.Common.Repository;
+    using Yashmak.Web.Infrastructure.ActionResults;
     using Yashmak.Web.Infrastructure.Filters;
-    using Yashmak.Web.Models;
     using Yashmak.Web.Models.Directory;
 
     using File = Yashmak.Data.Models.File;
@@ -65,14 +65,14 @@
         {
             if (filenodeid == null || filenodeid == 0)
             {
-                return this.Content("Don't try silly things!");
+                return this.Json("Don't try silly things!");
             }
 
             var fileNode = this.repository.GetById((int)filenodeid);
 
             if (fileNode.UserId != this.User.Identity.GetUserId())
             {
-                return this.Content("You're trying to delete things that not belong to you!");
+                return this.Json("You're trying to delete things that not belong to you!");
             }
 
             fileNode.IsDeleted = true;
@@ -83,6 +83,52 @@
             this.repository.SaveChanges();
 
             return this.RedirectToAction("Index", "Files", new { filenodeid = fileNode.ParentId });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Rename(FileViewModel fileModel)
+        {
+            var fileNode = this.repository.All().FirstOrDefault(f => f.Id == fileModel.Id);
+            if (fileNode == null)
+            {
+                this.ModelState.AddModelError(string.Empty, "No such file");
+                return this.View(fileModel);
+            }
+
+            if (fileNode.UserId != this.User.Identity.GetUserId())
+            {
+                return this.Json("You're trying to delete things that not belong to you!");
+            }
+
+            var existFileName =
+                this.repository.All()
+                    .Any(f => f.ParentId == fileNode.ParentId && f.FileName == fileModel.FileName);
+            if (existFileName)
+            {
+                this.ModelState.AddModelError(string.Empty, "Such filename exist in this folder!");
+                return this.View(fileModel);
+            }
+
+            fileNode.FileName = fileModel.FileName;
+            this.repository.SaveChanges();
+
+            return this.RedirectToAction(
+                "Index", 
+                "Files",
+                new { filenodeid = fileNode.ParentId });
+        }
+
+        public ActionResult Rename(int? filenodeid)
+        {
+            var fileNode =
+                this.repository.All()
+                    .Where(f => f.Id == filenodeid)
+                    .Project()
+                    .To<FileViewModel>()
+                    .FirstOrDefault();
+
+            return this.View(fileNode);
         }
 
         public ActionResult Download(int fileNodeId)
@@ -104,7 +150,7 @@
                         this.Server.MapPath(
                             "~/App_Data/" + fileNode.User.UserName + "/" + fileNode.PathToFile);
                     var stream = new FileStream(pathToFile, FileMode.Open);
-                    return File(
+                    return this.File(
                         stream, 
                         MimeAssistant.GetMimeType(fileNode.FileName), 
                         fileNode.FileName);

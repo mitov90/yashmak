@@ -12,10 +12,8 @@
 
     using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
-    using Yashmak.Web.Infrastructure.Filters;
 
     [Authorize]
-    [Log]
     public class UploadController : Controller
     {
         private readonly IDeletableEntityRepository<File> repository;

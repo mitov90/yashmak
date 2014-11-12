@@ -1,4 +1,4 @@
-﻿namespace Yashmak.Web.Models
+﻿namespace Yashmak.Web.Infrastructure.ActionResults
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -29,7 +29,7 @@
 
         public override void ExecuteResult(ControllerContext context)
         {
-            using (ZipFile zf = new ZipFile())
+            using (var zf = new ZipFile())
             {
                 zf.AddFiles(this.files, false, string.Empty);
                 context.HttpContext.Response.ContentType = "application/zip";
