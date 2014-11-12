@@ -1,6 +1,5 @@
-﻿@using System
+﻿@using Yashmak.Common
 @model DateTime
 @{
-    var dif = DateTime.Now - Model;
-    <span>Before @dif.TotalDays days</span>
+    <span> @PrettyDate.GetPrettyDate(@Model) </span>
 }

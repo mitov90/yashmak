@@ -73,6 +73,7 @@
     <Compile Include="FileSystemHelper.cs" />
     <Compile Include="MimeAssistant.cs" />
     <Compile Include="PermissionManager.cs" />
+    <Compile Include="PrettyDate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
