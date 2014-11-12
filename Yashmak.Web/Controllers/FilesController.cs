@@ -113,10 +113,7 @@
             fileNode.FileName = fileModel.FileName;
             this.repository.SaveChanges();
 
-            return this.RedirectToAction(
-                "Index", 
-                "Files",
-                new { filenodeid = fileNode.ParentId });
+            return this.RedirectToAction("Index", "Files", new { filenodeid = fileNode.ParentId });
         }
 
         public ActionResult Rename(int? filenodeid)
@@ -161,21 +158,21 @@
                         .Include(f => f.Permission)
                         .Where(f => f.ParentId == fileNodeId && (!f.IsDirectory));
 
-                var resultFilePath = (from potentialDownload in potentialDownloads
-                                      where
-                                          PermissionManager.CheckPermission(
-                                              potentialDownload, 
-                                              curUserId, 
-                                              curUserName)
-                                      select
-                                          this.Server.MapPath(
-                                              "~/App_Data/" + fileNode.User.UserName + "/" +
-                                              potentialDownload.PathToFile)).ToList();
+                var resultFilePath = new List<string>();
+                foreach (var potentialFile in potentialDownloads)
+                {
+                    if (PermissionManager.CheckPermission(potentialFile, curUserId, curUserName))
+                    {
+                        var mapPath =
+                            this.Server.MapPath(
+                                "~/App_Data/" + fileNode.User.UserName + "/" +
+                                potentialFile.PathToFile);
+                        resultFilePath.Add(mapPath);
+                    }
+                }
 
                 var zip = new ZipResult(resultFilePath) { FileName = fileNode.FileName + ".zip" };
                 return zip;
-
-                // return zip stream for folder
             }
 
             return this.Json(new { message = "Not authorized, Access denied!" });
