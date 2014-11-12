@@ -15,11 +15,14 @@
 
     using Yashmak.Common;
     using Yashmak.Data.Common.Repository;
+    using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.Models;
     using Yashmak.Web.Models.Directory;
 
     using File = Yashmak.Data.Models.File;
 
+    [Log]
+    [Authorize]
     public class FilesController : Controller
     {
         private readonly IDeletableEntityRepository<File> repository;

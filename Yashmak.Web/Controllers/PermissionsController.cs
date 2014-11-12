@@ -10,8 +10,11 @@
 
     using Yashmak.Data;
     using Yashmak.Data.Models;
+    using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.Models.Permission;
 
+    [Authorize]
+    [Log]
     public class PermissionsController : Controller
     {
         private readonly YashmakDbContext context;
@@ -111,7 +114,5 @@
             this.context.SaveChanges();
             return permission;
         }
-
-
     }
 }

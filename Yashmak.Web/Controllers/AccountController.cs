@@ -11,10 +11,8 @@
 
     using Yashmak.Common;
     using Yashmak.Data.Models;
-    using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.Models;
 
-    [Log]
     [Authorize]
     public class AccountController : Controller
     {

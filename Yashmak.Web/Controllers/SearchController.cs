@@ -11,6 +11,7 @@
     using Yashmak.Data.Models;
     using Yashmak.Web.Models.Directory;
 
+       [Authorize]
     public class SearchController : Controller
     {
         private readonly IDeletableEntityRepository<File> repository;
