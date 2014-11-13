@@ -5,8 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title - Yashmak</title>
         @Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/site")
         @RenderSection("styles", required: false)
+        @Styles.Render("~/Content/site")
+        @Scripts.Render("~/bundles/jquery")
 
     </head>
     <body>
@@ -49,7 +50,6 @@
         <footer class="panel-footer panel text-center">
             <p><a href="http://github.com/mitov90" class="fa fa-github fa-3x"></a></p>
         </footer>
-        @Scripts.Render("~/bundles/jquery")
         @Scripts.Render("~/bundles/bootstrap")
         @RenderSection("scripts", required: false)
     </body>
