@@ -4,8 +4,9 @@
     using System.Web.Mvc;
 
     using Yashmak.Data.Models;
+    using Yashmak.Web.Infrastructure.Mapping;
 
-    public class FileViewModel : AdministrationViewModel
+    public class FileViewModel : AdministrationViewModel, IMapFrom<File>
     {
         [HiddenInput(DisplayValue = false)]
         public int? Id { get; set; }

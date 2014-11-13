@@ -3,10 +3,10 @@
     using System.Web.Mvc;
 
     using Yashmak.Data;
+    using Yashmak.Web.Areas.Admin.Controllers.Base;
 
     public class HomeController : AdminController
     {
-        // GET: Admin/Home
         public HomeController(IYashmakData data)
             : base(data)
         {
