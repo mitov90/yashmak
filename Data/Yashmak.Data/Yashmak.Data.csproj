@@ -54,7 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IYashmakDbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="IYashmakData.cs" />
+    <Compile Include="Repositories\DeletableEntityRepository.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="YashmakData.cs" />
     <Compile Include="YashmakDbContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +68,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Yashmak.Common\Yashmak.Common.csproj">
+      <Project>{c5a1974c-132b-4cd2-8f9b-efc84f711370}</Project>
+      <Name>Yashmak.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
       <Project>{EFE74164-CB45-4403-BE91-5D7C8A110E25}</Project>
       <Name>Yashmak.Data.Common</Name>
@@ -72,6 +81,7 @@
       <Name>Yashmak.Data.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

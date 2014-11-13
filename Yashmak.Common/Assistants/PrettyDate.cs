@@ -1,4 +1,4 @@
-﻿namespace Yashmak.Common
+﻿namespace Yashmak.Common.Assistants
 {
     using System;
 

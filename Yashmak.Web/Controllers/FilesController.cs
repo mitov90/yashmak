@@ -14,7 +14,8 @@
     using Microsoft.AspNet.Identity;
 
     using Yashmak.Common;
-    using Yashmak.Data.Common.Repository;
+    using Yashmak.Common.Assistants;
+    using Yashmak.Data;
     using Yashmak.Web.Infrastructure.ActionResults;
     using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.Models.Directory;
@@ -25,9 +26,9 @@
     [Authorize]
     public class FilesController : Controller
     {
-        private readonly IDeletableEntityRepository<File> repository;
+        private readonly IYashmakData repository;
 
-        public FilesController(IDeletableEntityRepository<File> data)
+        public FilesController(IYashmakData data)
         {
             this.repository = data;
         }
@@ -40,11 +41,11 @@
         public ActionResult ViewFolder(int? filenodeid)
         {
             var userId = this.HttpContext.User.Identity.GetUserId();
-            var curFile = this.repository.GetById(Convert.ToInt32(filenodeid));
+            var curFile = this.repository.Files.GetById(Convert.ToInt32(filenodeid));
             var navView = GetPath(curFile);
 
             var files =
-                this.repository.All()
+                this.repository.Files.All()
                     .Where(f => f.UserId == userId && f.ParentId == filenodeid)
                     .Include(f => f.Parent)
                     .OrderByDescending(f => f.IsDirectory)
@@ -68,7 +69,7 @@
                 return this.Json("Don't try silly things!");
             }
 
-            var fileNode = this.repository.GetById((int)filenodeid);
+            var fileNode = this.repository.Files.GetById((int)filenodeid);
 
             if (fileNode.UserId != this.User.Identity.GetUserId())
             {
@@ -76,7 +77,7 @@
             }
 
             fileNode.IsDeleted = true;
-            this.repository.All()
+            this.repository.Files.All()
                 .Where(f => f.ParentId == filenodeid)
                 .Update(f => new File { IsDeleted = true });
 
@@ -89,7 +90,7 @@
         [ValidateAntiForgeryToken]
         public ActionResult Rename(FileViewModel fileModel)
         {
-            var fileNode = this.repository.All().FirstOrDefault(f => f.Id == fileModel.Id);
+            var fileNode = this.repository.Files.All().FirstOrDefault(f => f.Id == fileModel.Id);
             if (fileNode == null)
             {
                 this.ModelState.AddModelError(string.Empty, "No such file");
@@ -102,7 +103,7 @@
             }
 
             var existFileName =
-                this.repository.All()
+                this.repository.Files.All()
                     .Any(f => f.ParentId == fileNode.ParentId && f.FileName == fileModel.FileName);
             if (existFileName)
             {
@@ -119,7 +120,7 @@
         public ActionResult Rename(int? filenodeid)
         {
             var fileNode =
-                this.repository.All()
+                this.repository.Files.All()
                     .Where(f => f.Id == filenodeid)
                     .Project()
                     .To<FileViewModel>()
@@ -132,7 +133,7 @@
         {
             var curUserId = this.User.Identity.GetUserId();
             var curUserName = this.User.Identity.Name;
-            var fileNode = this.repository.All().FirstOrDefault(f => f.Id == fileNodeId);
+            var fileNode = this.repository.Files.All().FirstOrDefault(f => f.Id == fileNodeId);
             if (fileNode == null)
             {
                 return this.Json(new { message = "Not existing file, Redirecting to Err page" });
@@ -154,7 +155,7 @@
                 }
 
                 var potentialDownloads =
-                    this.repository.All()
+                    this.repository.Files.All()
                         .Include(f => f.Permission)
                         .Where(f => f.ParentId == fileNodeId && (!f.IsDirectory));
 

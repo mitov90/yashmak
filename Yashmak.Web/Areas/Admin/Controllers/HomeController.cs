@@ -2,9 +2,16 @@
 {
     using System.Web.Mvc;
 
-    public class HomeController : Controller
+    using Yashmak.Data;
+
+    public class HomeController : AdminController
     {
         // GET: Admin/Home
+        public HomeController(IYashmakData data)
+            : base(data)
+        {
+        }
+
         public ActionResult Navigation()
         {
             return this.View();

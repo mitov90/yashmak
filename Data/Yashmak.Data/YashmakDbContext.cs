@@ -6,17 +6,23 @@
 
     using Microsoft.AspNet.Identity.EntityFramework;
 
+    using Yashmak.Data.Common.CodeFirstConventions;
     using Yashmak.Data.Common.Models;
     using Yashmak.Data.Migrations;
     using Yashmak.Data.Models;
 
-    public class YashmakDbContext : IdentityDbContext<AppUser>
+    public class YashmakDbContext : IdentityDbContext<AppUser>, IYashmakDbContext
     {
         public YashmakDbContext()
             : base("name=YashmakContext")
         {
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
+        }
+
+        public DbContext DbContext
+        {
+            get { return this; }
         }
 
         public virtual IDbSet<File> Files { get; set; }
@@ -26,11 +32,6 @@
         public virtual IDbSet<Permission> Permissions { get; set; }
 
         public virtual IDbSet<Log> Logs { get; set; }
-
-        public static YashmakDbContext Create()
-        {
-            return new YashmakDbContext();
-        }
 
         public new IDbSet<T> Set<T>() where T : class
         {
@@ -42,6 +43,20 @@
             this.ApplyAuditInfoRules();
             this.ApplyDeletableEntityRules();
             return base.SaveChanges();
+        }
+
+        public static YashmakDbContext Create()
+        {
+            return new YashmakDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Add(new IsUnicodeAttributeConvention());
+
+            base.OnModelCreating(modelBuilder);
+
+            // Without this call EntityFramework won't be able to configure the identity model
         }
 
         private void ApplyAuditInfoRules()

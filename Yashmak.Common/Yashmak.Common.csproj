@@ -70,10 +70,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extentions\IEnumerableExtensions.cs" />
+    <Compile Include="Extentions\ObjectExtensions.cs" />
     <Compile Include="FileSystemHelper.cs" />
-    <Compile Include="MimeAssistant.cs" />
+    <Compile Include="Assistants\MimeAssistant.cs" />
     <Compile Include="PermissionManager.cs" />
-    <Compile Include="PrettyDate.cs" />
+    <Compile Include="Assistants\PrettyDate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

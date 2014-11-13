@@ -19,6 +19,7 @@ namespace Yashmak.Web
 
     using Yashmak.Data;
     using Yashmak.Data.Common.Repository;
+    using Yashmak.Data.Repositories;
 
     public static class NinjectWebCommon
     {
@@ -70,11 +71,11 @@ namespace Yashmak.Web
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IBindingRoot kernel)
         {
+            kernel.Bind<IYashmakDbContext>().To<YashmakDbContext>();
+            kernel.Bind<IYashmakData>().To<YashmakData>();
+
+            // Only for testing purposes
             kernel.Bind<DbContext>().To<YashmakDbContext>();
-
-            kernel.Bind(typeof(IRepository<>)).To(typeof(GenericRepository<>));
-            kernel.Bind(typeof(IDeletableEntityRepository<>)).To(typeof(DeletableEntityGenericRepository<>));
-
         }
     }
 }

@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="ActionResults\ZipResult.cs" />
     <Compile Include="Extentions\DropdownFromEnumType.cs" />
+    <Compile Include="Extentions\HtmlExtensions.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
     <Compile Include="Mapping\AutoMapperConfig.cs" />
     <Compile Include="Mapping\IHaveCustomMappings.cs" />
@@ -95,6 +96,10 @@
     <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
       <Project>{EFE74164-CB45-4403-BE91-5D7C8A110E25}</Project>
       <Name>Yashmak.Data.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Yashmak.Data\Yashmak.Data.csproj">
+      <Project>{1DBE9941-D4FF-4DCA-85EF-DEEF5A443D77}</Project>
+      <Name>Yashmak.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\Data\Yashmak.Models\Yashmak.Data.Models.csproj">
       <Project>{68658828-BEEE-404C-8DB7-E441D93D0D84}</Project>
