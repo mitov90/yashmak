@@ -1,24 +1,20 @@
-﻿using System.Web.Mvc;
-
-namespace Yashmak.Web.Areas.Admin
+﻿namespace Yashmak.Web.Areas.Admin
 {
-    public class AdminAreaRegistration : AreaRegistration 
+    using System.Web.Mvc;
+
+    public class AdminAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
-            {
-                return "Admin";
-            }
+            get { return "Admin"; }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Admin_default",
-                "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+                "Admin_default", 
+                "Admin/{controller}/{action}/{id}", 
+                new { action = "Index", id = UrlParameter.Optional });
         }
     }
 }

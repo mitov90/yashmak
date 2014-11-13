@@ -23,14 +23,10 @@
 
         public int? ParentId { get; set; }
 
-        public virtual File Parent { get; set; }
 
         public string UserId { get; set; }
 
-        public virtual AppUser User { get; set; }
-
         public int? PermissionId { get; set; }
 
-        public virtual Permission Permission { get; set; }
     }
 }

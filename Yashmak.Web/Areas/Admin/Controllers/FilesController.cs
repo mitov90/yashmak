@@ -1,7 +1,10 @@
 ﻿namespace Yashmak.Web.Areas.Admin.Controllers
 {
     using System.Collections;
+    using System.Collections.Generic;
     using System.Web.Mvc;
+
+    using AutoMapper.QueryableExtensions;
 
     using Kendo.Mvc.UI;
 
@@ -25,7 +28,7 @@
 
         protected override IEnumerable GetData()
         {
-            return this.Data.Files.All();
+            return this.Data.Files.All().Project().To<ViewModel>();
         }
 
         protected override T GetById<T>(object id)
