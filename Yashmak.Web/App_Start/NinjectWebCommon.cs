@@ -18,8 +18,6 @@ namespace Yashmak.Web
     using Ninject.Web.Common;
 
     using Yashmak.Data;
-    using Yashmak.Data.Common.Repository;
-    using Yashmak.Data.Repositories;
 
     public static class NinjectWebCommon
     {
