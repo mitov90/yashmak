@@ -241,12 +241,15 @@
     <Compile Include="Areas\Admin\ViewModels\AdministrationViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\FileViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Base\BaseController.cs" />
+    <Compile Include="Controllers\Base\PermissionBaseController.cs" />
     <Compile Include="Controllers\DirectoryController.cs" />
+    <Compile Include="Controllers\Base\FileBaseController.cs" />
     <Compile Include="Controllers\FilesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PermissionsController.cs" />
+    <Compile Include="Controllers\RenameController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Global.asax.cs">
@@ -656,8 +659,6 @@
     <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\Permissions\Share.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PermissionViewModel.cshtml" />
-    <Content Include="Views\Files\Rename.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
@@ -665,11 +666,10 @@
     <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FileSize.cshtml" />
+    <Content Include="Views\Rename\Rename.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Data\Yashmak.Data.Common\Yashmak.Data.Common.csproj">
@@ -698,6 +698,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Users\" />
+    <Folder Include="Views\FileAction\" />
+    <Folder Include="Views\PermissionBase\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionResults\ZipResult.cs" />
+    <Compile Include="ControllerHelpers\FileCtrlHelper.cs" />
     <Compile Include="Extentions\DropdownFromEnumType.cs" />
     <Compile Include="Extentions\HtmlExtensions.cs" />
     <Compile Include="Filters\LogAttribute.cs" />
@@ -81,6 +82,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

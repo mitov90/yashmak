@@ -7,8 +7,6 @@
     var maxNoOfFiles = Model.MaxNumberOfFiles.HasValue ? Model.MaxNumberOfFiles.Value.ToString(CultureInfo.InvariantCulture) : "undefined";
 }
         
-<!-- file upload dialog/inline form-->
-
 @if (Model.IsDialog) //popup dialog
 {
     <div class="modal-dialog">
@@ -25,6 +23,7 @@
                 }
                 
                 <form role="form" class="form-inline" id="@formId" action="@Model.UploadUrl" method="POST" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
                     <div class="fileupload-buttonbar">
                         <div class="btn-group">
                             <!-- The fileinput-button span is used to style the file input field as button -->
@@ -81,10 +80,10 @@
         </div>
     </div>
 }
-
-else //inline
+else // else inline
 {
-    <form id="@formId" action="@Model.UploadUrl" method="POST" enctype="multipart/form-data">        
+    <form id="@formId" action="@Model.UploadUrl" method="POST" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()        
         <div class="row fileupload-buttonbar">                    
             <div class="col-lg-7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
@@ -138,13 +137,9 @@ else //inline
     </form>
 }
 
-
-
-<!--template and scripts-->
 @if (Model.RenderSharedScript)
 {
 
-    //template scripts are different for jquery ui
     if (Model.UIStyle == UploadUI.JQueryUI)
     {
         <!-- The template to display files available for upload for jquery ui -->
@@ -166,7 +161,6 @@ else //inline
                     {% if (!i && !o.options.autoUpload) { %}
                         <button class="start">Start</button>
 
-    <!-- The template to display files available for upload -->
     <script id="template-upload" type="text/x-tmpl">
     {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-upload fade">
@@ -198,7 +192,6 @@ else //inline
         </tr>
     {% } %}
     </script>
-    <!-- The template to display files available for download -->
     <script id="template-download" type="text/x-tmpl">
     {% for (var i=0, file; file=o.files[i]; i++) { %}
         <tr class="template-download fade">
@@ -214,7 +207,6 @@ else //inline
             </tr>
         {% } %}
         </script>
-        <!-- The template to display files available for download for jquery ui -->
         <script id="template-download" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-download fade">
@@ -246,7 +238,6 @@ else //inline
     }
     else
     {
-        <!-- The template to display files available for upload -->
         <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">
@@ -349,7 +340,6 @@ else //inline
        <script type="text/javascript" src="/Scripts/mvcfileupload/blueimp/jquery.fileupload-jquery-ui.js"></script>
     }
 }
-<!--template and scripts end-->
 
 <script type="text/javascript">
             

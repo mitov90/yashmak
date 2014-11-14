@@ -5,5 +5,7 @@
         public const string AdminRole = "Admin";
 
         public const string UserFilesPath = "/App_Data/";
+
+        public const string Moto = "Sharing, archive, upload, whatever you like";
     }
 }

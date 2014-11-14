@@ -7,29 +7,31 @@
     using Microsoft.AspNet.Identity;
 
     using Yashmak.Data;
-    using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
+    using Yashmak.Web.Controllers.Base;
     using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.ViewModels.Directory;
 
     [Authorize]
     [Log]
-    public class DirectoryController : Controller
+    public class DirectoryController : BaseController
     {
-        private readonly IYashmakData context;
-
-        public DirectoryController(IYashmakData context)
+        public DirectoryController(IYashmakData data)
+            : base(data)
         {
-            this.context = context;
         }
 
         public ActionResult CreateFolder(int? filenodeid)
         {
-            var viewModel = new NavigationDirectoryViewModel { Id = null, FileName = "Private Home" };
+            var viewModel = new NavigationDirectoryViewModel
+                {
+                    Id = null, 
+                    FileName = "Private Home"
+                };
             if (filenodeid != 0 && filenodeid != null)
             {
                 viewModel.Id = filenodeid;
-                var dir = this.context.Files.GetById((int)filenodeid);
+                var dir = this.Data.Files.GetById((int)filenodeid);
                 if (dir.UserId != this.User.Identity.GetUserId())
                 {
                     this.RedirectToAction("Index", "Files");
@@ -41,39 +43,45 @@
             return this.PartialView(viewModel);
         }
 
-        // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         [HttpPost]
         public ActionResult CreateFolder(NavigationDirectoryViewModel directory)
         {
-            if (!this.ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                return this.RedirectToAction("Index", "Files", new { fileId = directory.Id });
-            }
-
-            var userId = this.User.Identity.GetUserId();
-            var newDir = new File
+                if (this.ExistDuplicatedName(directory))
                 {
-                    IsDirectory = true, 
-                    FileName = directory.FileName, 
-                    ParentId = directory.Id == 0 ? null : directory.Id, 
-                    UserId = userId, 
-                    ModifiedOn = DateTime.Now, 
-                };
-            var parentId = directory.Id == 0 ? null : directory.Id;
-            var dirsInUserFolder =
-                this.context.Files.All().Where(d => d.ParentId == parentId && d.UserId == userId);
-            if (dirsInUserFolder.Any(d => d.FileName == directory.FileName))
-            {
-                this.ModelState.AddModelError(
-                    "Duplicated name!", 
-                    "Name alredy exists in parent folder, try change the name!");
-                return this.View(directory);
+                    this.ModelState.AddModelError(
+                        string.Empty, 
+                        "Name alredy exists in parent folder, try change the name!");
+                    return this.View(directory);
+                }
+
+                this.Data.Files.Add(
+                    new File
+                        {
+                            IsDirectory = true, 
+                            FileName = directory.FileName, 
+                            ParentId = directory.Id == 0 ? null : directory.Id, 
+                            UserId = this.UserId, 
+                            ModifiedOn = DateTime.Now, 
+                        });
+                this.Data.SaveChanges();
             }
 
-            this.context.Files.Add(newDir);
-            this.context.SaveChanges();
+            return this.RedirectToAction("Index", "Files", new { fileId = directory.Id });
+        }
 
-            return this.RedirectToAction("Index", "Files", new { filenodeid = directory.Id });
+        private bool ExistDuplicatedName(NavigationDirectoryViewModel directory)
+        {
+            var parentId = directory.Id == 0 ? null : directory.Id;
+
+            var existDuplicatedName =
+                this.Data.Files.All()
+                    .Where(d => d.ParentId == parentId && d.UserId == this.UserId)
+                    .Any(d => d.FileName == directory.FileName);
+            return existDuplicatedName;
         }
     }
 }

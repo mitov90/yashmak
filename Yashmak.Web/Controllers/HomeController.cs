@@ -2,8 +2,17 @@
 {
     using System.Web.Mvc;
 
-    public class HomeController : Controller
+    using Yashmak.Common;
+    using Yashmak.Data;
+    using Yashmak.Web.Controllers.Base;
+
+    public class HomeController : BaseController
     {
+        public HomeController(IYashmakData data)
+            : base(data)
+        {
+        }
+
         public ActionResult Index()
         {
             return this.View();
@@ -11,7 +20,7 @@
 
         public ActionResult About()
         {
-            this.ViewBag.Message = "Your application description page.";
+            this.ViewBag.Message = Constants.Moto; 
 
             return this.View();
         }

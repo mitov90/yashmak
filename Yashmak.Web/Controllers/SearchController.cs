@@ -8,16 +8,15 @@
     using Microsoft.AspNet.Identity;
 
     using Yashmak.Data;
+    using Yashmak.Web.Controllers.Base;
     using Yashmak.Web.ViewModels.File;
 
     [Authorize]
-    public class SearchController : Controller
+    public class SearchController : BaseController
     {
-        private readonly IYashmakData repository;
-
-        public SearchController(IYashmakData repository)
+        public SearchController(IYashmakData data)
+            : base(data)
         {
-            this.repository = repository;
         }
 
         [ValidateAntiForgeryToken]
@@ -27,7 +26,7 @@
         {
             var userId = this.User.Identity.GetUserId();
             var queryable =
-                this.repository.Files.All()
+                this.Data.Files.All()
                     .Where(f => f.UserId == userId && f.FileName.Contains(query))
                     .Project()
                     .To<FileViewModel>();

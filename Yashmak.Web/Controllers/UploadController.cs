@@ -5,23 +5,23 @@
     using System.Linq;
     using System.Web.Mvc;
 
+    using Microsoft.AspNet.Identity;
+
     using MvcFileUploader;
     using MvcFileUploader.Models;
 
-    using Yashmak.Common;
     using Yashmak.Data;
     using Yashmak.Data.Models;
+    using Yashmak.Web.Controllers.Base;
 
-    using IdentityExtensions = Microsoft.AspNet.Identity.IdentityExtensions;
+    using Constants = Yashmak.Common.Constants;
 
     [Authorize]
-    public class UploadController : Controller
+    public class UploadController : BaseController
     {
-        private readonly IYashmakData context;
-
-        public UploadController(IYashmakData context)
+        public UploadController(IYashmakData data)
+            : base(data)
         {
-            this.context = context;
         }
 
         [HttpGet]
@@ -31,15 +31,16 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult FileUpload(int? filenodeid, string test)
         {
             filenodeid = filenodeid == 0 ? null : filenodeid;
             var username = this.User.Identity.Name;
             var savePath =
                 this.Server.MapPath(string.Format(@"~{0}{1}/", Constants.UserFilesPath, username));
-            var userId = IdentityExtensions.GetUserId(this.User.Identity);
+            var userId = this.User.Identity.GetUserId();
             var userFilesInCurrentDir =
-                this.context.Files.All().Where(d => d.ParentId == filenodeid && d.UserId == userId);
+                this.Data.Files.All().Where(d => d.ParentId == filenodeid && d.UserId == userId);
 
             var statuses = new List<ViewDataUploadFileResult>();
 
@@ -58,7 +59,7 @@
                             x.StorageDirectory = savePath;
 
                             // TODO: CHange the download url
-                            x.UrlPrefix = string.Format("/App_Data/{0}", username);
+                            x.UrlPrefix = string.Format("{0}{1}", Constants.UserFilesPath, username);
 
                             // overriding defaults
                             x.FileName = saveFileName;
@@ -89,8 +90,9 @@
                             Size = st.size, 
                             PathToFile = st.SavedFileName
                         };
-                    this.context.Files.Add(file);
-                    this.context.SaveChanges();
+                    this.Data.Files.Add(file);
+                    this.Data.SaveChanges();
+                    
                     st.deleteUrl = this.Url.Action(
                         "DeleteFile", 
                         new { filenodeid = file.Id, filePath = st.FullPath });
@@ -111,8 +113,8 @@
         [HttpPost] // should accept only post
         public ActionResult DeleteFile(int? filenodeid, string filePath)
         {
-            var file = this.context.Files.GetById((int)filenodeid);
-            if (file.UserId != IdentityExtensions.GetUserId(this.User.Identity))
+            var file = this.Data.Files.GetById((int)filenodeid);
+            if (file.UserId != this.UserId)
             {
                 return
                     this.Json(new { error = "Don't try delete files that do not belongs to you!" });
@@ -123,7 +125,7 @@
                 System.IO.File.Delete(filePath);
             }
 
-            this.context.Files.Delete(file);
+            this.Data.Files.Delete(file);
 
             var viewresult = this.Json(new { error = string.Empty });
 

@@ -2,20 +2,20 @@
 
 @{
     ViewBag.Title = "Rename [" + @Model.FileName + "]";
-} 
+}
 
 <h2>@ViewBag.Title</h2>
 
-@using (@Html.BeginForm("Rename", "Files", FormMethod.Post, new { @class = "form-inline" }))
+@using (@Html.BeginForm("Rename", "Rename", FormMethod.Post, new { @class = "form-inline" }))
 {
-    <div class="alert alert-warning">
+    <div class="text-danger">
         @Html.ValidationSummary()
     </div>
     @Html.AntiForgeryToken()
     <div class="form-group">
-        <input type="hidden" name="Id" value="@Model.Id"/>
+        <input type="hidden" name="Id" value="@Model.Id" />
         <label for="FileName">Name:</label>
         <input type="text" name="FileName" value="@Model.FileName" class="form-control" />
     </div>
-    <input type="submit" name="submit" value="Rename" class="btn btn-primary"/>
+    <input type="submit" name="submit" value="Rename" class="btn btn-primary" />
 }
