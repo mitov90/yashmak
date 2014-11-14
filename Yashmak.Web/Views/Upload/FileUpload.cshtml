@@ -14,3 +14,8 @@
       .MaxNumberOfFiles(10)
       .AddFormField("filenodeid", @Model.ToString())
       .RenderInline())
+
+@Html.ActionLink("Go Back", "Index", "Files", new { filenodeid = Model }, new { @class = "btn btn-inverse pull-left" })
+
+
+

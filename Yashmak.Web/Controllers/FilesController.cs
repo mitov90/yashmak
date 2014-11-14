@@ -45,26 +45,7 @@
             return this.PartialView("_ViewFolder", dirView);
         }
 
-        public ActionResult Delete(int? filenodeid, string fileUrl)
-        {
-            var fileNode = this.GetFileNode(filenodeid);
-
-            if (filenodeid == null || filenodeid == 0 || (fileNode.UserId != this.UserId))
-            {
-                return
-                    this.Json(
-                        "You're trying to delete things that do not exist or do not belong to you! ");
-            }
-
-            fileNode.IsDeleted = true;
-            this.Data.Files.All()
-                .Where(f => f.ParentId == filenodeid)
-                .Update(f => new File { IsDeleted = true });
-
-            this.Data.SaveChanges();
-
-            return this.RedirectToAction("Index", "Files", new { filenodeid = fileNode.ParentId });
-        }
+        
 
         public ActionResult ViewFile(int fileNodeId)
         {

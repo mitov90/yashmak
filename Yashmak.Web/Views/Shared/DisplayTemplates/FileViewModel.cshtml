@@ -4,7 +4,7 @@
     <td></td>
     <td>
         @Html.ActionLink("Download", "Download", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-cloud-download downloadLink" })
-        @Html.ActionLink("Delete", "Delete", "Files", new { fileNodeId = Model.Id }, new { @class = "modal-link fa fa-remove deleteLink" })
+        @Html.ActionLink("Delete", "Delete", "Delete", new { fileNodeId = Model.Id }, new { @class = "modal-link fa fa-remove deleteLink" })
         @Html.ActionLink("Rename ", "Rename", "Rename", new { fileNodeId = Model.Id }, new { @class = "fa fa-pencil renameLink" })
     </td>
     <td></td>
