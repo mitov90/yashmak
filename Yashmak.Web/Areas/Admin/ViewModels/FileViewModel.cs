@@ -15,8 +15,6 @@
         [MinLength(1)]
         public string FileName { get; set; }
 
-        public string PathToFile { get; set; }
-
         public int Size { get; set; }
 
         public bool IsDirectory { get; set; }
@@ -26,7 +24,9 @@
 
         public string UserId { get; set; }
 
-        public int? PermissionId { get; set; }
+        public AppUser User { get; set; }
+
+        public Permission Permission { get; set; }
 
     }
 }

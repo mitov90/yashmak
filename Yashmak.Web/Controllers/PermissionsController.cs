@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Data.Entity;
     using System.Linq;
     using System.Web.Mvc;
@@ -37,7 +38,7 @@
             }
 
             var permission = this.CreateOrGetPermission(fileNode);
-            var userWithAccess = this.context.ShareNames.Where(s => s.PermissionId == permission.Id);
+            var userWithAccess = fileNode.Permission.AuthorizedUsers;
             var people = string.Join(", ", userWithAccess.Select(u => u.Username));
 
             var fileView = new PermissionViewModel
@@ -110,6 +111,7 @@
             var permission = new Permission { AccessType = AccessType.Private, Id = fileNode.Id };
 
             fileNode.Permission = permission;
+            fileNode.Permission.AuthorizedUsers = new Collection<ShareName>();
             this.context.Permissions.Add(permission);
             this.context.SaveChanges();
             return permission;

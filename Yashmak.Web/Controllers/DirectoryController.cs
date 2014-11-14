@@ -6,6 +6,7 @@
 
     using Microsoft.AspNet.Identity;
 
+    using Yashmak.Data;
     using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
     using Yashmak.Web.Infrastructure.Filters;
@@ -15,11 +16,11 @@
     [Log]
     public class DirectoryController : Controller
     {
-        private readonly IDeletableEntityRepository<File> repository;
+        private readonly IYashmakData context;
 
-        public DirectoryController(IDeletableEntityRepository<File> repository)
+        public DirectoryController(IYashmakData context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         public ActionResult CreateFolder(int? filenodeid)
@@ -28,7 +29,7 @@
             if (filenodeid != 0 && filenodeid != null)
             {
                 viewModel.Id = filenodeid;
-                var dir = this.repository.GetById((int)filenodeid);
+                var dir = this.context.Files.GetById((int)filenodeid);
                 if (dir.UserId != this.User.Identity.GetUserId())
                 {
                     this.RedirectToAction("Index", "Files");
@@ -60,7 +61,7 @@
                 };
             var parentId = directory.Id == 0 ? null : directory.Id;
             var dirsInUserFolder =
-                this.repository.All().Where(d => d.ParentId == parentId && d.UserId == userId);
+                this.context.Files.All().Where(d => d.ParentId == parentId && d.UserId == userId);
             if (dirsInUserFolder.Any(d => d.FileName == directory.FileName))
             {
                 this.ModelState.AddModelError(
@@ -69,8 +70,8 @@
                 return this.View(directory);
             }
 
-            this.repository.Add(newDir);
-            this.repository.SaveChanges();
+            this.context.Files.Add(newDir);
+            this.context.SaveChanges();
 
             return this.RedirectToAction("Index", "Files", new { filenodeid = directory.Id });
         }

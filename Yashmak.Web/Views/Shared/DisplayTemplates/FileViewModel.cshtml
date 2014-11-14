@@ -1,17 +1,18 @@
-﻿@using System.Globalization
+﻿@using Yashmak.Common.Assistants
 @model Yashmak.Web.Models.Directory.FileViewModel
 <tr class="hidden info">
     <td></td>
     <td>
-        @Html.ActionLink("Download", "Download", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-cloud-download" })
-        @Html.ActionLink("Share", "Share", "Permissions", new { fileNodeId = Model.Id }, new { @class = "fa fa-share" })
+        @Html.ActionLink("Download", "Download", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-cloud-download downloadLink" })
         @Html.ActionLink("Delete", "Delete", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-remove deleteLink" })
-        @Html.ActionLink("Rename", "Rename", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-pencil" })
-        @Html.ActionLink("Move", "Move", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-folder-open" })
+        @Html.ActionLink("Rename", "Rename", "Files", new { fileNodeId = Model.Id }, new { @class = "fa fa-pencil renameLink" })
     </td>
     <td></td>
     <td></td>
     <td></td>
+    <td>
+        @Html.ActionLink("Share", "Share", "Permissions", new { fileNodeId = Model.Id }, new { @class = "fa fa-share" })
+    </td>
 </tr>
 <tr class="file-row">
     <td>
@@ -27,14 +28,15 @@
 
         }
     </td>
-    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files",
+    <td>@Ajax.ActionLink(Model.FileName, "ViewFolder", "Files", 
             new { filenodeid = Model.Id }, 
-            new AjaxOptions {
-                UpdateTargetId = "files", 
-                HttpMethod = "GET",
-                InsertionMode = InsertionMode.Replace,
-                OnComplete = "new function(){OnFolderChange(" + Model.Id + ")}"
-            })</td>
+            new AjaxOptions
+                {
+                    UpdateTargetId = "files", 
+                    HttpMethod = "GET", 
+                    InsertionMode = InsertionMode.Replace, 
+                    OnComplete = "new function(){OnFolderChange(" + Model.Id + ")}"
+                })</td>
     <td>@{
             if (Model.IsDirectory)
             {
@@ -55,5 +57,6 @@
 
         }</td>
     <td>@Html.DisplayFor(f => f.ModifiedOn)</td>
-    <td>@(Model.Size == 0 ? "-" : Model.Size.ToString(CultureInfo.InvariantCulture))</td>
+    <td>@(Model.Size == 0 ? "-" : PrettySize.GetPrettySize(@Model.Size))</td>
+    <td>Private</td>
 </tr>

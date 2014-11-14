@@ -12,11 +12,15 @@
       .Name("grid")
       .Columns(cols =>
           {
-              cols.Bound(pr => pr.Id);
+              cols.Bound(pr => pr.Id).Hidden();
+              cols.Bound(pr => pr.User.UserName);
               cols.Bound(pr => pr.FileName);
               cols.Bound(pr => pr.Size);
+              //cols.Bound(pr => pr.Permission.AccessType);
+              //cols.Bound(pr => pr.Permission.AuthorizedUsers).Hidden();
               cols.Bound(pr => pr.CreatedOn).Hidden();
               cols.Bound(pr => pr.ModifiedOn).Hidden();
+              cols.Bound(pr => pr.ParentId).Hidden();              
               cols.Command(com => com.Edit()).Title("Change");
               cols.Command(com => com.Destroy()).Title("Delete");
           })

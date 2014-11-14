@@ -20,6 +20,7 @@
     using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.Models.Directory;
 
+    using Constants = Yashmak.Common.Constants;
     using File = Yashmak.Data.Models.File;
 
     [Log]
@@ -48,6 +49,7 @@
                 this.repository.Files.All()
                     .Where(f => f.UserId == userId && f.ParentId == filenodeid)
                     .Include(f => f.Parent)
+                    .Include(f => f.Permission)
                     .OrderByDescending(f => f.IsDirectory)
                     .Project()
                     .To<FileViewModel>();
@@ -146,7 +148,8 @@
                     // Download file
                     var pathToFile =
                         this.Server.MapPath(
-                            "~/App_Data/" + fileNode.User.UserName + "/" + fileNode.PathToFile);
+                            "~" + Constants.UserFilesPath + fileNode.User.UserName + "/" +
+                            fileNode.PathToFile);
                     var stream = new FileStream(pathToFile, FileMode.Open);
                     return this.File(
                         stream, 
@@ -166,7 +169,7 @@
                     {
                         var mapPath =
                             this.Server.MapPath(
-                                "~/App_Data/" + fileNode.User.UserName + "/" +
+                                "~" + Constants.UserFilesPath + fileNode.User.UserName + "/" +
                                 potentialFile.PathToFile);
                         resultFilePath.Add(mapPath);
                     }

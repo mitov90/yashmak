@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title in @Model.FileName</h2>
 @using (Html.BeginForm("CreateFolder", "Directory", FormMethod.Post, new { @class = "form-horizontal" }))
 {
-    <div class="alert alert-warning">
+    <div class="text-danger">
         @Html.ValidationSummary()
     </div>
     @Html.AntiForgeryToken();

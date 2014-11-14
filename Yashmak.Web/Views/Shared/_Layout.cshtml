@@ -26,7 +26,7 @@
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         @if (Request.IsAuthenticated)
                         {
-                            <li>@Html.ActionLink("Files", "Index", "Files")</li>
+                            <li>@Html.ActionLink("Files", "Index", "Files")<span class="navbar-unread">1</span></li>
                             <li>
                                 @using (Html.BeginForm("Search", "Search", FormMethod.Post, new { @class = "navbar-form navbar-right", role = "search" }))
                                 {

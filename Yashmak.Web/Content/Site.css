@@ -26,5 +26,12 @@ textarea {
 }
 
 .deleteLink {
-    color: deeppink;
+    color: #E74C3C;
+}
+
+.downloadLink {
+}
+
+.renameLink {
+    color: #34495E;
 }

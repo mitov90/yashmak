@@ -2,6 +2,8 @@ namespace Yashmak.Data.Migrations
 {
     using System.Data.Entity.Migrations;
 
+    using Microsoft.AspNet.Identity;
+
     internal sealed class Configuration : DbMigrationsConfiguration<YashmakDbContext>
     {
         public Configuration()
@@ -12,6 +14,7 @@ namespace Yashmak.Data.Migrations
 
         protected override void Seed(YashmakDbContext context)
         {
+
         }
     }
 }

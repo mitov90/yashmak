@@ -34,6 +34,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assistants\PrettySize.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Extentions\IEnumerableExtensions.cs" />
     <Compile Include="Extentions\ObjectExtensions.cs" />

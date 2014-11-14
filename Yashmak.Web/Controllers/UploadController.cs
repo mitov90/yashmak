@@ -5,22 +5,23 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    using Microsoft.AspNet.Identity;
-
     using MvcFileUploader;
     using MvcFileUploader.Models;
 
-    using Yashmak.Data.Common.Repository;
+    using Yashmak.Common;
+    using Yashmak.Data;
     using Yashmak.Data.Models;
+
+    using IdentityExtensions = Microsoft.AspNet.Identity.IdentityExtensions;
 
     [Authorize]
     public class UploadController : Controller
     {
-        private readonly IDeletableEntityRepository<File> repository;
+        private readonly IYashmakData context;
 
-        public UploadController(IDeletableEntityRepository<File> repository)
+        public UploadController(IYashmakData context)
         {
-            this.repository = repository;
+            this.context = context;
         }
 
         [HttpGet]
@@ -34,10 +35,11 @@
         {
             filenodeid = filenodeid == 0 ? null : filenodeid;
             var username = this.User.Identity.Name;
-            var savePath = this.Server.MapPath(string.Format(@"~/App_Data/{0}/", username));
-            var userId = this.User.Identity.GetUserId();
+            var savePath =
+                this.Server.MapPath(string.Format(@"~{0}{1}/", Constants.UserFilesPath, username));
+            var userId = IdentityExtensions.GetUserId(this.User.Identity);
             var userFilesInCurrentDir =
-                this.repository.All().Where(d => d.ParentId == filenodeid && d.UserId == userId);
+                this.context.Files.All().Where(d => d.ParentId == filenodeid && d.UserId == userId);
 
             var statuses = new List<ViewDataUploadFileResult>();
 
@@ -87,8 +89,8 @@
                             Size = st.size, 
                             PathToFile = st.SavedFileName
                         };
-                    this.repository.Add(file);
-                    this.repository.SaveChanges();
+                    this.context.Files.Add(file);
+                    this.context.SaveChanges();
                     st.deleteUrl = this.Url.Action(
                         "DeleteFile", 
                         new { filenodeid = file.Id, filePath = st.FullPath });
@@ -109,8 +111,8 @@
         [HttpPost] // should accept only post
         public ActionResult DeleteFile(int? filenodeid, string filePath)
         {
-            var file = this.repository.GetById((int)filenodeid);
-            if (file.UserId != this.User.Identity.GetUserId())
+            var file = this.context.Files.GetById((int)filenodeid);
+            if (file.UserId != IdentityExtensions.GetUserId(this.User.Identity))
             {
                 return
                     this.Json(new { error = "Don't try delete files that do not belongs to you!" });
@@ -121,7 +123,7 @@
                 System.IO.File.Delete(filePath);
             }
 
-            this.repository.Delete(file);
+            this.context.Files.Delete(file);
 
             var viewresult = this.Json(new { error = string.Empty });
 
