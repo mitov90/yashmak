@@ -40,7 +40,13 @@
                 viewModel.FileName = dir.FileName;
             }
 
-            return this.PartialView(viewModel);
+            object err;
+            if (this.TempData.TryGetValue("Error", out err))
+            {
+                this.ModelState.AddModelError(string.Empty, err as string);
+            }
+
+            return this.View(viewModel);
         }
 
         [ValidateAntiForgeryToken]
@@ -52,10 +58,9 @@
             {
                 if (this.ExistDuplicatedName(directory))
                 {
-                    this.ModelState.AddModelError(
-                        string.Empty, 
-                        "Name alredy exists in parent folder, try change the name!");
-                    return this.View(directory);
+                    this.TempData["Error"] =
+                        "Name alredy exists in parent folder, try change the name!";
+                    return this.RedirectToAction("CreateFolder", "Directory",new {filenodeid = directory.Id});
                 }
 
                 this.Data.Files.Add(

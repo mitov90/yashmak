@@ -19,7 +19,10 @@
     </div>
     <input type="hidden" name="FileName" value="@Model.FileName" />
     <input type="hidden" name="Id" value="@Model.Id" />
-    <input type="submit" name="submit" value="Change" class="btn btn-warning btn-sm pull-right"/>
+    @Html.ActionLink("Cancel", "Index", "Files", new { filenodeid = Model.Id }, new { @class = "btn btn-danger pull-right" })
+
+    <input type="submit" name="submit" value="Change" class="btn btn-warning pull-right"/>
+
 }
 
 @section scripts{

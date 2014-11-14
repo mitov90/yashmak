@@ -14,4 +14,5 @@
     <input type="text" required="required" class="form-control" name="FileName" id="FileName" placeholder="Folder Name"/>
     <input type="submit" class="btn btn-primary" name="CreateFolder" value="Create" />
     <input type="hidden" value="@Model.Id" name="Id" id="Id" />
+    @Html.ActionLink("Cancel","Index","Files", new {filenodeid=Model.Id}, new{@class="btn btn-danger"})
 }

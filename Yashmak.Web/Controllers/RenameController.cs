@@ -16,6 +16,25 @@
         {
         }
 
+        [HttpGet]
+        public ActionResult Rename(int? filenodeid)
+        {
+            object err;
+            if (this.TempData.TryGetValue("Error", out err))
+            {
+                this.ModelState.AddModelError(string.Empty, err as string);                
+            }
+
+            var fileNode =
+                this.Data.Files.All()
+                    .Where(f => f.Id == filenodeid)
+                    .Project()
+                    .To<FileViewModel>()
+                    .FirstOrDefault();
+
+            return this.View(fileNode);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Rename(FileViewModel fileModel)
@@ -33,26 +52,14 @@
 
             if (existFileName)
             {
-                this.ModelState.AddModelError(string.Empty, "Such filename exist in this folder!");
-                return this.View(fileModel);
+                this.TempData.Add("Error","Such filename exist in this folder!");
+                return this.RedirectToAction("Rename", "Rename", new { filenodeid = fileModel.Id });
             }
 
             fileNode.FileName = fileModel.FileName;
             this.Data.SaveChanges();
 
             return this.RedirectToAction("Index", "Files", new { filenodeid = fileNode.ParentId });
-        }
-
-        public ActionResult Rename(int? filenodeid)
-        {
-            var fileNode =
-                this.Data.Files.All()
-                    .Where(f => f.Id == filenodeid)
-                    .Project()
-                    .To<FileViewModel>()
-                    .FirstOrDefault();
-
-            return this.View(fileNode);
         }
     }
 }
