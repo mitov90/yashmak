@@ -45,11 +45,11 @@
             return this.PartialView("_ViewFolder", dirView);
         }
 
-        
-
         public ActionResult ViewFile(int fileNodeId)
         {
-            return null;
+            var fileViewModel = AutoMapper.Mapper.Map<FileViewModel>(this.GetFileNode(fileNodeId));
+
+            return this.PartialView(fileViewModel);
         }
 
         public ActionResult Download(int fileNodeId)

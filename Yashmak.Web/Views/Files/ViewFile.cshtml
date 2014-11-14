@@ -1,17 +1,19 @@
-﻿@model int?
+﻿@model Yashmak.Web.ViewModels.File.FileViewModel
+
 
 <div class="modal-body">
     <div class="alert alert-warning">
         <span class="glyphicon glyphicon-warning-sign"></span>
-        Are you sure you want to delete?.. or just clicking around?
+        View file @Model.FileName
     </div>
-    @using (Html.BeginForm("Delete", "Delete", FormMethod.Post))
+    @using (Html.BeginForm("Download", "Files", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         <div class="row">
+            @Url.Action("Download", "Files", new { fileNodeId = Model.Id })
             &nbsp;
         </div>
-        <input type="hidden" name="filenodeid" value="@Model"/>
+        <input type="hidden" name="filenodeid" value="@Model.Id" />
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <button type="button" class="btn btn-default"
@@ -19,8 +21,8 @@
                     Cancel
                 </button>
                 <button type="submit" id="approve-btn"
-                        class="btn btn-danger">
-                    Save
+                        class="btn btn-inverse">
+                    Download
                 </button>
             </div>
         </div>

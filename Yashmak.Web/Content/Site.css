@@ -35,3 +35,8 @@ textarea {
 .renameLink {
     color: #34495E;
 }
+
+.modal-content {
+        width: 600px !important;
+        margin: 30px auto !important;
+    }

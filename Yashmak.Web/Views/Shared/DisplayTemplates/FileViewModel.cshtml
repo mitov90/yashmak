@@ -43,7 +43,7 @@
             }
             else
             {
-                @Html.ActionLink(Model.FileName, "ViewFile", "Files", new { fileNodeId = Model.Id })
+                @Html.ActionLink(Model.FileName, "ViewFile", "Files", new { fileNodeId = Model.Id }, new {@class = "modal-link"})
             }
 }
         
