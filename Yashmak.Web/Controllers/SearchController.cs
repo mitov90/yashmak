@@ -8,7 +8,7 @@
     using Microsoft.AspNet.Identity;
 
     using Yashmak.Data;
-    using Yashmak.Web.Models.Directory;
+    using Yashmak.Web.ViewModels.File;
 
     [Authorize]
     public class SearchController : Controller

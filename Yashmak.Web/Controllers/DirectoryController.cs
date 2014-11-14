@@ -10,7 +10,7 @@
     using Yashmak.Data.Common.Repository;
     using Yashmak.Data.Models;
     using Yashmak.Web.Infrastructure.Filters;
-    using Yashmak.Web.Models.Directory;
+    using Yashmak.Web.ViewModels.Directory;
 
     [Authorize]
     [Log]
@@ -25,7 +25,7 @@
 
         public ActionResult CreateFolder(int? filenodeid)
         {
-            var viewModel = new NavigationDirectoryViewModel { Id = null, FileName = "Home" };
+            var viewModel = new NavigationDirectoryViewModel { Id = null, FileName = "Private Home" };
             if (filenodeid != 0 && filenodeid != null)
             {
                 viewModel.Id = filenodeid;

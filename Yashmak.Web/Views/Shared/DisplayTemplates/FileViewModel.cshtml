@@ -1,5 +1,5 @@
 ﻿@using Yashmak.Common.Assistants
-@model Yashmak.Web.Models.Directory.FileViewModel
+@model Yashmak.Web.ViewModels.File.FileViewModel
 <tr class="hidden info">
     <td></td>
     <td>
@@ -58,5 +58,5 @@
         }</td>
     <td>@Html.DisplayFor(f => f.ModifiedOn)</td>
     <td>@(Model.Size == 0 ? "-" : PrettySize.GetPrettySize(@Model.Size))</td>
-    <td>Private</td>
+    <td>@(Model.Permission == null ? "Parent" : Model.Permission.AccessType.ToString())</td>
 </tr>

@@ -1,4 +1,4 @@
-﻿namespace Yashmak.Web.Models.Directory
+﻿namespace Yashmak.Web.ViewModels.Directory
 {
     using Yashmak.Data.Models;
     using Yashmak.Web.Infrastructure.Mapping;

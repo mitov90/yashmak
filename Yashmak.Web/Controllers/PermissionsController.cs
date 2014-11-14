@@ -12,7 +12,7 @@
     using Yashmak.Data;
     using Yashmak.Data.Models;
     using Yashmak.Web.Infrastructure.Filters;
-    using Yashmak.Web.Models.Permission;
+    using Yashmak.Web.ViewModels.Permission;
 
     [Authorize]
     [Log]

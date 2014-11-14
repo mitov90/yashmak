@@ -237,6 +237,7 @@
     <Compile Include="Areas\Admin\Controllers\Base\KendoGridAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\FilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdministrationViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\FileViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -253,7 +254,7 @@
     </Compile>
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\Directory\DirectoryViewModel.cs" />
-    <Compile Include="ViewModels\Directory\FileViewModel.cs" />
+    <Compile Include="ViewModels\File\FileViewModel.cs" />
     <Compile Include="ViewModels\Directory\NavigationDirectoryViewModel.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\Permission\PermissionViewModel.cs" />
@@ -695,7 +696,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Users\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

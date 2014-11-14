@@ -1,8 +1,9 @@
-﻿namespace Yashmak.Web.Models.Permission
+﻿namespace Yashmak.Web.ViewModels.Permission
 {
     using Yashmak.Data.Models;
+    using Yashmak.Web.Infrastructure.Mapping;
 
-    public class PermissionViewModel
+    public class PermissionViewModel : IMapFrom<Permission>
     {
         public string FileName { get; set; }
 

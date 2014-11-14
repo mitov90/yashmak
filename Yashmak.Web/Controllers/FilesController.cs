@@ -18,7 +18,8 @@
     using Yashmak.Data;
     using Yashmak.Web.Infrastructure.ActionResults;
     using Yashmak.Web.Infrastructure.Filters;
-    using Yashmak.Web.Models.Directory;
+    using Yashmak.Web.ViewModels.Directory;
+    using Yashmak.Web.ViewModels.File;
 
     using Constants = Yashmak.Common.Constants;
     using File = Yashmak.Data.Models.File;
