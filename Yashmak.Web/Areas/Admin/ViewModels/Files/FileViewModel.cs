@@ -1,9 +1,10 @@
-﻿namespace Yashmak.Web.Areas.Admin.ViewModels
+﻿namespace Yashmak.Web.Areas.Admin.ViewModels.Files
 {
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     using Yashmak.Data.Models;
+    using Yashmak.Web.Areas.Admin.ViewModels.Base;
     using Yashmak.Web.Infrastructure.Mapping;
 
     public class FileViewModel : AdministrationViewModel, IMapFrom<File>

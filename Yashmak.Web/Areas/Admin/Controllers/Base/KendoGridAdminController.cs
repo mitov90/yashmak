@@ -12,6 +12,7 @@
     using Yashmak.Data;
     using Yashmak.Data.Common.Models;
     using Yashmak.Web.Areas.Admin.ViewModels;
+    using Yashmak.Web.Areas.Admin.ViewModels.Base;
 
     public abstract class KendoGridAdministrationController : AdminController
     {

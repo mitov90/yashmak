@@ -1,4 +1,4 @@
-﻿namespace Yashmak.Web.Areas.Admin.ViewModels
+﻿namespace Yashmak.Web.Areas.Admin.ViewModels.Base
 {
     using System;
     using System.Web.Mvc;

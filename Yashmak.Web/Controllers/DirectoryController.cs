@@ -9,11 +9,9 @@
     using Yashmak.Data;
     using Yashmak.Data.Models;
     using Yashmak.Web.Controllers.Base;
-    using Yashmak.Web.Infrastructure.Filters;
     using Yashmak.Web.ViewModels.Directory;
 
     [Authorize]
-    [Log]
     public class DirectoryController : BaseController
     {
         public DirectoryController(IYashmakData data)

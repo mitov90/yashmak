@@ -1,26 +1,24 @@
 ﻿@using Kendo.Mvc.UI
-@using Yashmak.Web.Areas.Admin.ViewModels.Files
-@model FileViewModel
+@using Yashmak.Web.Areas.Admin.ViewModels.Users
+@model Yashmak.Data.Models.AppUser
 @{
-    ViewBag.Title = "Files";
-    const string ControllerName = "Files";
+    ViewBag.Title = "Users";
+    const string ControllerName = "Users";
 }
 
 <h2>@ViewBag.Title</h2>
 @(Html.Kendo()
-      .Grid<FileViewModel>()
+      .Grid<UserViewModel>()
       .Name("grid")
       .Columns(cols =>
           {
               cols.Bound(pr => pr.Id).Hidden();
-              cols.Bound(pr => pr.User.UserName);
-              cols.Bound(pr => pr.FileName);
-              cols.Bound(pr => pr.Size);
-
-              // cols.Bound(pr => pr.Permission.AccessType);
-              // cols.Bound(pr => pr.Permission.AuthorizedUsers).Hidden();
-              cols.Bound(pr => pr.CreatedOn).Format("{0:d}").Hidden();
-              cols.Bound(pr => pr.ParentId).Hidden();
+              cols.Bound(pr => pr.UserName);
+              cols.Bound(pr => pr.Role);
+              cols.Bound(pr => pr.FilesCount);
+              cols.Bound(pr => pr.UsedSpace);
+              
+              cols.Command(com => com.Edit()).Title("Change");
               cols.Command(com => com.Destroy()).Title("Delete");
           })
       .ColumnMenu()
@@ -29,10 +27,12 @@
       .Groupable()
       .Filterable()
       .Editable(edit => edit.Mode(GridEditMode.PopUp))
+      .ToolBar(toolbar => toolbar.Create())
       .DataSource(data =>
                   data.Ajax()
                       .Model(m => m.Id(adv => adv.Id))
                       .Read(read => read.Action("Read", ControllerName))
                       .Create(create => create.Action("Create", ControllerName))
+                      .Update(update => update.Action("Update", ControllerName))
                       .Destroy(destroy => destroy.Action("Destroy", ControllerName))
       ))

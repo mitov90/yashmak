@@ -14,7 +14,6 @@
 
     public class DeleteController : FileBaseController
     {
-        // GET: Delete
         public DeleteController(IYashmakData data)
             : base(data)
         {

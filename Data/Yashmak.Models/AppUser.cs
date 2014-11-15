@@ -11,12 +11,11 @@
     {
         public AppUser()
         {
-            this.Logs = new HashSet<Log>();
+
+            this.Files = new HashSet<File>();
         }
 
-        public ICollection<Log> Logs { get; set; }
-
-        public ICollection<Permission> Permissions { get; set; }
+        public ICollection<File> Files { get; set; } 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)
         {

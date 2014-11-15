@@ -38,5 +38,6 @@
                    (permission.AccessType == AccessType.Custom &&
                     permission.AuthorizedUsers.Any(e => e.Username == curUserName));
         }
+
     }
 }

@@ -1,0 +1,34 @@
+﻿@using Kendo.Mvc.UI
+@using Yashmak.Data.Models
+@model Log
+@{
+    ViewBag.Title = "Logs";
+    const string ControllerName = "Logs";
+}
+
+<h2>@ViewBag.Title</h2>
+@(Html.Kendo()
+      .Grid<Log>()
+      .Name("grid")
+      .Columns(cols =>
+          {
+              cols.Bound(pr => pr.Id).Hidden();
+              cols.Bound(pr => pr.Action);
+              cols.Bound(pr => pr.DateTime).Format("{0:g}"); ;
+              cols.Bound(pr => pr.Ip);
+              cols.Bound(pr => pr.Username);
+              cols.Command(com => com.Destroy()).Title("Delete");
+          })
+      .ColumnMenu()
+      .Pageable(page => page.Refresh(true))
+      .Sortable()
+      .Groupable()
+      .Filterable()
+      .Editable(edit => edit.Mode(GridEditMode.PopUp))
+      .DataSource(data =>
+                  data.Ajax()
+                      .Model(m => m.Id(adv => adv.Id))
+                      .Destroy(destroy => destroy.Action("Destroy", ControllerName))
+                      .Read(read => read.Action("Read", ControllerName))
+                      .Update(update => update.Action("Update", ControllerName))
+      ))

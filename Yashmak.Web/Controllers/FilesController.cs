@@ -4,13 +4,11 @@
     using System.Linq;
     using System.Web.Mvc;
 
+    using AutoMapper;
     using AutoMapper.QueryableExtensions;
-
-    using EntityFramework.Extensions;
 
     using Yashmak.Common;
     using Yashmak.Data;
-    using Yashmak.Data.Models;
     using Yashmak.Web.Controllers.Base;
     using Yashmak.Web.ViewModels.File;
 
@@ -47,7 +45,7 @@
 
         public ActionResult ViewFile(int fileNodeId)
         {
-            var fileViewModel = AutoMapper.Mapper.Map<FileViewModel>(this.GetFileNode(fileNodeId));
+            var fileViewModel = Mapper.Map<FileViewModel>(this.GetFileNode(fileNodeId));
 
             return this.PartialView(fileViewModel);
         }
@@ -56,7 +54,7 @@
         {
             var curUserName = this.User.Identity.Name;
             var fileNode = this.GetFileNode(fileNodeId);
-
+            
             if (fileNode == null)
             {
                 return this.Json(new { message = "Not existing file, Redirecting to Err page" });

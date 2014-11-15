@@ -1,10 +1,14 @@
 ﻿namespace Yashmak.Web.Areas.Admin.Controllers
 {
     using System.Collections;
+    using System.Data.Entity;
     using System.Web.Mvc;
+
+    using AutoMapper.QueryableExtensions;
 
     using Yashmak.Data;
     using Yashmak.Web.Areas.Admin.Controllers.Base;
+    using Yashmak.Web.Areas.Admin.ViewModels.Users;
 
     public class UsersController : KendoGridAdministrationController
     {
@@ -21,12 +25,17 @@
 
         protected override IEnumerable GetData()
         {
-            throw new System.NotImplementedException();
+            return
+                this.Data.Users.All()
+                    .Include(u => u.Files)
+                    .Include(u => u.Roles)
+                    .Project()
+                    .To<UserViewModel>();
         }
 
         protected override T GetById<T>(object id)
         {
-            throw new System.NotImplementedException();
+            return this.Data.Users.GetById(id) as T;
         }
     }
 }

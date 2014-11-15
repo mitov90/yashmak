@@ -5,8 +5,6 @@
 
     using AutoMapper.QueryableExtensions;
 
-    using Microsoft.AspNet.Identity;
-
     using Yashmak.Data;
     using Yashmak.Web.Controllers.Base;
     using Yashmak.Web.ViewModels.File;
@@ -24,10 +22,9 @@
         [ValidateInput(false)]
         public ActionResult Search(string query)
         {
-            var userId = this.User.Identity.GetUserId();
             var queryable =
                 this.Data.Files.All()
-                    .Where(f => f.UserId == userId && f.FileName.Contains(query))
+                    .Where(f => f.UserId == UserId && f.FileName.Contains(query))
                     .Project()
                     .To<FileViewModel>();
 
