@@ -14,7 +14,6 @@
         </div>
         <div class="row text-center">
             @Url.Action("Download", "Files", new {filenodeid=@Model.Id},"http")
-            @*@(Url.Action("Download", "Files", new { fileNodeId = Model.Id }))*@
             &nbsp;
         </div>
             <input type="hidden" name="filenodeid" value="@Model.Id" />

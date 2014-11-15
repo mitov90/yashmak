@@ -86,6 +86,45 @@
         }
 
         [NonAction]
+        protected IOrderedQueryable<File> SortQuery(string sortOrder, IOrderedQueryable<File> files)
+        {
+            this.ViewBag.NameSortParm = sortOrder == "Name" ? "Name_desc" : "Name";
+            this.ViewBag.DateSortParm = sortOrder == "Date" ? "Date_desc" : "Date";
+            this.ViewBag.SizeSortParm = sortOrder == "Size" ? "Size_desc" : "Size";
+            this.ViewBag.PermSortParm = sortOrder == "Perm" ? "Perm_desc" : "Perm";
+
+            switch (sortOrder)
+            {
+                case "Name_desc":
+                    files = files.ThenByDescending(f => f.FileName);
+                    break;
+                case "Name":
+                    files = files.ThenBy(f => f.FileName);
+                    break;
+                case "Date":
+                    files = files.ThenBy(s => s.ModifiedOn);
+                    break;
+                case "Date_desc":
+                    files = files.ThenByDescending(s => s.ModifiedOn);
+                    break;
+                case "Size":
+                    files = files.ThenBy(s => s.Size);
+                    break;
+                case "Size_desc":
+                    files = files.ThenByDescending(s => s.Size);
+                    break;
+                case "Perm":
+                    files = files.ThenBy(s => s.Permission.AccessType);
+                    break;
+                case "Perm_desc":
+                    files = files.ThenByDescending(s => s.Permission.AccessType);
+                    break;
+            }
+
+            return files;
+        }
+
+        [NonAction]
         protected IEnumerable<NavigationDirectoryViewModel> GetPath(File fileNode)
         {
             var list = new List<NavigationDirectoryViewModel>();

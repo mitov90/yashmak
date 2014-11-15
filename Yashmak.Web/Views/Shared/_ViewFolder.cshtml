@@ -29,12 +29,58 @@
         <table class="table table-responsive table-condensed table-hover table-striped">
             <thead>
                 <tr>
-                    <th> </th>
-                    <th style ="width: 50%">Name </th>
+                    <th></th>
+                    <th style="width: 50%">
+                        @Ajax.ActionLink("Name", "ViewFolder", "Files",
+                            new
+                                {
+                                    filenodeid = Model.FileNodeId,
+                                    sortOrder = ViewBag.NameSortParm
+                                },
+                            new AjaxOptions
+                                {
+                                    UpdateTargetId = "files",
+                                    HttpMethod = "GET",
+                                    InsertionMode = InsertionMode.Replace,
+                                })
+                    </th>
                     <th>Kind</th>
-                    <th>Modified</th>
-                    <th>Size</th>
-                    <th>Permission</th>
+                    <th>@Ajax.ActionLink("Modified", "ViewFolder", "Files",
+                            new
+                                {
+                                    filenodeid = Model.FileNodeId,
+                                    sortOrder = ViewBag.DateSortParm
+                                },
+                            new AjaxOptions
+                                {
+                                    UpdateTargetId = "files",
+                                    HttpMethod = "GET",
+                                    InsertionMode = InsertionMode.Replace,
+                                })</th>
+                    <th>@Ajax.ActionLink("Size", "ViewFolder", "Files",
+                            new
+                                {
+                                    filenodeid = Model.FileNodeId,
+                                    sortOrder = ViewBag.SizeSortParm
+                                },
+                            new AjaxOptions
+                                {
+                                    UpdateTargetId = "files",
+                                    HttpMethod = "GET",
+                                    InsertionMode = InsertionMode.Replace,
+                                })</th>
+                    <th>@Ajax.ActionLink("Permission", "ViewFolder", "Files",
+                            new
+                                {
+                                    filenodeid = Model.FileNodeId,
+                                    sortOrder = ViewBag.PermSortParm
+                                },
+                            new AjaxOptions
+                                {
+                                    UpdateTargetId = "files",
+                                    HttpMethod = "GET",
+                                    InsertionMode = InsertionMode.Replace,
+                                })</th>
                 </tr>
             </thead>
             <tbody>
