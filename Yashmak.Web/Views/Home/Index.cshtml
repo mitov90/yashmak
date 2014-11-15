@@ -1,11 +1,23 @@
-﻿@{
+﻿@model IEnumerable<Yashmak.Data.Models.Message>
+@{
     ViewBag.Title = "Home Page";
 }
+
+<div class="row text-center">
+
+    @foreach (var message in Model)
+    {
+        <div class="row panel panel-warning"><span class="fa fa-2x fa-warning"></span> <h4>Message: @message.Content</h4></div>
+    }
+
+</div>
+
 
 <div class="row text-center" >
     <h2><span class="fa fa-5x fa-archive"></span></h2>
 </div>
 <hr/>
+
 <div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>

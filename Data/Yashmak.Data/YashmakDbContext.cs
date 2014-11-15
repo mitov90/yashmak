@@ -20,7 +20,6 @@
                 new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
         }
 
-
         public DbContext DbContext
         {
             get { return this; }

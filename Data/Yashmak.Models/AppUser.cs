@@ -15,7 +15,6 @@
 
         public AppUser()
         {
-            this.files = new HashSet<File>();
             this.messages = new HashSet<Message>();
         }
 

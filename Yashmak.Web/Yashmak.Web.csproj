@@ -241,6 +241,7 @@
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\ViewModels\Base\AdministrationViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Files\FileViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\Users\RoleViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\Users\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />

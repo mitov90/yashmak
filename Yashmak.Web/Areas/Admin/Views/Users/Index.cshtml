@@ -1,8 +1,10 @@
-﻿@using Kendo.Mvc.UI
+﻿@using System.Collections
+@using Kendo.Mvc.UI
 @using Yashmak.Web.Areas.Admin.ViewModels.Users
-@model Yashmak.Data.Models.AppUser
+@model UserViewModel
 @{
     ViewBag.Title = "Users";
+
     const string ControllerName = "Users";
 }
 
@@ -14,25 +16,33 @@
           {
               cols.Bound(pr => pr.Id).Hidden();
               cols.Bound(pr => pr.UserName);
-              cols.Bound(pr => pr.Role);
-              cols.Bound(pr => pr.FilesCount);
+              cols.ForeignKey(p => p.Role.Name, ViewData["Roles"] as IEnumerable, "Name", "Name")
+                  .Title("Role").ClientTemplate("#=Role.Name#").Width(160);
+              cols.Bound(pr => pr.FilesCount).Width(150);
               cols.Bound(pr => pr.UsedSpace);
-              
-              cols.Command(com => com.Edit()).Title("Change");
-              cols.Command(com => com.Destroy()).Title("Delete");
+
+              cols.Command(com => com.Destroy()).Title("Delete").Width(140);
           })
+      .ToolBar(toolBar => toolBar.Save())
       .ColumnMenu()
       .Pageable(page => page.Refresh(true))
       .Sortable()
       .Groupable()
       .Filterable()
-      .Editable(edit => edit.Mode(GridEditMode.PopUp))
-      .ToolBar(toolbar => toolbar.Create())
+      .Editable(editable => editable.Mode(GridEditMode.InCell))
       .DataSource(data =>
                   data.Ajax()
-                      .Model(m => m.Id(adv => adv.Id))
+                      .Batch(true)
+                      .Model(m =>
+                          {
+                              m.Id(adv => adv.Id);
+                              m.Field(u => u.Id).Editable(false);
+                              m.Field(u => u.UserName).Editable(false);
+                              m.Field(u => u.FilesCount).Editable(false);
+                              m.Field(u => u.UsedSpace).Editable(false);
+                              m.Field(p => p.Role.Name);
+                          })
                       .Read(read => read.Action("Read", ControllerName))
-                      .Create(create => create.Action("Create", ControllerName))
                       .Update(update => update.Action("Update", ControllerName))
                       .Destroy(destroy => destroy.Action("Destroy", ControllerName))
       ))

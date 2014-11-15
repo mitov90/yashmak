@@ -31,7 +31,7 @@ namespace Yashmak.Data.Migrations
             IdentityDbContext<AppUser, IdentityRole, string, IdentityUserLogin, IdentityUserRole, IdentityUserClaim> context)
         {
             context.Roles.AddOrUpdate(x => x.Name, new IdentityRole(Constants.AdminRole));
-            context.Roles.AddOrUpdate(x => x.Name, new IdentityRole(Constants.PaidUser));
+            context.Roles.AddOrUpdate(x => x.Name, new IdentityRole(Constants.NonPaidUser));
             context.SaveChanges();
         }
 

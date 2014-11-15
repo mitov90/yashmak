@@ -15,12 +15,14 @@
 
         public ActionResult Index()
         {
-            return this.View();
+            var messages = this.GetUserMessages();
+
+            return this.View(messages);
         }
 
         public ActionResult About()
         {
-            this.ViewBag.Message = Constants.Moto; 
+            this.ViewBag.Message = Constants.Moto;
 
             return this.View();
         }

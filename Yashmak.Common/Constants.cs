@@ -3,7 +3,7 @@
     public static class Constants
     {
         public const string AdminRole = "Admin";
-        public const string PaidUser = "Pro";
+        public const string NonPaidUser = "User";
 
         public const string UserFilesPath = "/App_Data/";
 
