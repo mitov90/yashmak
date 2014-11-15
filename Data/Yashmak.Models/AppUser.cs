@@ -9,13 +9,27 @@
 
     public class AppUser : IdentityUser
     {
+        private ICollection<File> files;
+
+        private ICollection<Message> messages;
+
         public AppUser()
         {
-
-            this.Files = new HashSet<File>();
+            this.files = new HashSet<File>();
+            this.messages = new HashSet<Message>();
         }
 
-        public ICollection<File> Files { get; set; } 
+        public virtual ICollection<Message> Messages
+        {
+            get { return this.messages; }
+            set { this.messages = value; }
+        }
+
+        public virtual ICollection<File> Files
+        {
+            get { return this.files; }
+            set { this.files = value; }
+        }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)
         {

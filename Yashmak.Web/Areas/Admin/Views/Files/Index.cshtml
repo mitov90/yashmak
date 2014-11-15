@@ -5,7 +5,6 @@
     ViewBag.Title = "Files";
     const string ControllerName = "Files";
 }
-
 <h2>@ViewBag.Title</h2>
 @(Html.Kendo()
       .Grid<FileViewModel>()
@@ -14,7 +13,9 @@
           {
               cols.Bound(pr => pr.Id).Hidden();
               cols.Bound(pr => pr.User.UserName);
-              cols.Bound(pr => pr.FileName);
+              cols.Template(pr => pr.FileName)
+                  .ClientTemplate("<a href='/Admin/Files/DownloadFile/#= Id #'>#: FileName #</a>");
+
               cols.Bound(pr => pr.Size);
 
               // cols.Bound(pr => pr.Permission.AccessType);

@@ -20,12 +20,15 @@
                 new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
         }
 
+
         public DbContext DbContext
         {
             get { return this; }
         }
 
         public virtual IDbSet<File> Files { get; set; }
+
+        public virtual IDbSet<Message> Messages { get; set; }
 
         public virtual IDbSet<ShareName> ShareNames { get; set; }
 

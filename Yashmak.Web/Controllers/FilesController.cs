@@ -9,7 +9,6 @@
 
     using Yashmak.Common;
     using Yashmak.Data;
-    using Yashmak.Data.Models;
     using Yashmak.Web.Controllers.Base;
     using Yashmak.Web.ViewModels.File;
 
@@ -45,7 +44,6 @@
             var dirView = this.CreateDirView(filenodeid, result, navView);
             return this.PartialView("_ViewFolder", dirView);
         }
-
 
         public ActionResult ViewFile(int fileNodeId)
         {

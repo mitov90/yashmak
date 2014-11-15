@@ -4,10 +4,9 @@
 
     using Yashmak.Common;
     using Yashmak.Data;
-    using Yashmak.Web.Controllers;
     using Yashmak.Web.Controllers.Base;
 
-    //[Authorize(Roles = Constants.AdminRole)]
+    [Authorize(Roles = Constants.AdminRole)]
     public abstract class AdminController : BaseController
     {
         protected AdminController(IYashmakData data)

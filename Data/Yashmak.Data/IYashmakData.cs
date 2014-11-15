@@ -11,6 +11,8 @@
 
         IRepository<AppUser> Users { get; }
 
+        IDeletableEntityRepository<Message> Messages { get; }
+
         IRepository<ShareName> Sharenames { get; }
 
         IRepository<Permission> Permissions { get; }

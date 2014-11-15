@@ -29,15 +29,11 @@
             get { return this.GetDeletableEntityRepository<File>(); }
         }
 
-        // public IRepository<T> GetGenericRepository<T>() where T : class
-        // {
-        // if (typeof(T).IsAssignableFrom(typeof(DeletableEntity)))
-        // {
-        // return this.GetDeletableEntityRepository<T>();
-        // }
+        public IDeletableEntityRepository<Message> Messages
+        {
+            get { return this.GetDeletableEntityRepository<Message>(); }
+        }
 
-        // return this.GetRepository<T>();
-        // }
         public IRepository<AppUser> Users
         {
             get { return this.GetRepository<AppUser>(); }

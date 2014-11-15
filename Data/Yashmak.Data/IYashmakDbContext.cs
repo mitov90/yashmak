@@ -13,6 +13,8 @@
 
         IDbSet<Permission> Permissions { get; set; }
 
+        IDbSet<Message> Messages { get; set; }
+
         IDbSet<Log> Logs { get; set; }
 
         DbContext DbContext { get; }
