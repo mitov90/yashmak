@@ -11,7 +11,6 @@
 
     using Yashmak.Data;
     using Yashmak.Data.Common.Models;
-    using Yashmak.Web.Areas.Admin.ViewModels;
     using Yashmak.Web.Areas.Admin.ViewModels.Base;
 
     public abstract class KendoGridAdministrationController : AdminController
@@ -24,9 +23,9 @@
         [HttpPost]
         public ActionResult Read([DataSourceRequest] DataSourceRequest request)
         {
-            var ads = this.GetData().ToDataSourceResult(request);
+            var result = this.GetData().ToDataSourceResult(request);
 
-            return this.Json(ads);
+            return this.Json(result);
         }
 
         [NonAction]

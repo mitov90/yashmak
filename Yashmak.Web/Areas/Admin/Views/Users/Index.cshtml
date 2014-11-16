@@ -8,6 +8,10 @@
     const string ControllerName = "Users";
 }
 
+@{
+    @Scripts.Render("~/bundles/kendo")
+}
+
 <h2>@ViewBag.Title</h2>
 @(Html.Kendo()
       .Grid<UserViewModel>()
@@ -21,7 +25,8 @@
               cols.Bound(pr => pr.FilesCount).Width(150);
               cols.Bound(pr => pr.UsedSpace);
 
-              cols.Command(com => com.Destroy()).Title("Delete").Width(140);
+              cols.Command(command => command.Custom("Send").Click("sendMessage")).Title("Message").Width(100);
+              cols.Command(com => com.Destroy()).Title("Delete").Width(130);
           })
       .ToolBar(toolBar => toolBar.Save())
       .ColumnMenu()
@@ -46,3 +51,38 @@
                       .Update(update => update.Action("Update", ControllerName))
                       .Destroy(destroy => destroy.Action("Destroy", ControllerName))
       ))
+
+@(Html.Kendo().Window().Name("Message")
+      .Title("Send Message")
+      .Visible(false)
+      .Modal(true)
+      .Draggable(true)
+      .Width(400)
+      )
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        @using (Ajax.BeginForm("SendMessage", "Users", new AjaxOptions { }, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="ReceiverId" value="#=Id#" />
+            <h5>To: #= UserName #</h5>
+            <textarea name="Content" placeholder="Enter your message" class="form-control" required="required"></textarea>
+            <input type="submit" class="btn btn-primary" value="Send" />
+        }
+    </div>
+</script>
+
+<script type="text/javascript">
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function sendMessage(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#Message").data("kendoWindow");
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    }
+</script>
