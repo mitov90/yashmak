@@ -1,16 +1,14 @@
-﻿namespace Yashmak.Data
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Yashmak.Data.Common.CodeFirstConventions;
+using Yashmak.Data.Common.Models;
+using Yashmak.Data.Migrations;
+using Yashmak.Data.Models;
+
+namespace Yashmak.Data
 {
-    using System;
-    using System.Data.Entity;
-    using System.Linq;
-
-    using Microsoft.AspNet.Identity.EntityFramework;
-
-    using Yashmak.Data.Common.CodeFirstConventions;
-    using Yashmak.Data.Common.Models;
-    using Yashmak.Data.Migrations;
-    using Yashmak.Data.Models;
-
     public class YashmakDbContext : IdentityDbContext<AppUser>, IYashmakDbContext
     {
         public YashmakDbContext()
@@ -20,10 +18,7 @@
                 new MigrateDatabaseToLatestVersion<YashmakDbContext, Configuration>());
         }
 
-        public DbContext DbContext
-        {
-            get { return this; }
-        }
+        public DbContext DbContext => this;
 
         public virtual IDbSet<File> Files { get; set; }
 
@@ -42,8 +37,8 @@
 
         public override int SaveChanges()
         {
-            this.ApplyAuditInfoRules();
-            this.ApplyDeletableEntityRules();
+            ApplyAuditInfoRules();
+            ApplyDeletableEntityRules();
             return base.SaveChanges();
         }
 
@@ -65,13 +60,13 @@
         {
             // Approach via @julielerman: http://bit.ly/123661P
             foreach (var entry in
-                this.ChangeTracker.Entries()
+                ChangeTracker.Entries()
                     .Where(
                         e =>
-                        e.Entity is IAuditInfo &&
-                        ((e.State == EntityState.Added) || (e.State == EntityState.Modified))))
+                            e.Entity is IAuditInfo &&
+                            ((e.State == EntityState.Added) || (e.State == EntityState.Modified))))
             {
-                var entity = (IAuditInfo)entry.Entity;
+                var entity = (IAuditInfo) entry.Entity;
 
                 if (entry.State == EntityState.Added)
                 {
@@ -91,10 +86,10 @@
         {
             // Approach via @julielerman: http://bit.ly/123661P
             foreach (var entry in
-                this.ChangeTracker.Entries()
+                ChangeTracker.Entries()
                     .Where(e => e.Entity is IDeletableEntity && (e.State == EntityState.Deleted)))
             {
-                var entity = (IDeletableEntity)entry.Entity;
+                var entity = (IDeletableEntity) entry.Entity;
 
                 entity.DeletedOn = DateTime.Now;
                 entity.IsDeleted = true;

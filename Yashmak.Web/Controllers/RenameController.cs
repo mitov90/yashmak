@@ -1,14 +1,12 @@
-﻿namespace Yashmak.Web.Controllers
+﻿using System.Linq;
+using System.Web.Mvc;
+using AutoMapper.QueryableExtensions;
+using Yashmak.Data;
+using Yashmak.Web.Controllers.Base;
+using Yashmak.Web.ViewModels.File;
+
+namespace Yashmak.Web.Controllers
 {
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using AutoMapper.QueryableExtensions;
-
-    using Yashmak.Data;
-    using Yashmak.Web.Controllers.Base;
-    using Yashmak.Web.ViewModels.File;
-
     public class RenameController : FileBaseController
     {
         public RenameController(IYashmakData data)
@@ -20,46 +18,45 @@
         public ActionResult Rename(int? filenodeid)
         {
             object err;
-            if (this.TempData.TryGetValue("Error", out err))
+            if (TempData.TryGetValue("Error", out err))
             {
-                this.ModelState.AddModelError(string.Empty, err as string);                
+                ModelState.AddModelError(string.Empty, err as string);
             }
 
             var fileNode =
-                this.Data.Files.All()
+                Data.Files.All()
                     .Where(f => f.Id == filenodeid)
-                    .Project()
-                    .To<FileViewModel>()
+                    .ProjectTo<FileViewModel>()
                     .FirstOrDefault();
 
-            return this.View(fileNode);
+            return View(fileNode);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Rename(FileViewModel fileModel)
         {
-            var fileNode = this.GetFileNode(fileModel.Id);
+            var fileNode = GetFileNode(fileModel.Id);
 
-            if (fileNode.UserId != this.UserId)
+            if (fileNode.UserId != UserId)
             {
-                return this.HttpNotFound("File not found");
+                return HttpNotFound("File not found");
             }
 
             var existFileName =
-                this.Data.Files.All()
+                Data.Files.All()
                     .Any(f => f.ParentId == fileNode.ParentId && f.FileName == fileModel.FileName);
 
             if (existFileName)
             {
-                this.TempData.Add("Error","Such filename exist in this folder!");
-                return this.RedirectToAction("Rename", "Rename", new { filenodeid = fileModel.Id });
+                TempData.Add("Error", "Such filename exist in this folder!");
+                return RedirectToAction("Rename", "Rename", new {filenodeid = fileModel.Id});
             }
 
             fileNode.FileName = fileModel.FileName;
-            this.Data.SaveChanges();
+            Data.SaveChanges();
 
-            return this.RedirectToAction("Index", "Files", new { filenodeid = fileNode.ParentId });
+            return RedirectToAction("Index", "Files", new {filenodeid = fileNode.ParentId});
         }
     }
 }

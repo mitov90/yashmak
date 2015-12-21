@@ -7,6 +7,8 @@
     var maxNoOfFiles = Model.MaxNumberOfFiles.HasValue ? Model.MaxNumberOfFiles.Value.ToString(CultureInfo.InvariantCulture) : "undefined";
 }
         
+<!-- file upload dialog/inline form-->
+
 @if (Model.IsDialog) //popup dialog
 {
     <div class="modal-dialog">
@@ -23,7 +25,6 @@
                 }
                 
                 <form role="form" class="form-inline" id="@formId" action="@Model.UploadUrl" method="POST" enctype="multipart/form-data">
-                    @Html.AntiForgeryToken()
                     <div class="fileupload-buttonbar">
                         <div class="btn-group">
                             <!-- The fileinput-button span is used to style the file input field as button -->
@@ -80,10 +81,10 @@
         </div>
     </div>
 }
-else // else inline
+
+else //inline
 {
-    <form id="@formId" action="@Model.UploadUrl" method="POST" enctype="multipart/form-data">
-        @Html.AntiForgeryToken()        
+    <form id="@formId" action="@Model.UploadUrl" method="POST" enctype="multipart/form-data">        
         <div class="row fileupload-buttonbar">                    
             <div class="col-lg-7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
@@ -137,12 +138,16 @@ else // else inline
     </form>
 }
 
+
+
+<!--template and scripts-->
 @if (Model.RenderSharedScript)
 {
 
+    //template scripts are different for jquery ui
     if (Model.UIStyle == UploadUI.JQueryUI)
     {
-        <!-- The template to display files available for upload for jquery ui -->
+        <!-- The template to display files available for upload for jquery ui -->        
         <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">
@@ -151,62 +156,31 @@ else // else inline
                 </td>
                 <td>
                     <p class="name">{%=file.name%}</p>
-                    <strong class="error"></strong>
+                    <strong class="error text-danger"></strong>
                 </td>
                 <td>
                     <p class="size">Processing...</p>
-                    <div class="progress"></div>
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
                 </td>
                 <td>
                     {% if (!i && !o.options.autoUpload) { %}
-                        <button class="start">Start</button>
-
-    <script id="template-upload" type="text/x-tmpl">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-upload fade">
-            <td>
-                <span class="preview"></span>
-            </td>
-            <td>
-                <p class="name">{%=file.name%}</p>
-                <strong class="error text-danger"></strong>
-            </td>
-            <td>
-                <p class="size">Processing...</p>
-                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-            </td>
-            <td>
-                {% if (!i && !o.options.autoUpload) { %}
-                    <button class="btn btn-primary start">
-                        <i class="glyphicon glyphicon-upload"></i>
-                        <span>Start</span>
-                    </button>
-                {% } %}
-                {% if (!i) { %}
-                    <button class="btn btn-warning cancel">
-                        <i class="glyphicon glyphicon-ban-circle"></i>
-                        <span>Cancel</span>
-                    </button>
-                {% } %}
-            </td>
-        </tr>
-    {% } %}
-    </script>
-    <script id="template-download" type="text/x-tmpl">
-    {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-download fade">
-            <td>
-                <span class="preview">
-                    {% if (file.thumbnailUrl) { %}
-                        <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                        <button class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Start</span>
+                        </button>
                     {% } %}
                     {% if (!i) { %}
-                        <button class="cancel">Cancel</button>
+                        <button class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel</span>
+                        </button>
                     {% } %}
                 </td>
             </tr>
         {% } %}
         </script>
+        
+        <!-- The template to display files available for download for jquery ui -->
         <script id="template-download" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-download fade">
@@ -236,8 +210,9 @@ else // else inline
         {% } %}
         </script>
     }
-    else
+    else  // bootstrap templates
     {
+        <!-- The template to display files available for upload -->
         <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}
             <tr class="template-upload fade">
@@ -340,19 +315,21 @@ else // else inline
        <script type="text/javascript" src="/Scripts/mvcfileupload/blueimp/jquery.fileupload-jquery-ui.js"></script>
     }
 }
+<!--template and scripts end-->
 
 <script type="text/javascript">
-            
+
     // Initialize the jQuery File Upload widget:
     $('#@(formId)').fileupload({url: '@Model.UploadUrl'});
 
-    $('#@(formId)').fileupload('option', { 
-        maxFileSize: @Model.MaxFileSizeInBytes,        
+    $('#@(formId)').fileupload('option', {
+        dropZone: $('#@(formId)'),
+        maxFileSize: @Model.MaxFileSizeInBytes,
         maxNumberOfFiles: @maxNoOfFiles,
         disableImagePreview: @(Model.DisableImagePreview ? "true" : "false"),
         resizeMaxWidth: 1920,
         resizeMaxHeight: 1200,
         acceptFileTypes: @Model.FileTypes
-    });    
+        });
 
 </script>
