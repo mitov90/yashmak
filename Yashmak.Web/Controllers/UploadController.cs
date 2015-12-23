@@ -1,19 +1,15 @@
-﻿namespace Yashmak.Web.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using MvcFileUploader.Models;
+using Yashmak.Data;
+using Yashmak.Data.Models;
+using Yashmak.IO;
+using Yashmak.Web.Controllers.Base;
+
+namespace Yashmak.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
-
-    using MvcFileUploader;
-    using MvcFileUploader.Models;
-
-    using Yashmak.Data;
-    using Yashmak.Data.Models;
-    using Yashmak.Web.Controllers.Base;
-
-    using Constants = Yashmak.Common.Constants;
-
     [Authorize]
     public class UploadController : BaseController
     {
@@ -25,94 +21,82 @@
         [HttpGet]
         public ActionResult FileUpload(int? filenodeid)
         {
-            return this.PartialView(filenodeid);
+            return PartialView(filenodeid);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult FileUpload(int? filenodeid, string test)
         {
             filenodeid = filenodeid == 0 ? null : filenodeid;
-            var username = this.User.Identity.Name;
-            var savePath =
-                this.Server.MapPath(string.Format(@"~{0}{1}/", Constants.UserFilesPath, username));
-            
-            var userFilesInCurrentDir =
-                this.Data.Files.All().Where(d => d.ParentId == filenodeid && d.UserId == UserId);
+
+            var userFilesInCurrentDir = Data.Files
+                .All().Where(d => d.ParentId == filenodeid && d.UserId == UserId);
 
             var statuses = new List<ViewDataUploadFileResult>();
+            var provider = new AzureStorageProvider();
 
-            for (var i = 0; i < this.Request.Files.Count; i++)
+            for (var i = 0; i < Request.Files.Count; i++)
             {
-                var curFile = i;
-                var curFileName = this.Request.Files[curFile].FileName;
-                var saveFileName = Guid.NewGuid().ToString();
-                var st = FileSaver.StoreFile(
-                    x =>
-                        {
-                            x.File = this.Request.Files[curFile];
-                            x.StorageDirectory = savePath;
-                            x.FileName = saveFileName;
-                            x.ThrowExceptions = true;
+                var curFileIndex = i;
+                var curFile = Request.Files[curFileIndex];
+                var curFileName = curFile.FileName;
+                var saveFileName = Guid.NewGuid().ToString().Replace("-", string.Empty);
 
-                        });
+
+                var storedFile = new ViewDataUploadFileResult
+                {
+                    name = curFileName,
+                    size = curFile.ContentLength,
+                    type = curFile.ContentType,
+                    Title = curFileName,
+                    deleteType = "POST"
+                };
 
                 if (userFilesInCurrentDir.Any(f => f.FileName == curFileName))
                 {
-                    st.error = "This name alredy exists in folder!";
-                    if (System.IO.File.Exists(st.FullPath))
-                    {
-                        System.IO.File.Delete(st.FullPath);
-                    }
+                    storedFile.error = "This name already exists in folder!";
                 }
                 else
                 {
+                    provider.UploadStream(UserId, saveFileName, curFile.InputStream);
                     var file = new File
-                        {
-                            FileName = curFileName, 
-                            IsDirectory = false, 
-                            ModifiedOn = DateTime.Now, 
-                            ParentId = filenodeid, 
-                            UserId = UserId, 
-                            Size = st.size, 
-                            PathToFile = st.SavedFileName
-                        };
-                    this.Data.Files.Add(file);
-                    this.Data.SaveChanges();
-                    
-                    st.deleteUrl = this.Url.Action(
-                        "DeleteFile", 
-                        new {filenodeid = file.Id, filePath = st.FullPath });
-                    
+                    {
+                        FileName = curFileName,
+                        IsDirectory = false,
+                        ModifiedOn = DateTime.Now,
+                        ParentId = filenodeid,
+                        UserId = UserId,
+                        Size = storedFile.size,
+                        PathToFile = saveFileName
+                    };
+                    Data.Files.Add(file);
+                    Data.SaveChanges();
+
+                    storedFile.deleteUrl = Url.Action(
+                        "DeleteFile",
+                        new {filenodeid = file.Id});
                 }
 
-                statuses.Add(st);
+                statuses.Add(storedFile);
             }
 
-            var viewresult = this.Json(new { files = statuses });
-
-            return viewresult;
+            return Json(new {files = statuses});
         }
 
         [HttpPost]
-        public ActionResult DeleteFile(int? filenodeid, string filePath)
+        public ActionResult DeleteFile(int? filenodeid)
         {
-            var file = this.Data.Files.GetById((int)filenodeid);
-            if (file.UserId != this.UserId)
+            var file = Data.Files.GetById((int) filenodeid);
+            if (file.UserId != UserId)
             {
-                return this.HttpNotFound("File not found!");
+                return HttpNotFound("File not found!");
             }
 
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
+            Data.Files.Delete(file);
+            Data.SaveChanges();
 
-            this.Data.Files.Delete(file);
-
-            var viewresult = this.Json(new { error = string.Empty });
-
-            return viewresult; 
+            return Json(new {error = string.Empty});
         }
     }
 }

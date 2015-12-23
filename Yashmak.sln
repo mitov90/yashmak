@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3459ADE1-9D18-4651-8AD9-F52933F4B8D6}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web", "Yashmak.Web\Yashmak.Web.csproj", "{3BED139F-693D-4ED6-8FD5-D40DCAF37514}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.Web.Infrastructure", "Yashmak.Web.Infrastructure\Yashmak.Web.Infrastructure.csproj", "{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yashmak.IO", "Yashmak.IO\Yashmak.IO.csproj", "{7AFA4728-A67A-4379-ADD4-E8AE8D508CFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AFA4728-A67A-4379-ADD4-E8AE8D508CFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AFA4728-A67A-4379-ADD4-E8AE8D508CFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AFA4728-A67A-4379-ADD4-E8AE8D508CFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AFA4728-A67A-4379-ADD4-E8AE8D508CFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,5 +81,6 @@ Global
 		{EFE74164-CB45-4403-BE91-5D7C8A110E25} = {3459ADE1-9D18-4651-8AD9-F52933F4B8D6}
 		{3BED139F-693D-4ED6-8FD5-D40DCAF37514} = {26AFE9CB-1689-4EE6-9F3D-4F9D979FA93E}
 		{A9D1FF74-F2E3-43A8-9CBE-8CB1DB7FAB9E} = {26AFE9CB-1689-4EE6-9F3D-4F9D979FA93E}
+		{7AFA4728-A67A-4379-ADD4-E8AE8D508CFD} = {3459ADE1-9D18-4651-8AD9-F52933F4B8D6}
 	EndGlobalSection
 EndGlobal

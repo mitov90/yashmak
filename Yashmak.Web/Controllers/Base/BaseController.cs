@@ -16,37 +16,31 @@
             this.Data = data;
         }
 
-        public string UserId
-        {
-            get { return this.HttpContext.User.Identity.GetUserId(); }
-        }
+        public string UserId => this.HttpContext.User.Identity.GetUserId();
 
         protected IYashmakData Data { get; set; }
 
-        protected AppUser CurrentUser
-        {
-            get { return this.Data.Users.GetById(this.UserId); }
-        }
+        protected AppUser CurrentUser => this.Data.Users.GetById(this.UserId);
 
         protected List<Message> GetUserMessages()
         {
             var messages = new List<Message>();
 
-            if (this.UserId != null)
+            if (this.UserId == null)
+                return messages;
+
+            messages = this.Data.Users
+                .GetById(this.UserId)
+                .Messages
+                .Where(m => !m.IsSeen)
+                .ToList();
+
+            foreach (var message in messages)
             {
-                messages = this.Data.Users
-                               .GetById(this.UserId)
-                               .Messages
-                               .Where(m => !m.IsSeen)
-                               .ToList();
-
-                foreach (var message in messages)
-                {
-                    message.IsSeen = true;
-                }
-
-                this.Data.SaveChanges();
+                message.IsSeen = true;
             }
+
+            this.Data.SaveChanges();
 
             return messages;
         }

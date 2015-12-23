@@ -1,4 +1,7 @@
-﻿namespace Yashmak.Web.Controllers.Base
+﻿using System;
+using Yashmak.IO;
+
+namespace Yashmak.Web.Controllers.Base
 {
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -6,15 +9,17 @@
     using System.Linq;
     using System.Web.Mvc;
 
-    using Yashmak.Common;
-    using Yashmak.Common.Assistants;
-    using Yashmak.Data;
-    using Yashmak.Web.Infrastructure.ActionResults;
-    using Yashmak.Web.Infrastructure.Filters;
-    using Yashmak.Web.ViewModels.Directory;
-    using Yashmak.Web.ViewModels.File;
+    using Common;
+    using Common.Assistants;
+    using Data;
 
-    using File = Yashmak.Data.Models.File;
+    using Infrastructure.ActionResults;
+    using Infrastructure.Filters;
+
+    using ViewModels.Directory;
+    using ViewModels.File;
+
+    using File = Data.Models.File;
 
     [Log]
     [Authorize]
@@ -28,11 +33,8 @@
         [NonAction]
         protected ActionResult DownloadFile(File fileNode)
         {
-            var pathToFile =
-                this.Server.MapPath(
-                    "~" + Constants.UserFilesPath + fileNode.User.UserName + "/" +
-                    fileNode.PathToFile);
-            var stream = new FileStream(pathToFile, FileMode.Open);
+            var provider = new AzureStorageProvider();
+            var stream = provider.StreamFile(this.UserId, fileNode.PathToFile);
             return this.File(
                 stream, 
                 MimeAssistant.GetMimeType(fileNode.FileName), 
@@ -47,20 +49,19 @@
                     .Include(f => f.Permission)
                     .Where(f => f.ParentId == fileNodeId && (!f.IsDirectory));
 
-            var resultFilePath = new List<string>();
+            var resultFiles = new List<Tuple<string, Stream>>();
+            var provider = new AzureStorageProvider();
             foreach (var potentialFile in potentialDownloads)
             {
                 if (PermissionManager.CheckPermission(potentialFile, this.UserId, curUserName))
                 {
-                    var mapPath =
-                        this.Server.MapPath(
-                            "~" + Constants.UserFilesPath + fileNode.User.UserName + "/" +
-                            potentialFile.PathToFile);
-                    resultFilePath.Add(mapPath);
+                    resultFiles.Add(
+                        new Tuple<string, Stream>(potentialFile.FileName, 
+                        provider.StreamFile(this.UserId, potentialFile.PathToFile)));
                 }
             }
 
-            var zip = new ZipResult(resultFilePath) { FileName = fileNode.FileName + ".zip" };
+            var zip = new ZipResult(resultFiles) { FileName = fileNode.FileName + ".zip" };
             return zip;
         }
 

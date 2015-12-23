@@ -1,5 +1,6 @@
 ﻿@using MvcFileUploader.HtmlHelper
 @using MvcFileUploader.Models
+@using Yashmak.Common
 @model int?
 
 @{
@@ -9,9 +10,9 @@
 
 @(Html.MvcFileUpload()
       .UploadAt(Url.Action("FileUpload"))
-      .WithMaxFileSize(50000000) // 50 MB
+      .WithMaxFileSize(Constants.UploadFileMaxSize)
       .UIStyle(UploadUI.Bootstrap)
-      .MaxNumberOfFiles(10)
+      .MaxNumberOfFiles(Constants.MaxСimultaneouslyUploads)
       .AddFormField("filenodeid", @Model.ToString())
       .RenderInline())
 

@@ -62,7 +62,6 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Extentions\IEnumerableExtensions.cs" />
     <Compile Include="Extentions\ObjectExtensions.cs" />
-    <Compile Include="FileSystemHelper.cs" />
     <Compile Include="Assistants\MimeAssistant.cs" />
     <Compile Include="PermissionManager.cs" />
     <Compile Include="Assistants\PrettyDate.cs" />

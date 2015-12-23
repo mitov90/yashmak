@@ -1,4 +1,5 @@
-﻿@model Yashmak.Web.ViewModels.Directory.DirectoryViewModel
+﻿@using System.Web.UI.WebControls
+@model Yashmak.Web.ViewModels.Directory.DirectoryViewModel
 
 <div id="files">
     <div class="row">
@@ -11,19 +12,20 @@
     
     <input type="hidden" id="curFolderId" value="null"/>
     <div class="">
-        @Ajax.ActionLink(" Upload", "FileUpload", "Upload", 
-            new { fileNodeId = @Model.FileNodeId }, 
+        
+        @Ajax.ActionLink("Upload", "FileUpload", "Upload",
+            new {fileNodeId = @Model.FileNodeId},
             new AjaxOptions
-                {
-                    UpdateTargetId = "files", 
-                    InsertionMode = InsertionMode.Replace, 
-                    HttpMethod = "GET", 
-                }, 
-            new { @class = "fa fa-upload dynamic-change-id btn btn-primary btn-sm" })
+            {
+                UpdateTargetId = "files",
+                InsertionMode = InsertionMode.Replace,
+                HttpMethod = "GET",
+            },
+            new {@class = "fa fa-upload dynamic-change-id btn btn-primary btn-sm"})
 
-        @Html.ActionLink(" Folder", "CreateFolder", "Directory", 
-            new { fileNodeId = @Model.FileNodeId }, 
-            new { @class = "fa fa-folder-o dynamic-change-id btn btn-inverse btn-sm" })
+        @Html.ActionLink(" Folder", "CreateFolder", "Directory",
+            new {fileNodeId = @Model.FileNodeId},
+            new {@class = "fa fa-folder-o dynamic-change-id btn btn-inverse btn-sm"})
     </div>
     <div class="row">
         <table class="table table-responsive table-condensed table-hover table-striped">
