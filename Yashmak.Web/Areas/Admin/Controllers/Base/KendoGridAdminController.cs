@@ -41,9 +41,17 @@
             return dbModel;
         }
 
+        protected abstract T GetById<T>(object id) where T : class;
+
+        protected abstract IEnumerable GetData();
+
+        protected JsonResult GridOperation<T>(T model, [DataSourceRequest] DataSourceRequest request)
+        {
+            return this.Json(new[] { model }.ToDataSourceResult(request, this.ModelState));
+        }
+
         [NonAction]
-        protected virtual void Update<TModel, TViewModel>(TViewModel model, object id)
-            where TModel : AuditInfo
+        protected virtual void Update<TModel, TViewModel>(TViewModel model, object id) where TModel : AuditInfo
             where TViewModel : AdministrationViewModel
         {
             if (model != null && this.ModelState.IsValid)
@@ -54,15 +62,6 @@
                 model.ModifiedOn = dbModel.ModifiedOn;
             }
         }
-
-        protected JsonResult GridOperation<T>(T model, [DataSourceRequest] DataSourceRequest request)
-        {
-            return this.Json(new[] { model }.ToDataSourceResult(request, this.ModelState));
-        }
-
-        protected abstract IEnumerable GetData();
-
-        protected abstract T GetById<T>(object id) where T : class;
 
         private void ChangeEntityStateAndSave(object dbModel, EntityState state)
         {

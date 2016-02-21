@@ -13,28 +13,28 @@
             Share link:
         </div>
         <div class="row text-center">
-            @Url.Action("Download", "Files", new {filenodeid=@Model.Id},"http")
+            @Url.Action("Download", "Files", new { filenodeid = @Model.Id }, "http")
             &nbsp;
         </div>
-            <input type="hidden" name="filenodeid" value="@Model.Id" />
-            <div class="row">
-                <div class="row col-md-8 col-md-offset-4">
-                    <button type="submit" id="approve-btn"
-                            class="btn btn-inverse">
-                        Download
-                    </button>
-                    <button type="button" class="btn btn-default"
-                            data-dismiss="modal">
-                        Cancel
-                    </button>
-                
-                </div>
+        <input type="hidden" name="filenodeid" value="@Model.Id"/>
+        <div class="row">
+            <div class="row col-md-8 col-md-offset-4">
+                <button type="submit" id="approve-btn"
+                        class="btn btn-inverse">
+                    Download
+                </button>
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal">
+                    Cancel
+                </button>
+
             </div>
-            }
         </div>
+    }
+</div>
 <script type="text/javascript">
-    $(function () {
-        $('#approve-btn').click(function () {
+    $(function() {
+        $('#approve-btn').click(function() {
             $('#modal-container').modal('hide');
         });
     });

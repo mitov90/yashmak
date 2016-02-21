@@ -10,45 +10,25 @@
     using System.Linq.Expressions;
 
     using Yashmak.Common.Extentions;
-    using Yashmak.Data;
     using Yashmak.Data.Common.Repository;
 
-    public class GenericRepository<T> : IRepository<T> where T : class
+    public class GenericRepository<T> : IRepository<T>
+        where T : class
     {
         public GenericRepository(IYashmakDbContext context)
         {
             if (context == null)
             {
-                throw new ArgumentException(
-                    "An instance of DbContext is required to use this repository.", 
-                    "context");
+                throw new ArgumentException("An instance of DbContext is required to use this repository.", "context");
             }
 
             this.Context = context;
             this.DbSet = this.Context.Set<T>();
         }
 
-        protected IDbSet<T> DbSet
-        {
-            get;
-            set;
-        }
+        protected IYashmakDbContext Context { get; set; }
 
-        protected IYashmakDbContext Context
-        {
-            get;
-            set;
-        }
-
-        public virtual IQueryable<T> All()
-        {
-            return this.DbSet.AsQueryable();
-        }
-
-        public virtual T GetById(object id)
-        {
-            return this.DbSet.Find(id);
-        }
+        protected IDbSet<T> DbSet { get; set; }
 
         public virtual void Add(T entity)
         {
@@ -63,15 +43,9 @@
             }
         }
 
-        public virtual void Update(T entity)
+        public virtual IQueryable<T> All()
         {
-            DbEntityEntry entry = this.Context.Entry(entity);
-            if (entry.State == EntityState.Detached)
-            {
-                this.DbSet.Attach(entity);
-            }
-
-            entry.State = EntityState.Modified;
+            return this.DbSet.AsQueryable();
         }
 
         public virtual void Delete(T entity)
@@ -105,6 +79,27 @@
             entry.State = EntityState.Detached;
         }
 
+        public virtual T GetById(object id)
+        {
+            return this.DbSet.Find(id);
+        }
+
+        public int SaveChanges()
+        {
+            return this.Context.SaveChanges();
+        }
+
+        public virtual void Update(T entity)
+        {
+            DbEntityEntry entry = this.Context.Entry(entity);
+            if (entry.State == EntityState.Detached)
+            {
+                this.DbSet.Attach(entity);
+            }
+
+            entry.State = EntityState.Modified;
+        }
+
         /// <summary>
         ///     This method updates database values by using expression. It works with both anonymous and class objects.
         ///     It is used in one of the following ways:
@@ -118,9 +113,7 @@
             object compiledExpression = entity.Compile()(null);
 
             // cast the result of invokation to T
-            T updatedEntity = compiledExpression is T
-                                  ? compiledExpression as T
-                                  : compiledExpression.CastTo<T>();
+            T updatedEntity = compiledExpression is T ? compiledExpression as T : compiledExpression.CastTo<T>();
 
             // attach the entry if missing in ObjectStateManager
             var entry = this.Context.Entry(updatedEntity);
@@ -159,8 +152,7 @@
             }
 
             // select all not mapped properties and set value
-            typeof(T)
-                .GetProperties()
+            typeof(T).GetProperties()
                 .Where(pr => !pr.GetCustomAttributes(typeof(NotMappedAttribute), true).Any())
                 .ForEach(
                     prop =>
@@ -179,19 +171,14 @@
                         });
         }
 
-        public int SaveChanges()
-        {
-            return this.Context.SaveChanges();
-        }
-
         private static int GetPrimaryKey(DbEntityEntry entry)
         {
             var myObject = entry.Entity;
 
-            var property = myObject
-                .GetType()
-                .GetProperties()
-                .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(KeyAttribute)));
+            var property =
+                myObject.GetType()
+                    .GetProperties()
+                    .FirstOrDefault(prop => Attribute.IsDefined(prop, typeof(KeyAttribute)));
 
             return (int)property.GetValue(myObject, null);
         }

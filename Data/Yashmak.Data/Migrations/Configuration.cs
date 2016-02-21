@@ -43,11 +43,7 @@ namespace Yashmak.Data.Migrations
                 return;
             }
 
-            var adminUser = new AppUser
-                {
-                    Email = "a@a.a", 
-                    UserName = "a@a.a"
-                };
+            var adminUser = new AppUser { Email = "a@a.a", UserName = "a@a.a" };
             this.userManager.Create(adminUser, "asdasd");
             context.SaveChanges();
             this.userManager.AddToRole(adminUser.Id, Constants.AdminRole);

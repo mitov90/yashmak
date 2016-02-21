@@ -57,7 +57,7 @@ namespace Yashmak.Web.Areas.Admin.Controllers
 
         protected override IEnumerable GetData()
         {
-            return Data.Files.All().ProjectTo<ViewModel>();
+            return Data.Files.AllWithDeleted().ProjectTo<ViewModel>();
         }
 
         protected override T GetById<T>(object id)

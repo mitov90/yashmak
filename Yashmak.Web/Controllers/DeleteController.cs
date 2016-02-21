@@ -23,7 +23,7 @@
         public ActionResult Delete(int? filenodeid)
         {
             var fileViewModel = Mapper.Map<FileViewModel>(this.GetFileNode(filenodeid));
-            return this.PartialView(filenodeid);
+            return this.PartialView(fileViewModel.Id);
         }
 
         [HttpPost]
@@ -34,15 +34,11 @@
 
             if (filenodeid == null || filenodeid == 0 || (fileNode.UserId != this.UserId))
             {
-                return
-                    this.Json(
-                        "You're trying to delete things that do not exist or do not belong to you! ");
+                return this.Json("You're trying to delete things that do not exist or do not belong to you! ");
             }
 
             fileNode.IsDeleted = true;
-            this.Data.Files.All()
-                .Where(f => f.ParentId == filenodeid)
-                .Update(f => new File { IsDeleted = true });
+            this.Data.Files.All().Where(f => f.ParentId == filenodeid).Update(f => new File { IsDeleted = true });
 
             this.Data.SaveChanges();
 

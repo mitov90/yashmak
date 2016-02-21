@@ -5,11 +5,11 @@
 
     public class PermissionViewModel : IMapFrom<Permission>
     {
+        public AccessType AccessType { get; set; }
+
         public string FileName { get; set; }
 
         public int Id { get; set; }
-
-        public AccessType AccessType { get; set; }
 
         public string People { get; set; }
     }

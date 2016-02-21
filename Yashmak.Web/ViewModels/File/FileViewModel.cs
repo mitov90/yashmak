@@ -13,18 +13,18 @@
             this.IsDirectory = false;
         }
 
-        public int? Id { get; set; }
-
         public string FileName { get; set; }
 
-        public PermissionViewModel Permission { get; set; }
+        public int? Id { get; set; }
 
-        public int? ParentId { get; set; }
-
-        public int Size { get; set; }
+        public bool IsDirectory { get; set; }
 
         public DateTime? ModifiedOn { get; set; }
 
-        public bool IsDirectory { get; set; }
+        public int? ParentId { get; set; }
+
+        public PermissionViewModel Permission { get; set; }
+
+        public int Size { get; set; }
     }
 }

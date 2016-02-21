@@ -1,40 +1,46 @@
-﻿using System;
-using System.IO;
-
-namespace Yashmak.Web.Infrastructure.ActionResults
+﻿namespace Yashmak.Web.Infrastructure.ActionResults
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Web.Mvc;
 
     using Ionic.Zip;
 
     public class ZipResult : ActionResult
     {
-        private readonly IEnumerable<Tuple<string, Stream>> _files;
+        private readonly IEnumerable<Tuple<string, Stream>> files;
 
-        private string _fileName;
+        private string fileName;
 
         public ZipResult(params Tuple<string, Stream>[] files)
         {
-            this._files = files;
+            this.files = files;
         }
 
         public ZipResult(IEnumerable<Tuple<string, Stream>> files)
         {
-            this._files = files;
+            this.files = files;
         }
 
         public string FileName
         {
-            get { return this._fileName ?? "files.zip"; }
-            set { this._fileName = value; }
+            get
+            {
+                return this.fileName ?? "files.zip";
+            }
+
+            set
+            {
+                this.fileName = value;
+            }
         }
 
         public override void ExecuteResult(ControllerContext context)
         {
             using (var zf = new ZipFile())
             {
-                foreach (var file in this._files)
+                foreach (var file in this.files)
                 {
                     zf.AddEntry(file.Item1, file.Item2);
                 }

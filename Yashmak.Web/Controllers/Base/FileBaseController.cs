@@ -1,25 +1,22 @@
-﻿using System;
-using Yashmak.IO;
-
-namespace Yashmak.Web.Controllers.Base
+﻿namespace Yashmak.Web.Controllers.Base
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.IO;
     using System.Linq;
     using System.Web.Mvc;
 
-    using Common;
-    using Common.Assistants;
-    using Data;
+    using Yashmak.Common;
+    using Yashmak.Common.Assistants;
+    using Yashmak.Data;
+    using Yashmak.IO;
+    using Yashmak.Web.Infrastructure.ActionResults;
+    using Yashmak.Web.Infrastructure.Filters;
+    using Yashmak.Web.ViewModels.Directory;
+    using Yashmak.Web.ViewModels.File;
 
-    using Infrastructure.ActionResults;
-    using Infrastructure.Filters;
-
-    using ViewModels.Directory;
-    using ViewModels.File;
-
-    using File = Data.Models.File;
+    using File = Yashmak.Data.Models.File;
 
     [Log]
     [Authorize]
@@ -31,14 +28,21 @@ namespace Yashmak.Web.Controllers.Base
         }
 
         [NonAction]
+        protected DirectoryViewModel CreateDirView(
+            int? filenodeid, 
+            IQueryable<FileViewModel> files, 
+            IEnumerable<NavigationDirectoryViewModel> navView)
+        {
+            var dirView = new DirectoryViewModel { Files = files, NavigationModels = navView, FileNodeId = filenodeid };
+            return dirView;
+        }
+
+        [NonAction]
         protected ActionResult DownloadFile(File fileNode)
         {
             var provider = new AzureStorageProvider();
-            var stream = provider.StreamFile(this.UserId, fileNode.PathToFile);
-            return this.File(
-                stream, 
-                MimeAssistant.GetMimeType(fileNode.FileName), 
-                fileNode.FileName);
+            var stream = provider.StreamFile(fileNode.UserId, fileNode.PathToFile);
+            return this.File(stream, MimeAssistant.GetMimeType(fileNode.FileName), fileNode.FileName);
         }
 
         [NonAction]
@@ -56,8 +60,9 @@ namespace Yashmak.Web.Controllers.Base
                 if (PermissionManager.CheckPermission(potentialFile, this.UserId, curUserName))
                 {
                     resultFiles.Add(
-                        new Tuple<string, Stream>(potentialFile.FileName, 
-                        provider.StreamFile(this.UserId, potentialFile.PathToFile)));
+                        new Tuple<string, Stream>(
+                            potentialFile.FileName, 
+                            provider.StreamFile(this.UserId, potentialFile.PathToFile)));
                 }
             }
 
@@ -72,18 +77,19 @@ namespace Yashmak.Web.Controllers.Base
         }
 
         [NonAction]
-        protected DirectoryViewModel CreateDirView(
-            int? filenodeid, 
-            IQueryable<FileViewModel> files, 
-            IEnumerable<NavigationDirectoryViewModel> navView)
+        protected IEnumerable<NavigationDirectoryViewModel> GetPath(File fileNode)
         {
-            var dirView = new DirectoryViewModel
-                {
-                    Files = files, 
-                    NavigationModels = navView, 
-                    FileNodeId = filenodeid
-                };
-            return dirView;
+            var list = new List<NavigationDirectoryViewModel>();
+
+            while (fileNode != null)
+            {
+                list.Add(new NavigationDirectoryViewModel { Id = fileNode.Id, FileName = fileNode.FileName });
+                fileNode = fileNode.Parent;
+            }
+
+            list.Add(new NavigationDirectoryViewModel { Id = null, FileName = "Home" });
+            list.Reverse();
+            return list;
         }
 
         [NonAction]
@@ -123,27 +129,6 @@ namespace Yashmak.Web.Controllers.Base
             }
 
             return files;
-        }
-
-        [NonAction]
-        protected IEnumerable<NavigationDirectoryViewModel> GetPath(File fileNode)
-        {
-            var list = new List<NavigationDirectoryViewModel>();
-
-            while (fileNode != null)
-            {
-                list.Add(
-                    new NavigationDirectoryViewModel
-                        {
-                            Id = fileNode.Id, 
-                            FileName = fileNode.FileName
-                        });
-                fileNode = fileNode.Parent;
-            }
-
-            list.Add(new NavigationDirectoryViewModel { Id = null, FileName = "Home" });
-            list.Reverse();
-            return list;
         }
     }
 }

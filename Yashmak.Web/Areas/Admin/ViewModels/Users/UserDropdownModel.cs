@@ -14,8 +14,8 @@
         public void CreateMappings(IConfiguration configuration)
         {
             configuration.CreateMap<AppUser, UserViewModel>()
-                         .ForMember(m => m.Id, opt => opt.MapFrom(t => t.Id))
-                         .ForMember(m => m.UserName, opt => opt.MapFrom(t => t.UserName));
+                .ForMember(m => m.Id, opt => opt.MapFrom(t => t.Id))
+                .ForMember(m => m.UserName, opt => opt.MapFrom(t => t.UserName));
         }
     }
 }

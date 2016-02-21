@@ -1,24 +1,31 @@
-﻿using System.IO;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-
-namespace Yashmak.IO
+﻿namespace Yashmak.IO
 {
+    using System.IO;
+
+    using Microsoft.Azure;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Blob;
+
     public class AzureStorageProvider : IStorageProvider
     {
-        private readonly CloudBlobClient _blobClient;
+        private readonly CloudBlobClient blobClient;
 
         public AzureStorageProvider()
         {
             var connectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
             var storageAccount = CloudStorageAccount.Parse(connectionString);
-            _blobClient = storageAccount.CreateCloudBlobClient();
+            this.blobClient = storageAccount.CreateCloudBlobClient();
+        }
+
+        public Stream StreamFile(string userId, string filename)
+        {
+            var container = this.blobClient.GetContainerReference(userId.Replace("-", string.Empty));
+            return container.GetBlockBlobReference(filename).OpenRead();
         }
 
         public string UploadStream(string userId, string filename, Stream stream)
         {
-            var container = _blobClient.GetContainerReference(userId.Replace("-", string.Empty));
+            var container = this.blobClient.GetContainerReference(userId.Replace("-", string.Empty));
 
             container.CreateIfNotExistsAsync();
             var blockBlob = container.GetBlockBlobReference(filename);
@@ -26,12 +33,6 @@ namespace Yashmak.IO
             blockBlob.UploadFromStream(stream);
 
             return blockBlob.StorageUri.PrimaryUri.ToString();
-        }
-
-        public Stream StreamFile(string userId, string filename)
-        {
-            var container = _blobClient.GetContainerReference(userId.Replace("-", string.Empty));
-            return container.GetBlockBlobReference(filename).OpenRead();
         }
     }
 }

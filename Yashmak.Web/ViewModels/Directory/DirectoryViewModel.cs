@@ -7,10 +7,10 @@
 
     public class DirectoryViewModel
     {
+        public int? FileNodeId { get; set; }
+
         public IQueryable<FileViewModel> Files { get; set; }
 
         public IEnumerable<NavigationDirectoryViewModel> NavigationModels { get; set; }
-
-        public int? FileNodeId { get; set; }
     }
 }
